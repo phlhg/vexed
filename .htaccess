@@ -1,0 +1,33 @@
+AddDefaultCharset UTF-8
+
+ErrorDocument 400 /err/?e=400
+ErrorDocument 401 /err/?e=401
+ErrorDocument 403 /err/?e=403
+ErrorDocument 404 /err/?e=404
+ErrorDocument 410 /err/?e=410
+ErrorDocument 500 /err/?e=500
+ErrorDocument 501 /err/?e=501
+ErrorDocument 502 /err/?e=503
+ErrorDocument 503 /err/?e=503
+Options -Indexes
+
+Options +FollowSymLinks -MultiViews
+
+AddType x-mapp-php6 .php
+AddHandler x-mapp-php6 .php
+
+RewriteEngine on
+RewriteBase /
+
+#HTTPS
+#RewriteCond %{HTTPS} off
+#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#SLASH AT END
+RewriteCond %{REQUEST_URI} !\.([a-zA-Z0-9]{2,5})$
+RewriteCond %{DOCUMENT_ROOT}/sites%{REQUEST_URI} !-f
+RewriteRule ^.*[^/]$ /$0/ [L,R]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?_url=%{REQUEST_FILENAME}
