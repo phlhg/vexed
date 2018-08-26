@@ -28,5 +28,8 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/windows
 
-#Keep Database-Connection secret
+#Database-Connections
 /php/db.php
+
+#Log-files
+*.log
