@@ -2,7 +2,7 @@
 
     namespace Core;
 
-    class Error extends \exception {
+    class Error extends \Exception {
 
         public function __construct(...$args){
             parent::__construct(...$args);

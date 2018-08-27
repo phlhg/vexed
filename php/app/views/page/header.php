@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <!--HEAD-->
     <head>
         <title><?php echo $view->getTitle(); ?></title>
         <!--// META //-->
@@ -34,4 +35,6 @@
         <link href="/css/dark.css" rel="stylesheet" />
     </head>
     <body>
+        <!--MENU-->
         <?php $this->get("page/menu"); ?>
+        <!--CONTENT-->
