@@ -38,9 +38,9 @@ header > nav > a:hover, a, h1,h2,h3,h4,h5,h6, form input[type='submit']:hover {
 ::-moz-selection{ background-color: rgb(0, 160, 60); color: #fff; }
 
 h1,h2,h3,h4,h5,h6{ font-weight: bold; text-decoration: none; margin: 10px 0; text-align: left; }
-h1 { font-size: 60px; line-height: 60px; }
-h2 { font-size: 40px; line-height: 40px; }
-h3 { font-size: 30px; line-height: 30px; }
+h1 { font-size: 70px; line-height: 80px; }
+h2 { font-size: 50px; line-height: 60px; }
+h3 { font-size: 30px; line-height: 40px; }
 
 a{ text-decoration: none; transition: all 0.2s; -webkit-transition: all 0.2s; -o-transition: all 0.2s; -moz-transition: all 0.2s; }
 p { color: rgb(80,80,80); font-weight: 300; }

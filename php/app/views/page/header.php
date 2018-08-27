@@ -23,8 +23,8 @@
         <meta property="og:type" content="website" />
         <!--// WEBAPP //-->
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-title" content="Myname">
-        <meta name="application-name" content="Myname">
+        <meta name="apple-mobile-web-app-title" content="<?php echo \Core\Config::get("application_title"); ?>">
+        <meta name="application-name" content="<?php echo \Core\Config::get("application_title"); ?>">
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <!--// LINKS //-->
         <!-- FONTS -->

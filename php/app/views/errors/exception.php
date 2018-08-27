@@ -1,6 +1,6 @@
 <section class="min-fullscreen">
     <div class="ph_text">
-        <h2>Hoppla!</h2>
+        <h2>Whoops!</h2>
         <p>
             Leider ist hier etwas unerwartet schief gelaufen...<br/>
             Um dies in Zukunft zu vermeiden wurde der Fehler gemeldet.<BR/>
