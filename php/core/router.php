@@ -53,7 +53,7 @@
             foreach(self::$repository as $route){
                 if($route->match($url)){
                     self::$route = $route;
-                        self::$route->execute();
+                        self::$route->execute($url);
                     return true;
                 }
             }
@@ -89,7 +89,7 @@
          */
         public static function setRoute(String $action, Array $methodParams=[], Array $controllerParams=[]){
             self::$route = new \Core\Route("",$action,$methodParams,$controllerParams);
-            self::$route->execute();
+            self::$route->execute("");
             return true;
         }
 

@@ -77,7 +77,7 @@
         public function getRegex(){
             $regex = str_replace("/","\/",$this->pattern);
             foreach($this->variables as $variable){
-                $regex = str_replace("{".$variable["name"]."}",'(?P<'.$variable["name"].'>'.$variable["regex"].')',$regex);
+                $regex = str_replace("{".$variable["name"]."}",'(?P<'.urlencode($variable["name"]).'>'.$variable["regex"].')',$regex);
             }
 
             return '/^'.$regex.'$/i';
@@ -100,13 +100,14 @@
         /**
          * Executes the route by initializing the controller and running the method supplied in "action".
          * 
-         * @since 1.0.0
+         * @param String $url Variables get extracted from this url
          * 
          */
-        public function execute(){
+        public function execute(String $url){
+            $this->extractValues($url);
             $nameController = '\App\Controllers\\'.$this->nameController;
             $nameMethod = $this->nameMethod;
-            $_URL = array();
+            $_URL = $this->getValues();
         
             $methodParams = $this->methodParams;
             array_unshift($methodParams,$_URL);
@@ -128,6 +129,30 @@
             foreach($variables as $variable){
                 $this->addVariable($variable);
             }
+        }
+
+        /**
+         * @todo
+         */
+        public function extractValues(String $url){
+            preg_match($this->getRegex(),$url,$matches);
+            foreach($this->variables as $variable){
+                $name = urlencode($variable["name"]);
+                if(!empty($matches[$name])){
+                    $this->setVariable($variable["name"],$matches[$name]);
+                }
+            }
+        }
+
+        /**
+         * @todo
+         */
+        public function getValues(){
+            $return = array();
+            foreach($this->variables as $variable){
+                $return[$variable["name"]] = $variable["value"];
+            }
+            return $return;
         }
 
         /**
@@ -166,7 +191,7 @@
                     $regex = '[\w\s_]+';
                     break;
                 case 'nickname':
-                    $regex = '[\w\d_-$]+';
+                    $regex = '[\w\d_\-$]+';
                     break;
             }
             return $regex;
@@ -185,6 +210,13 @@
             $this->variables[urlencode($name)]["name"] = $name;
             $this->variables[urlencode($name)]["regex"] = '.+';
             $this->variables[urlencode($name)]["value"] = null;
+        }
+
+        /**
+         * @todo
+         */
+        public function setVariable(String $name, $value){
+            $this->variables[urlencode($name)]["value"] = $value;
         }
 
         /**
