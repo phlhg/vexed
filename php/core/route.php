@@ -14,40 +14,40 @@
          * @var Controller $controller */
         public $controller = null;
 
-        /** Name of the controller that handles the route.
+        /** Name of the controller that handles the request.
          * @var String $nameController */
         public $nameController = "";
 
-        /** Name of the method in the controller that handles the route.
+        /** Name of the method in the controller that handles the request.
          * @var String $nameMethod */
         public $nameMethod = "";
 
-        /** Pattern url has to match to be executed.
-         *  Variables are added by barckets like this: /url/{name}/{id}/.
+        /** Pattern the url has to match for the route to be selected.
+         *  Variables are added by barckets like: /url/{name}/{id}/.
          * @var String $pattern */
         public $pattern = "";
 
-        /** Parameters used in the method of the controller
+        /** Parameters of the method executed in the controller.
          * @var Mixed[] $methodParams */
         public $methodParams = [];
 
-        /** Parameters used in the constructor of the controller
+        /** Parameters for the construction of the controller.
          * @var Mixed[] $controllerParams */
         public $controllerParams = [];
 
-        /** Stores the name, the RegEx and the value of each variable.
+        /** Stores the name, the RegEx and the value of each variable in a multidimensional array.
          * @var Array[] $variables */
         public $variables = [];
 
         /**
-         * Constructs a possible route withe the supplied parameters
+         * Constructs a new route with the the supplied parameters.
          * 
          * @since 1.0.0
          * 
-         * @param String $pattern Pattern url has to match to be executed. Variables are added by brackets "{name}"
-         * @param String $action Action to be executed. Actions are always constructed like "controller/method"
-         * @param Mixed[] $methodParams Parameters to be used in the method of the controller
-         * @param Mixed[] $controllerParams Parameters to be used in the constructor of the controller
+         * @param String $pattern Pattern the url has to match for the route to be selected. Variables are added by brackets: "{name}".
+         * @param String $action Action to be executed. Actions are structured: "controller/method"
+         * @param Mixed[] $methodParams Parameters for method executed in the controller
+         * @param Mixed[] $controllerParams Parameters for the construction of the controller
          * 
          * @return Self Returns itself for chaining
          */
@@ -68,13 +68,13 @@
 
 
         /**
-         * Returns a regular expression for the pattern and the variables supplied
+         * Returns a regular expression for the pattern and the variables of the route.
          * 
          * @since 1.0.0
          * 
          * @return String Regular expression of the pattern 
          */
-        public function bakeRegex(){
+        public function getRegex(){
             $regex = str_replace("/","\/",$this->pattern);
             foreach($this->variables as $variable){
                 $regex = str_replace("{".$variable["name"]."}",'(?P<'.$variable["name"].'>'.$variable["regex"].')',$regex);
@@ -84,21 +84,23 @@
         }
 
         /**
-         * Checks if the route matches the given url.
+         * Checks if the route fits the given url.
          * 
          * @since 1.0.0
          * 
-         * @param String $url The url to check with the pattern.
+         * @param String $url Url that gets compared with the pattern.
          * 
          * @return Boolean Returns true if the route matches.
          */
         public function match(String $url){
-            $preg = preg_match($this->bakeRegex(),$url,$matches);
+            $preg = preg_match($this->getRegex(),$url,$matches);
             return $preg;
         }
 
         /**
-         * Executes the action of the route
+         * Executes the route by initializing the controller and running the method supplied in "action".
+         * 
+         * @since 1.0.0
          * 
          */
         public function execute(){
@@ -115,7 +117,7 @@
         }
 
         /**
-         * Extracts the variables from the pattern and stores them in @variables
+         * Extracts the variables from the pattern and stores them as an array in the "variable"-property
          * 
          * @since 1.0.0
          * 
@@ -133,12 +135,12 @@
          * 
          * @since 1.0.0
          * 
-         * @param String[] $variables Array is structured like: ["var" => "regex", "var2" => "regex2" ]. (Regular expression is supplied without wrapping slashes and modifiers!)
+         * @param String[] $settings Modifies the RegEx the variables have to match. Ex: ["var" => "regex", "var2" => "regex2" ]. (Regular expression is supplied without wrapping slashes and modifiers!)
          *
          * @return Self Returns itself for chaining
          */
-        public function where(Array $variables){
-            foreach($variables as $name => $regex){
+        public function where(Array $settings){
+            foreach($settings as $name => $regex){
                 $this->setVariableRegex($name,$this->type2Regex($regex));
             }
 
@@ -148,7 +150,7 @@
         /**
          * If the supplied type exists, its regular expression is returned. Otherwise it returns the supplied $type.
          * 
-         * @param String $type Type possible values are: int | string
+         * @param String $type Possible values for type are: int | string | nickname
          * 
          * @todo add more types.
          * 
@@ -163,6 +165,9 @@
                 case 'string':
                     $regex = '[\w\s_]+';
                     break;
+                case 'nickname':
+                    $regex = '[\w\d_-$]+';
+                    break;
             }
             return $regex;
         }
@@ -170,7 +175,7 @@
         //Variable Management
 
         /**
-         * Creates a new variable
+         * Creates a new variable for the pattern
          * 
          * @since 1.0.0
          * 
@@ -183,23 +188,23 @@
         }
 
         /**
-         * Sets a new regular expression for a specific variable
+         * Sets a new regular expression for a specific variable in the pattern
          * 
          * @since 1.0.0
          * 
          * @param String $name Name of the affected variable
-         * @param String $regex Regular expression without wrapping slashes and modifiers
+         * @param String $regex New regular expression (Without wrapping slashes and modifiers!)
          */
         public function setVariableRegex(String $name, String $regex){
             $this->variables[urlencode($name)]["regex"] = $regex;
         }
 
         /**
-         * Checks if a variable exists
+         * Checks if a variable exists in the list of variables
          * 
          * @param String $name Name of the variable
          * 
-         * @return Boolean Return true if the variable exists
+         * @return Boolean Returns true if the variable exists
          */
         public function existsVariable(String $name){
             return isset($this->variables[$name]);
