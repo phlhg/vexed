@@ -10,7 +10,7 @@
             $this->view->meta->title = "404 Fehler";
         }
 
-        public function Exception($details){
+        public function Exception($_URL,$details){
             header("HTTP/1.0 503 Service Unavailable");
             $this->view = new \Core\View("errors/exception");
             $this->view->meta->title = "Etwas ist schief gelaufen";

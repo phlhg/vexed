@@ -5,6 +5,7 @@
     class View {
 
         private $view = "";
+        public $cache = "";
 
         public $v = array();
         public $meta = null;
@@ -38,13 +39,18 @@
         }
 
         public function render(){
-            ob_start();
-                $this->get("page/header");
-                $this->get($this->view);
-                $this->get("page/footer");
-            $content = ob_get_contents();
-            ob_end_clean();
-            return $content;
+            $this->clearCache();
+            $this->getView("page/header");
+            $this->getView($this->view);
+            $this->getView("page/footer");
+        }
+
+        public function getRender(){
+            return $this->cache;
+        }
+
+        public function clearCache(){
+            $this->cache = "";
         }
 
         public function exists($name){
@@ -52,15 +58,28 @@
             return is_readable($file);
         }
 
+        public function getView($name){
+            $file = $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
+            if(!is_readable($file)){ throw new \Core\Error('View-Datei "/php/app/views/'.strtolower($name).'.php" could not be found'); }
+            $this->cache .= $this->load($file);
+        }
+
         public function get($name){
             $file = $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
-            if(!is_readable($file)){ throw new Error('View-Datei "/php/app/views/'.strtolower($name).'.php" could not be found'); }
-            $this->load($file);
+            if(!is_readable($file)){ throw new \Core\Error('View-Datei "/php/app/views/'.strtolower($name).'.php" could not be found'); }
+            $view = $this;
+            require $file;
         }
 
         private function load($__file){
-            $view = $this;
-            require_once $__file;
+            $content = "";
+            $c = ob_start();
+                $view = $this;
+                require $__file;
+            $content = ob_get_contents();
+            ob_end_clean();
+            if(!$content){ echo "FEHLER"; }
+            return $content;
         }
 
     }

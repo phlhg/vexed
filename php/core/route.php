@@ -10,18 +10,30 @@
     /** Stores information about a route and executes the action */
     class Route {
 
-        /** Action to be executed. Actions are always constructed like "controller/method".
-         * @var String $action */
-        public $action = "";
+        /** Instance of the initialized controller 
+         * @var Controller $controller */
+        public $controller = null;
+
+        /** Name of the controller that handles the route.
+         * @var String $nameController */
+        public $nameController = "";
+
+        /** Name of the method in the controller that handles the route.
+         * @var String $nameMethod */
+        public $nameMethod = "";
 
         /** Pattern url has to match to be executed.
          *  Variables are added by barckets like this: /url/{name}/{id}/.
          * @var String $pattern */
         public $pattern = "";
 
+        /** Parameters used in the method of the controller
+         * @var Mixed[] $methodParams */
+        public $methodParams = [];
+
         /** Parameters used in the constructor of the controller
-         * @var Mixed[] $parameters */
-        public $parameters = [];
+         * @var Mixed[] $controllerParams */
+        public $controllerParams = [];
 
         /** Stores the name, the RegEx and the value of each variable.
          * @var Array[] $variables */
@@ -34,15 +46,20 @@
          * 
          * @param String $pattern Pattern url has to match to be executed. Variables are added by brackets "{name}"
          * @param String $action Action to be executed. Actions are always constructed like "controller/method"
-         * @param Mixed[] $parameters Parameters to be used in the constructor of the controller
+         * @param Mixed[] $methodParams Parameters to be used in the method of the controller
+         * @param Mixed[] $controllerParams Parameters to be used in the constructor of the controller
          * 
          * @return Self Returns itself for chaining
          */
 
-        public function __construct(String $pattern, String $action, Mixed $parameters=null){
+        public function __construct(String $pattern, String $action, Array $methodParams=[], Array $controllerParams=[]){
             $this->pattern = $pattern;
-            $this->$action = $action;
-            $this->$parameters = ($parameters !== null ? $parameters : []);
+            $action = explode("/",$action);
+            if(count($action) < 2){ throw new Error("Invalid action supplied"); }
+            $this->nameController = $action[0];
+            $this->nameMethod = $action[1];
+            $this->methodParams = $methodParams;
+            $this->controllerParams = $controllerParams;
 
             $this->extractVariables();
 
@@ -76,11 +93,25 @@
          * @return Boolean Returns true if the route matches.
          */
         public function match(String $url){
-            echo $url."<br/>";
-            echo htmlspecialchars($this->bakeRegex())."<br/>";
             $preg = preg_match($this->bakeRegex(),$url,$matches);
-            print_r($matches);
             return $preg;
+        }
+
+        /**
+         * Executes the action of the route
+         * 
+         */
+        public function execute(){
+            $nameController = '\App\Controllers\\'.$this->nameController;
+            $nameMethod = $this->nameMethod;
+            $_URL = array();
+        
+            $methodParams = $this->methodParams;
+            array_unshift($methodParams,$_URL);
+
+            $this->controller = new $nameController($this->controllerParams);
+            call_user_func_array([$this->controller,$nameMethod],$methodParams);
+            $this->controller->view->render();
         }
 
         /**
@@ -89,7 +120,6 @@
          * @since 1.0.0
          * 
          */
-
         public function extractVariables(){
             preg_match_all('/{(\w+)}/i',$this->pattern,$matches);
             $variables = $matches[1];
