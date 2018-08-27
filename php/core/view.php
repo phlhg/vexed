@@ -9,9 +9,11 @@
 
         public $v = array();
         public $meta = null;
+        public $client = null;
 
-        public function __construct($name){
+        public function __construct($name,$client=null){
             $this->view = $name;
+            $this->client = $client;
             $this->meta = new Repository();
                 $this->meta->title = "";
                 $this->meta->title_appendix = Config::get("default_meta_title_appendix");

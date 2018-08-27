@@ -14,7 +14,7 @@
         }
 
         public function loggedIn(){
-            return false;
+            return true;
         }
 
         public function displayLogin(){
