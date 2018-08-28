@@ -4,11 +4,14 @@
 
     class Login extends \Core\Controller {
 
-        public function index($_URL,$msg=""){
-            $this->view = new \Core\View("login/index",$this->client);
+        public function index($_URL,$error="",$info="",$username="",$password=""){
+            $this->view = new \Core\View("login/index");
             $this->view->meta->title = "Login";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";
-            $this->view->v->login_form_msg = $msg;
+            $this->view->v->login_form_error = $error;
+            $this->view->v->login_form_info = $info;
+            $this->view->v->login_used_username = $username;
+            $this->view->v->login_used_password = $password;
         }
     }
 

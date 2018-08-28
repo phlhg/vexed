@@ -1,7 +1,12 @@
 <form action="" method="POST">
-    <input name="ph_login_username" type="text" placeholder="Nutzername oder E-Mail-Adresse"/>
-    <input name="ph_login_password" type="password" placeholder="Passwort" />
+    <input name="ph_login_username" required value="<?php echo $view->v->login_used_username; ?>" type="text" placeholder="Nutzername oder E-Mail"  pattern="([A-Za-z\._\-$]{3,25})|([a-z\.]+@[a-z]+\.[a-z]{1,4})" title="Gib eine gültige E-Mail oder eine gültigen Nutzernamen mit 3 bis 25 Zeichen ein." />
+    <input name="ph_login_password" required value="<?php echo $view->v->login_used_password; ?>" type="password" placeholder="Passwort" />
+    <?php if(!empty($view->v->login_form_error)){ ?>
+        <span class="ph_login_error"><i class="material-icons">error</i> <?php echo $view->v->login_form_error; ?></span>
+    <?php } ?>
+    <?php if(!empty($view->v->login_form_info)){ ?>
+        <span class="ph_login_info"><i class="material-icons">info</i> <?php echo $view->v->login_form_info; ?></span>
+    <?php } ?>
     <input type="submit" value="Anmelden"/>
-    <!--<label style="float: right;"><input name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>-->
-    <?php if(!empty($view->v->login_form_msg)){ ?><span class="ph_login_message"><?php echo $view->v->login_form_msg; ?></span><?php } ?>
+    <label style="float: right;"><input name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>
 </form>

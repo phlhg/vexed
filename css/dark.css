@@ -1,21 +1,14 @@
-header, HTML,.ph_login_center { 
-    background-color: rgb(30,30,30);
-}
-
-header {
-    border-color: rgb(80,80,80)
-}
 
 p, form input[type='text']:focus, form input[type='email']:focus, form input[type='password']:focus, form input[type='submit']:focus, form input[type='submit'] {
-    color: rgb(200,200,200);
+    color: #fff;
 }
 
 form input[type='text'], form input[type='email'], form input[type='password'], form input[type='submit'] { 
-    color: rgb(150,150,150); 
+    color: rgba(255,255,255,0.8); 
 }
 
 form input[type='submit'] {
-    border-color: rgb(200,200,200);
+    border-color: #fff;
 }
 
 header > nav > a {

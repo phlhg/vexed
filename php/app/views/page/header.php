@@ -36,5 +36,5 @@
     </head>
     <body>
         <!--MENU-->
-        <?php $this->get("page/menu"); ?>
+        <?php $view->get("page/menu"); ?>
         <!--CONTENT-->
