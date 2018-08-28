@@ -11,9 +11,9 @@
         public $meta = null;
         public $client = null;
 
-        public function __construct($name,$client=null){
+        public function __construct($name){
             $this->view = $name;
-            $this->client = $client;
+            $this->client = \App\Models\Client::get();
             $this->meta = new Repository();
                 $this->meta->title = "";
                 $this->meta->title_appendix = Config::get("default_meta_title_appendix");

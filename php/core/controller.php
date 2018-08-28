@@ -28,6 +28,6 @@
         */
         public function __construct(){
             $this->db = DBM::get("ph");
-            $this->client = new \App\Models\Client($this->db);
+            $this->client = \App\Models\Client::get();
         }
     }

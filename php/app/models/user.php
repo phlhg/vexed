@@ -6,5 +6,9 @@
 
         public $name = "phlhg";
 
+        public function __construct(...$args){
+            parent::__construct($args);
+        }
+
     }
 ?>
