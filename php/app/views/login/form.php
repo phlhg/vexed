@@ -8,5 +8,5 @@
         <span class="ph_login_info"><i class="material-icons">info</i> <?php echo $view->v->login_form_info; ?></span>
     <?php } ?>
     <input type="submit" value="Anmelden"/>
-    <label style="float: right;"><input name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>
+    <label style="float: right;"><input <?php echo ($view->v->login_used_remember ? 'checked="" ' : ''); ?>name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>
 </form>
