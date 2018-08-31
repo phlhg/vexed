@@ -10,6 +10,7 @@
         public $v = array();
         public $meta = null;
         public $client = null;
+        public $menu = "page/menu/default";
 
         public function __construct($name){
             $this->view = $name;
@@ -43,6 +44,8 @@
         public function render(){
             $this->clearCache();
             $this->getView("page/header");
+            if($this->meta->menu)
+                $this->getView($this->menu);
             $this->getView($this->view);
             $this->getView("page/footer");
         }

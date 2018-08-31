@@ -35,6 +35,3 @@
         <link href="/css/dark.css" rel="stylesheet" />
     </head>
     <body>
-        <!--MENU-->
-        <?php $view->get("page/menu"); ?>
-        <!--CONTENT-->
