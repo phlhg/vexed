@@ -1,4 +1,5 @@
 <form action="" method="POST">
+    <input name="ph_login_tkn" type="hidden" value="<?php echo \Core\Helpers\Token::get(); ?>" />
     <input name="ph_login_username" required value="<?php echo $view->v->login_used_username; ?>" type="text" placeholder="Nutzername oder E-Mail"  pattern="([A-Za-z\._\-$]{3,25})|([a-z\.]+@[a-z]+\.[a-z]{1,4})" title="Gib eine gültige E-Mail oder eine gültigen Nutzernamen mit 3 bis 25 Zeichen ein." />
     <input name="ph_login_password" required value="<?php echo $view->v->login_used_password; ?>" type="password" placeholder="Passwort" />
     <?php if(!empty($view->v->login_form_error)){ ?>
