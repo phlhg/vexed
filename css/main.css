@@ -9,17 +9,21 @@ header > .ph_logo_wrapper:after, header > nav > a:after, .ph_login_center {
 }
 
 form input[type='submit']:hover {
-    color: rgb(0, 160, 60) !important;
+    color: rgb(0, 150, 50) !important;
 }
 
 header > nav > a:hover, a, h1,h2,h3,h4,h5,h6, form input[type='submit']:hover {
-    color: rgb(0, 160, 60);
+    color: rgb(0, 150, 50);
 }
 
 /*-- REUSE -- */
 
 header > .ph_logo_wrapper:after, .ph_login_center, header {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.ph_login_meta a {
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 /*-- TRANSITIONS --*/
@@ -34,8 +38,8 @@ header > .ph_logo_wrapper:after, .ph_login_center, header {
 
 /*-- ELEMENT STYLE --*/
 
-::selection{ background-color: rgb(0, 160, 60); color: #fff; }
-::-moz-selection{ background-color: rgb(0, 160, 60); color: #fff; }
+::selection{ background-color: rgb(0, 150, 50); color: #fff; }
+::-moz-selection{ background-color: rgb(0, 150, 50); color: #fff; }
 
 h1,h2,h3,h4,h5,h6{ font-weight: bold; text-decoration: none; margin: 10px 0; text-align: left; }
 h1 { font-size: 70px; line-height: 80px; }
@@ -65,7 +69,9 @@ form input[type='text']:not(:placeholder-shown):invalid, form input[type='email'
 form input[type='submit'] { cursor: pointer; margin: 20px 0; width: auto; display: inline-block; border-radius: 25px; padding: 5px 20px; border: 2px solid; border-color: #fff; }
 form input[type='submit']:hover{ background-color: #fff;}
 
-form label { cursor: pointer; color: #fff; font-size: 14px; font-weight: 300;  vertical-align: top; margin-top: 20px; padding: 5px 0; line-height: 25px; }
+form label { cursor: pointer; display: block; color: #fff; font-size: 14px; font-weight: 300; margin-top: 20px; padding: 5px 0; line-height: 25px; }
+form label.inline { display: inline-block; vertical-align: top; }
+form label > a{ font-weight: normal; color: inherit; border-bottom: 1px solid #fff; }
 
 form input[type='checkbox'] { cursor: pointer; overflow: hidden; border: 0; position: relative; vertical-align: middle; display: inline-block; margin: 0 5px 0 0; border-radius: 20%; background-color: rgba(0,0,0,0.15); width: 24px; height: 24px; appearance: none; -moz-appearance: none; -webkit-appearance: none; -ms-appearance: none; }
 form input[type='checkbox']:after { transition: clip 0.25s ease-in; overflow: hidden; clip: rect(0px 0px 24px 0px); content: ''; background-image: url(/img/grafiken/check.png); background-repeat: no-repeat; background-position: center; background-size: 90%; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -73,14 +79,25 @@ form input[type='checkbox']:checked:after { transition: clip 0.25s ease-out; cli
 
 /*-- Material Icons --*/
 .material-icons { vertical-align: text-bottom; font-size: 24px; }
-
+.ph_big_icon { font-size: 30vh; display: block; text-align: center; }
 /*-- CLASS STYLE --*/
 section { overflow: hidden; position: relative; display: block; padding: 0; margin: 0; width: 100%; }
 
+section.fullscreen { height: 100%; }
 section.min-fullscreen { min-height: 100%; }
 section:first-of-type.min-fullscreen { min-height: calc(100% - 60px); top: 60px; }
+section.ph_separator { overflow: visible; white-space: nowrap;}
+
+.ph_separator_half { white-space: normal; vertical-align: top; display: inline-block; width: 50%; height: 100%; }
+.ph_separator_half > .ph_text { top: 50%; transform: translateY(-50%); max-width: 540px;}
+
+.ph_vertical_center { position: relative; display: block; top: 50%; transform: translateY(-50%); }
 
 .ph_text { position: relative; width: 100%; padding: 80px 20px; max-width: 1080px; margin: 0 auto; }
+.ph_text img { width: 100%; height: auto;}
+
+.ph_text_reference { display: block; position: relative; font-size: 14px; color: rgb(150,150,150); }
+.ph_text_reference > a { font-weight: normal; color: inherit; border-bottom: 1px solid rgb(150,150,150); }
 
 .ph_bg_image { z-index: -1; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-position: bottom; background-size: cover; }
 .ph_duotone { display: block; overflow: hidden; }
@@ -96,6 +113,10 @@ section:first-of-type.min-fullscreen { min-height: calc(100% - 60px); top: 60px;
 .ph_login_error > i, .ph_login_info > i { background: radial-gradient(#fff,#fff,transparent,transparent); border-radius: 50%; position: absolute; top: -2px; left: 0; }
 .ph_login_error > i { color: rgb(236, 43, 43); } 
 .ph_login_info > i { color: rgb(0, 89, 255); }
+
+.ph_login_meta { position: absolute; left: 0; bottom: 0; display: inline-block; padding: 10px 20px; }
+.ph_login_meta a { color: #fff; border-bottom: 2px solid transparent; font-weight: normal; font-size: 16px; margin-right: 15px; }
+.ph_login_meta a:hover { border-bottom: 2px solid #fff; }
 
 /* by https://stackoverflow.com/questions/32613896/how-to-hack-unsupported-mix-blend-mode-css-property */
 @supports not (mix-blend-mode: multiply) {

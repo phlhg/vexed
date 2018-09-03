@@ -99,7 +99,11 @@
          * @todo add functionality
          */
         public static function redirect(String $url){
+            header("Location: ".$url);
+        }
 
+        public static function reload(){
+            header("Refresh:0");
         }
 
 
