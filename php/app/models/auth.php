@@ -50,7 +50,7 @@
             $this->login->password = $password;
             $this->login->remember = $remember;
             //Check Token
-            if(!\Core\Helpers\Token::check($token)){ $this->login->info = "Ungültiger Token - Anfrage abgelehnt"; return; }
+            if(!\Helpers\Token::check($token)){ $this->login->info = "Ungültiger Token - Anfrage abgelehnt"; return; }
             //Check User
             $this->login->error = "Passwort oder Nutzername falsch"; return;
             $this->displayLogin();
