@@ -12,6 +12,9 @@
         public $client = null;
         public $menu = "page/menu/default";
 
+        public $scripts = [];
+        public $styles = [];
+
         public function __construct($name){
             $this->view = $name;
             $this->client = \App\Models\Client::get();
@@ -39,6 +42,14 @@
             array_pop($this->meta->keywords);
             array_unshift($this->meta->keywords,$keyword);
             return $this;
+        }
+
+        public function addScript($url){
+            $this->scripts[] = $url;
+        }
+
+        public function addStyle($url){
+            $this->styles[] = $url;
         }
 
         public function render(){

@@ -30,8 +30,14 @@
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <!-- STYLESHEETS -->
         <link href="/css/main.css" rel="stylesheet" />
         <link href="/css/dark.css" rel="stylesheet" />
+        <?php foreach($view->styles as $url){ ?>
+            <link href="<?=$url?>" rel="stylesheet" />
+        <?php } ?>
+        <!-- SCRIPTS -->
+        <script src="/js/main.js"></script>
     </head>
     <body>
