@@ -15,6 +15,8 @@
          * @var \PDO[] $repository */
         private static $repository = [];
 
+        private static $main = "";
+
         /**
          * Adds a database to the manager.
          * 
@@ -22,6 +24,7 @@
          * @param String[] $credentials Array with the credentials: Needed keys: 'host', 'database', 'username', 'password'
          */
         public static function add( String $identifier, Array $credentials){
+            if(count(Self::$repository) < 1){ Self::$main = $identifier; }
             $connection = new \PDO('mysql:host='.$credentials["host"].';dbname='.$credentials["database"],$credentials["username"],$credentials["password"]);
             $connection->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
             $connection->exec("set CHARSET UTF8");
@@ -53,6 +56,17 @@
         }
 
         /**
+         * Set the main Database-Connection
+         * 
+         * @param String $identifier Identifier of the main database in the manager.
+         * 
+         */
+        public static function setMain( String $identifier ){
+            if(!in_array($identifier,Self::$repository)){ die("The Connection \"".$identifier."\" can't be set as main connection, because it doesn't exists"); }
+            Self::$main = $identifier;
+        }
+
+        /**
          * Removes a connection
          * 
          * @param String $identifier Identifier of the connection to remove.
@@ -62,6 +76,15 @@
             unset(self::$repository[$identifier]);
         }
 
+        /**
+         * Returns the main connection
+         * 
+         * @return PDO Returns the main connection of the manager.
+         */
+        public static function getMain(){
+            return Self::get(Self::$main);
+        }
+        
     }
 
 ?>

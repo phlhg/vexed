@@ -30,6 +30,8 @@ $RECYCLE.BIN/
 
 #Database-Connections
 /php/db.php
+#Version
+/php/config/version
 
 #Log-files
 *.log

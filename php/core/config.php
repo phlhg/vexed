@@ -26,7 +26,7 @@
          */
         public static function load(){
             if(self::$loaded){ return false; }
-                require $_SERVER["DOCUMENT_ROOT"]."php/config.php";
+                require $_SERVER["DOCUMENT_ROOT"]."php/config/config.php";
                 self::$settings = $_CONFIG;
                 self::$loaded = true;
                 return true;
