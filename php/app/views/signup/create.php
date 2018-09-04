@@ -1,6 +1,7 @@
 <section class="fullscreen ph_separator">
     <div class="ph_separator_half">
         <div class="ph_text">
+            <div class="ph_progress_dots"><?php for($i = 0; $i < $view->v->signup_step_max; $i++){ ?><span <?=($i == $view->v->signup_step?'class="active" ':'')?>></span><?php } ?></div>
             <h1>Erstellen</h1>
             <p>Nachdem dein Account erstellt wurde, wirst du eine E-Mail mit einem Sicherheitscode erhalten um den Account zu bestätigen</p>
             <form action="" method="POST">

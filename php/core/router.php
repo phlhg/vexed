@@ -17,7 +17,7 @@
 
         /** Url the router currently searches a route for. 
          * @var String  $url */
-        public static $url = [];
+        public static $url = "";
 
         /** Current route taken by the router.
          * @var Route $route */
@@ -49,6 +49,7 @@
          * @return Boolean Returns true if a route has matched
          */
         public static function find(String $url){
+            self::$url = $url;
             self::$route = null;
             foreach(self::$repository as $route){
                 if($route->match($url)){
@@ -89,7 +90,7 @@
          */
         public static function setRoute(String $action, Array $methodParams=[], Array $controllerParams=[]){
             self::$route = new \Core\Route("",$action,$methodParams,$controllerParams);
-            self::$route->execute("");
+            self::$route->execute(Self::$url);
             return true;
         }
 

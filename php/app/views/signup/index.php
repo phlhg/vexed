@@ -1,6 +1,7 @@
 <section class="fullscreen ph_separator">
     <div class="ph_separator_half">
         <div class="ph_text">
+            <div class="ph_progress_dots"><?php for($i = 0; $i < $view->v->signup_step_max; $i++){ ?><span <?=($i == $view->v->signup_step?'class="active" ':'')?>></span><?php } ?></div>
             <h1>Aktivierungs<wbr/>code*</h1>
             <p>Bitte gib deinen Code ein oder scanne deinen QR-Code.</p>
             <form action="" method="POST">
