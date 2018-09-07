@@ -1,5 +1,5 @@
 <!--MENU-->
-<header>
+<header class="transparent-menu login-menu">
     <a href="/" class="ph_logo_wrapper">
         <img src="/img/icons/favicon.png" /><?php echo \Core\Config::get("application_title"); ?>
     </a>
