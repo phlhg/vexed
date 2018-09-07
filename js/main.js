@@ -1,4 +1,35 @@
-var lol = 1;
+
+$(document).ready(function(){
+    setTimeout(function(){
+        $("body").removeClass("ph_loading");
+    },200);
+
+    $("a[href]").on("click touchstart",function(e){
+        var href = $(this).attr("href");
+        if(href.startsWith("/") && !href.startsWith("//")){
+            e.preventDefault();
+            $("body").addClass("ph_loading");
+            setTimeout(function(href){
+                window.location.href = href;
+                setTimeout(function(){    
+                    $("body").removeClass("ph_loading");
+                },1000);
+            }.bind(null,href),600);
+        }
+    });
+
+    $("form").submit(function(e){
+        var form = this;
+        $("body").addClass("ph_loading");
+        setTimeout(function(href){
+            form.submit();
+            setTimeout(function(){    
+                $("body").removeClass("ph_loading");
+            },1000);
+        },600);
+        return false;
+    });
+});
 
 function structureCode(e,el,length,amount){
     amount = parseInt(amount);
@@ -12,5 +43,5 @@ function structureCode(e,el,length,amount){
     //by https://stackoverflow.com/questions/28779631/how-to-insert-space-after-four-characters-in-html-input
     var regex = new RegExp('[\\dA-Z]{1,'+length+'}','g')
     value = value.match(regex).join(" ");
-    el.value = value;
+    if(value){ el.value = value; }
 }
