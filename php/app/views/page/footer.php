@@ -1,6 +1,4 @@
     <!--FOOTER-->
-    <?php foreach($view->scripts as $url){ ?>
-        <script src="<?=$url?>"></script>
-    <?php } ?>
+    <script>(function(){ document.getElementsByTagName("body")[0].classList.add("ph_loading"); })();</script>
     </body>
 </html>

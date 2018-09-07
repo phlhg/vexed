@@ -38,6 +38,10 @@
             <link href="<?=$url?>" rel="stylesheet" />
         <?php } ?>
         <!-- SCRIPTS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="/js/main.js"></script>
+        <?php foreach($view->scripts as $url){ ?>
+        <script src="<?=$url?>"></script>
+    <?php } ?>
     </head>
     <body>
