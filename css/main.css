@@ -40,7 +40,7 @@ header > nav > a:hover, a, h1,h2,h3,h4,h5,h6, form input[type='submit']:hover {
     transition: all 250ms ease-in-out;
 }
 
-header > .ph_profile, .ph_logo_wrapper, .ph_text, .ph_bg_image, .ph_separator_half, .ph_login_meta, .ph_login_center, section, header > nav {
+header > .ph_profile, .ph_logo_wrapper, .ph_text, .ph_bg_image, .ph_login_bg, .ph_separator_half, .ph_login_meta, .ph_login_center, section, header > nav {
     transition: all 300ms ease-in-out;
 }
 
