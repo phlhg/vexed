@@ -11,12 +11,14 @@
         public $meta = null;
         public $client = null;
         public $menu = "page/menu/default";
+        public $template = "";
 
         public $scripts = [];
         public $styles = [];
 
-        public function __construct($name){
+        public function __construct($name,$template="page"){
             $this->view = $name;
+            $this->template = $template;
             $this->client = \App\Models\Client::get();
             $this->meta = new Repository();
                 $this->meta->title = "";
@@ -54,11 +56,7 @@
 
         public function render(){
             $this->clearCache();
-            $this->getView("page/header");
-            if($this->meta->menu)
-                $this->getView($this->menu);
-            $this->getView($this->view);
-            $this->getView("page/footer");
+            require $_SERVER["DOCUMENT_ROOT"]."php/app/templates/".strtolower($this->template).".php";
         }
 
         public function getRender(){
