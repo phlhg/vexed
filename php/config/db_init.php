@@ -13,6 +13,9 @@
             private int(1) DEFAULT 1,
             banned int(3) DEFAULT 0,
             description varchar(255),
+            security varchar(256),
+            created int(20),
+            conditions int(20),
             PRIMARY KEY(id)
         );
     ")->execute();

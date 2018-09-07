@@ -32,6 +32,8 @@ $RECYCLE.BIN/
 /php/db.php
 #Version
 /php/config/version
+#htpasswd
+.htpasswd
 
 #Log-files
 *.log

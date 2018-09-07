@@ -6,7 +6,7 @@
             <p>Wähle einen Nutzernamen, welcher dir gefällt. Wir überprüfen dann, ob er noch verfügbar ist.</p>
             <form action="" method="POST">
                 <input name="ph_signup_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
-                <input autofocus="" name="ph_signup_username" required value="<?=$view->v->signup_form_username?>" type="text" placeholder="Nutzername"  pattern="([A-Za-z\._\-$]{3,25})" title="Gib einen gültigen Nutzernamen mit 3 bis 25 Zeichen ein." />
+                <input autofocus="" name="ph_signup_username" required value="<?=$view->v->signup_form_username?>" type="text" placeholder="Nutzername"  pattern="([A-Za-z0-9\._\-$]{3,25})" title="Gib einen gültigen Nutzernamen mit 3 bis 25 Zeichen ein." />
                 <span <?php echo (empty($view->v->form_error) ? 'style="display: none;" ': ''); ?>class="ph_login_error"><i class="material-icons">error</i> <?=$view->v->form_error?></span>
                 <span <?php echo (empty($view->v->form_info) ? 'style="display: none;" ': ''); ?>class="ph_login_info"><i class="material-icons">info</i> <?=$view->v->form_info?></span>
                 <input type="submit" value="Weiter"/>

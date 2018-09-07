@@ -23,6 +23,19 @@
             }
         }
 
+        public function confirm($_URL){
+            $id = $_URL["id"];
+            $seccode = $_URL["seccode"];
+            $user = new \App\Models\User($id);
+            if($user->confirm($seccode)){
+                $this->view = new \Core\View("signup/confirm/success");
+                $this->view->meta->title = "Bestätigt";
+            } else {
+                $this->view = new \Core\View("signup/confirm/fail");
+                $this->view->meta->title = "Ungültig";
+            }
+        }
+
         public function advanced($_URL){
             $actcode = $_URL["actcode"];
             if($actcode != "ABCDEFGHI"){ \Core\Router::redirect("/signup/"); return; }
@@ -48,16 +61,29 @@
                 $this->view = new \Core\View("signup/create");
                 $this->view->meta->title = "Erstellen";
                 if(\Helpers\Post::exists("ph_signup_cond")){
-                    $signup_data["confirmed"] = true; 
-                    \Core\Router::redirect("/signup/".$actcode."/5/");
+                    if(\App\Models\User::create($signup_data["username"],$signup_data["password"],$signup_data["email"])){
+                        $signup_data["confirmed"] = true; 
+                        \Core\Router::redirect("/signup/".$actcode."/5/");
+                    } else {
+                        $this->view->v->form_error = "Leider konnte dein Profil nicht erstellt werden";
+                    }
                 }
             } else if($step == 3){
                 if($signup_data["username"] == "" OR $signup_data["password"] == ""){ \Core\Router::redirect("/signup/".$actcode."/2/"); }
                 $this->view = new \Core\View("signup/email");
                 $this->view->meta->title = "E-Mail-Adresse angeben";
                 if(\Helpers\Post::exists("ph_signup_email")){
-                    $signup_data["email"] = \Helpers\Post::get("ph_signup_email");
-                    \Core\Router::redirect("/signup/".$actcode."/4/");
+                    $email = \Helpers\Post::get("ph_signup_email");
+                    if(\Helpers\Pattern::email($email)){
+                        if(!\App\Models\UserService::existsEmail($email)){
+                            $signup_data["email"] = \Helpers\Post::get("ph_signup_email");
+                            \Core\Router::redirect("/signup/".$actcode."/4/");
+                        } else {
+                            $this->view->v->form_error = "Diese E-Mail-Adresse wird bereits verwendet";
+                        }
+                    } else {
+                        $this->view->v->form_error = "Bitte gib eine gültige E-Mail ein";
+                    }
                 }
             } else if($step == 2 && $signup_data["username"] != ""){
                 if($signup_data["username"] == ""){ \Core\Router::redirect("/signup/".$actcode."/1/"); }
@@ -73,7 +99,7 @@
                 $this->view->meta->title = "Nutzername wählen";
                 if(\Helpers\Post::exists("ph_signup_username")){
                     $username = \Helpers\Post::get("ph_signup_username");
-                    if($username != "phlhg"){
+                    if(!\App\Models\UserService::existsName($username)){
                         $signup_data["username"] = $username;
                         \Core\Router::redirect("/signup/".$actcode."/2/");
                     } else {

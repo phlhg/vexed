@@ -7,12 +7,8 @@
             <form action="" method="POST">
                 <input name="ph_signup_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
                 <input autofocus="" name="ph_signup_email" required value="<?=$view->v->signup_form_email?>" type="email" placeholder="E-Mail" title="Gib einen gültigen E-Mail an" />
-                <?php if(!empty($view->v->login_form_error)){ ?>
-                    <span class="ph_signup_error"><i class="material-icons">error</i> <?php echo $view->v->login_form_error; ?></span>
-                <?php } ?>
-                <?php if(!empty($view->v->login_form_info)){ ?>
-                    <span class="ph_signup_info"><i class="material-icons">info</i> <?php echo $view->v->login_form_info; ?></span>
-                <?php } ?>
+                <span <?php echo (empty($view->v->form_error) ? 'style="display: none;" ': ''); ?>class="ph_login_error"><i class="material-icons">error</i> <?=$view->v->form_error?></span>
+                <span <?php echo (empty($view->v->form_info) ? 'style="display: none;" ': ''); ?>class="ph_login_info"><i class="material-icons">info</i> <?=$view->v->form_info?></span>
                 <input type="submit" value="Weiter"/>
             </form>
             <span class="ph_text_reference">
