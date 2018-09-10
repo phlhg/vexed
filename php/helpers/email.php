@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Models;
+    namespace Helpers;
     use \Core\Config;
 
     class Email {
@@ -43,7 +43,6 @@
         public function send(){
             $this->generateHeader();
             $this->render();
-            file_put_contents($_SERVER["DOCUMENT_ROOT"]."php/files/logs/email/".uniqid().".html",$this->view->getRender());
             return mail($this->to,$this->subject,$this->view->getRender(),$this->header);
         }
         
