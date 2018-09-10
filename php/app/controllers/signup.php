@@ -61,11 +61,12 @@
                 $this->view = new \Core\View("signup/create");
                 $this->view->meta->title = "Erstellen";
                 if(\Helpers\Post::exists("ph_signup_cond")){
-                    if(\App\Models\User::create($signup_data["username"],$signup_data["password"],$signup_data["email"])){
+                    $creationService = new \App\Models\Account\CreatorService($signup_data["username"],$signup_data["password"],$signup_data["email"]);
+                    if($creationService->go()){
                         $signup_data["confirmed"] = true; 
                         \Core\Router::redirect("/signup/".$actcode."/5/");
                     } else {
-                        $this->view->v->form_error = "Leider konnte dein Profil nicht erstellt werden";
+                        $this->view->v->form_error = $creationService->errorMsg;
                     }
                 }
             } else if($step == 3){
@@ -74,7 +75,7 @@
                 $this->view->meta->title = "E-Mail-Adresse angeben";
                 if(\Helpers\Post::exists("ph_signup_email")){
                     $email = \Helpers\Post::get("ph_signup_email");
-                    if(\Helpers\Pattern::email($email)){
+                    if(\Helpers\Check::email($email)){
                         if(!\App\Models\UserService::existsEmail($email)){
                             $signup_data["email"] = \Helpers\Post::get("ph_signup_email");
                             \Core\Router::redirect("/signup/".$actcode."/4/");
