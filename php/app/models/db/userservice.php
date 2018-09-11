@@ -21,7 +21,7 @@
             $q = $this->db->prepare("SELECT id, username, email, admin, verified, private, banned, description, created, conditions FROM ph_users WHERE id = ? LIMIT 1");
             $q->execute(array($id));
             if($q->rowCount() < 1){ return false; }
-            return $q->fetchArray();
+            return $q->fetch();
         }
 
         /** 
