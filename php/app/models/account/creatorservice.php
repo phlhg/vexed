@@ -33,9 +33,6 @@
         /** Holds the generated security code */
         private $security = "";
 
-        /** Holds the hashed security code */
-        private $security_hashed = "";
-
         /** Holds wether there is an error or not.
          * @var Boolean $error */
         public $error = false;
