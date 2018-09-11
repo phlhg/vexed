@@ -15,8 +15,8 @@
                     return;
                 }
                 $actcode = str_replace(" ","",\Helpers\Post::get("ph_signup_actcode"));
-                if($actcode != "ABCDEFGHI"){
-                    $this->view->v->signup_form_error = "Ungültiger Aktivierungscode (".$actcode.")";
+                if(!\App\Models\Code::exists("signup",$actcode)){
+                    $this->view->v->signup_form_error = "Leider ist der Code ungültig oder gebraucht";
                     return;
                 }
                 \Core\Router::redirect("/signup/".$actcode."/1/");
@@ -38,7 +38,7 @@
 
         public function advanced($_URL){
             $actcode = $_URL["actcode"];
-            if($actcode != "ABCDEFGHI"){ \Core\Router::redirect("/signup/"); return; }
+            if(!\App\Models\Code::exists("signup",$actcode)){ \Core\Router::redirect("/signup/"); return; }
             $step = $_URL["step"];
             $signup_data = array(
                 "username" => "",
@@ -63,6 +63,7 @@
                 if(\Helpers\Post::exists("ph_signup_cond")){
                     $creationService = new \App\Models\Account\CreatorService($signup_data["username"],$signup_data["password"],$signup_data["email"]);
                     if($creationService->go()){
+                        \App\Models\Code::use("signup",$actcode);
                         $signup_data["confirmed"] = true; 
                         \Core\Router::redirect("/signup/".$actcode."/5/");
                     } else {

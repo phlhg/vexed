@@ -20,6 +20,21 @@
         );
     ")->execute();
 
+    //CODES
+
+    $db->prepare("
+        CREATE TABLE ph_codes (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            description varchar(255),
+            type varchar(50),
+            code varchar(21),
+            uses int(4) DEFAULT 1,
+            uses_init int(4) DEFAULT 1,
+            expires int(20),
+            PRIMARY KEY(id)
+        );
+    ")->execute();
+
     //USERSETTINGS
 
     $db->prepare("
