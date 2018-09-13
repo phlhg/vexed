@@ -5,7 +5,7 @@
     class Signup extends \Core\Controller {
 
         public function index($_URL){
-            $this->view = new \Core\View("signup/index");
+            $this->view("signup/index");
             $this->view->meta->title = "Registrieren";
             $this->view->meta->description = "Erstelle dir einen eigenen Account und finde deine Freunde";
             $this->view->v->signup_form_actcode = "";
@@ -28,10 +28,10 @@
             $seccode = $_URL["seccode"];
             $user = new \App\Models\User($id);
             if($user->confirm($seccode)){
-                $this->view = new \Core\View("signup/confirm/success");
+                $this->view("signup/confirm/success");
                 $this->view->meta->title = "Bestätigt";
             } else {
-                $this->view = new \Core\View("signup/confirm/fail");
+                $this->view("signup/confirm/fail");
                 $this->view->meta->title = "Ungültig";
             }
         }
@@ -53,12 +53,12 @@
 
             if($step == 5 && $signup_data["username"] != "" && $signup_data["email"] != "" && $signup_data["password"] != ""  && $signup_data["confirmed"] == true){ 
                 if($signup_data["username"] == "" OR $signup_data["email"] == "" OR $signup_data["password"] == "" OR $signup_data["confirmed"] == false){ \Core\Router::redirect("/signup/".$actcode."/4/"); }
-                $this->view = new \Core\View("signup/confirm");
+                $this->view("signup/confirm");
                 $this->view->meta->title = "Bestätigen";
                 $signup_data["complete"] = true;
             } else if($step == 4){
                 if($signup_data["username"] == "" OR $signup_data["email"] == "" OR $signup_data["password"] == ""){ \Core\Router::redirect("/signup/".$actcode."/3/"); }
-                $this->view = new \Core\View("signup/create");
+                $this->view("signup/create");
                 $this->view->meta->title = "Erstellen";
                 if(\Helpers\Post::exists("ph_signup_cond")){
                     $creationService = new \App\Models\Account\CreatorService($signup_data["username"],$signup_data["password"],$signup_data["email"]);
@@ -72,7 +72,7 @@
                 }
             } else if($step == 3){
                 if($signup_data["username"] == "" OR $signup_data["password"] == ""){ \Core\Router::redirect("/signup/".$actcode."/2/"); }
-                $this->view = new \Core\View("signup/email");
+                $this->view("signup/email");
                 $this->view->meta->title = "E-Mail-Adresse angeben";
                 if(\Helpers\Post::exists("ph_signup_email")){
                     $email = \Helpers\Post::get("ph_signup_email");
@@ -90,14 +90,14 @@
             } else if($step == 2 && $signup_data["username"] != ""){
                 if($signup_data["username"] == ""){ \Core\Router::redirect("/signup/".$actcode."/1/"); }
                 $step = 2;
-                $this->view = new \Core\View("signup/password");
+                $this->view("signup/password");
                 $this->view->meta->title = "Passwort wählen";
                 if(\Helpers\Post::exists("ph_signup_password") && \Helpers\Post::exists("ph_signup_password_confirm")){
                     $signup_data["password"] = \Helpers\Post::get("ph_signup_password");
                     \Core\Router::redirect("/signup/".$actcode."/3/");
                 }
             } else if($step == 1){
-                $this->view = new \Core\View("signup/username");
+                $this->view("signup/username");
                 $this->view->meta->title = "Nutzername wählen";
                 if(\Helpers\Post::exists("ph_signup_username")){
                     $username = \Helpers\Post::get("ph_signup_username");

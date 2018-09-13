@@ -5,7 +5,7 @@
     class Login extends \Core\Controller {
 
         public function index($_URL,$error="",$info="",$username="",$password="",$remember=false){
-            $this->view = new \Core\View("login/index");
+            $this->view("login/index");
             $this->view->meta->title = "Login";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";
             $this->view->v->page_menu_class = "transparent-menu login-menu";

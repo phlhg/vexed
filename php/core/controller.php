@@ -24,10 +24,17 @@
         public $view = null;
 
         /** 
-         * Constructor - Loads the database-connection and initializes the client-instance 
+         * Constructor - Loads the client-instance 
         */
         public function __construct(){
-            $this->db = DBM::get("ph");
             $this->client = \App\Models\Client::get();
+        }
+
+        /**
+         * Loads a new view to the controller.
+         * @param String $view Name of the view
+         */
+        public function view(String $view){
+            $this->view = new \Core\View($view);
         }
     }

@@ -1,25 +1,58 @@
 <?php
+    /**
+     * @author Philippe Hugo <info@phlhg.ch>
+     * @copyright Philippe Hugo
+     */
 
     namespace Core;
 
+    /**
+     * Manages the output rendering.
+     */
     class View {
 
+        /** Holds the name of the view
+         * @var String $view */
         private $view = "";
-        public $cache = "";
 
-        public $v = array();
+        /** Holds the name of the template
+         * @var String $template */
+        public $template = "html";
+
+        /** Holds the type of format
+         * @var String $format */
+        private $format = "text/html";
+
+        /** List of additional scripts to load 
+         * @var String[] $scripts */
+        private $scripts = [];
+
+        /** List of additional stylesheets to load
+         * @var String[] $styles */
+        private $styles = [];
+
+        /** Holds the variable repository
+         * @var Repository $v */
+        public $v = null;
+        
+        /** Holds the meta repository with additional info about the page
+         * @var Repository $v */
         public $meta = null;
+
+        /** Holds information about the client 
+         * @var \App\Model\Client $client */
         public $client = null;
-        public $menu = "core/html/menu/default";
-        public $template = "";
-        public $format = "text/html";
 
-        public $scripts = [];
-        public $styles = [];
+        /** Stores the output after the rendering.
+         * @var String $cache */
+        private $cache = "";
 
-        public function __construct($name,$template="html"){
+        /** 
+         * Create a new View
+         * @param String $name Name of the view
+         */
+        public function __construct(String $name){
             $this->view = $name;
-            $this->template = $template;
             $this->client = \App\Models\Client::get();
             $this->meta = new Repository();
                 $this->meta->title = "";
@@ -28,73 +61,129 @@
                 $this->meta->keywords = Config::get("default_meta_keywords");
                 $this->meta->menu = Config::get("default_meta_menu");
                 $this->meta->image = Config::get("default_meta_image");
-                $this->meta->themecolor = Config::get("default_meta_themecolor");
             $this->v = new Repository();
             return $this;
         }
 
+        //PAGE
+
+        /** 
+         * Formats the title with an appendix
+         * @return String Returns the page title with the title appendix
+        */
         public function getTitle(){
             return $this->meta->title.$this->meta->title_appendix;
         }
 
+        /**
+         * Formats the list of the stored keywords
+         * @return String Returns all stored keywords separated by a comma (" ,").
+         */
         public function getKeywords(){
             return implode(" ,",$this->meta->keywords);
         }
 
+        /**
+         * Adds a keyword to the storage.
+         * @param String $keyword A keyword for the page.
+         * @return Self Returns itself for chaining
+         */
         public function addKeywords($keyword){
             array_pop($this->meta->keywords);
             array_unshift($this->meta->keywords,$keyword);
             return $this;
         }
 
-        public function addScript($url){
-            $this->scripts[] = $url;
+        //INTERN
+
+        /**
+         * Sets the template of the view.
+         * @param String $template Name of the template
+         */
+        public function setTemplate($template){
+            $this->template = $template;
         }
 
-        public function addStyle($url){
-            $this->styles[] = $url;
-        }
-
+        /**
+         * Sets the format of the view.
+         * @param String $format A valid content-type (ex. 'text/html', 'image/png')
+         */
         public function setFormat($format){
             $this->format = $format;
         }
 
+        /**
+         * Adds an additional script to the page.
+         * @param String The url of the script to add.
+         */
+        public function addScript($url){
+            $this->scripts[] = $url;
+        }
+
+        /**
+         * Adds an additional stylesheet to the page.
+         * @param String The url of the stylesheet to add.
+         */
+        public function addStyle($url){
+            $this->styles[] = $url;
+        }
+
+        /**
+         * Renders the page out of the view.
+         */
         public function render(){
-            $this->clearCache();
+            $this->cache = "";
             require $_SERVER["DOCUMENT_ROOT"]."php/app/templates/".strtolower($this->template).".php";
         }
 
+        /**
+         * Sets the format of the page and returns the rendered page.
+         * @return String Returns the rendered page.
+         */
         public function getRender(){
             header("Content-Type: ".$this->format);
             return $this->cache;
         }
 
-        public function clearCache(){
-            $this->cache = "";
+        /**
+         * Retrieves the location of a view-file in the file-system.
+         * @param String $name Name of the view
+         * @return String Returns the Location of the view-file
+         */
+        private function getLocation($name){
+           return $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
         }
 
-        public function exists($name){
-            $file = $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
-            return is_readable($file);
+        /**
+         * Load a view-file internal and append it to the render.
+         * @param String $name Name of the view
+         */
+        private function getView($name){
+            if(!is_readable($this->getLocation($name))){ throw new \Core\Error('View-Datei "'.strtolower($name).'.php" could not be found'); }
+            $this->cache .= $this->load($this->getLocation($name));
         }
 
-        public function getView($name){
-            $file = $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
-            if(!is_readable($file)){ throw new \Core\Error('View-Datei "/php/app/views/'.strtolower($name).'.php" could not be found'); }
-            $this->cache .= $this->load($file);
-        }
-
+        /** Load a view-file external
+         * @param String $name Name of the view
+         */
         public function get($name){
-            $file = $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
-            if(!is_readable($file)){ throw new \Core\Error('View-Datei "/php/app/views/'.strtolower($name).'.php" could not be found'); }
+            if(!is_readable($this->getLocation($name))){ throw new \Core\Error('View-Datei "'.strtolower($name).'.php" could not be found'); }
             $view = $this;
-            require $file;
+            $_var = $this->v;
+            $_meta = $this->meta;
+            require $this->getLocation($name);
         }
 
+        /** Capture the output of a view-file.
+         * @param String $__file Location of the view-file
+         * @return String Returns the output of the file.
+        */
         private function load($__file){
             $content = "";
             $c = ob_start();
                 $view = $this;
+                $_var = $this->v;
+                $_meta = $this->meta;
                 require $__file;
             $content = ob_get_contents();
             ob_end_clean();
@@ -104,8 +193,14 @@
 
     }
 
+    /**
+     * Manages a list of elements.
+     */
     class Repository {
 
+        /**
+         * Returns the search property if it exists otherwise returns "[property]".
+         */
         public function __get($property){
             if(!isset($this->$property)){ return '['.$property.']'; }
             return $this->$property;
