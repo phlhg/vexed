@@ -15,4 +15,4 @@
         </a>
     </div><!--
 --></div></header>
-<?php $view->get("page/menu/nav"); ?>
+<?php $view->get("core/html/menu/nav"); ?>

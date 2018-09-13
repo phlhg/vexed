@@ -9,15 +9,13 @@
         public function __construct(){
             $this->check4Update();
             $this->loadRoutes();
-            
             \Helpers\Token::init();
         }
 
         private function loadRoutes(){
             require_once $_SERVER["DOCUMENT_ROOT"]."php/routes.php";
         }
-
-
+        
         public function render(){
             return \Core\Router::run(explode("?",$_SERVER["REQUEST_URI"])[0]);
         }

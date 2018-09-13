@@ -10,13 +10,14 @@
         public $v = array();
         public $meta = null;
         public $client = null;
-        public $menu = "page/menu/default";
+        public $menu = "core/html/menu/default";
         public $template = "";
+        public $format = "text/html";
 
         public $scripts = [];
         public $styles = [];
 
-        public function __construct($name,$template="page"){
+        public function __construct($name,$template="html"){
             $this->view = $name;
             $this->template = $template;
             $this->client = \App\Models\Client::get();
@@ -54,12 +55,17 @@
             $this->styles[] = $url;
         }
 
+        public function setFormat($format){
+            $this->format = $format;
+        }
+
         public function render(){
             $this->clearCache();
             require $_SERVER["DOCUMENT_ROOT"]."php/app/templates/".strtolower($this->template).".php";
         }
 
         public function getRender(){
+            header("Content-Type: ".$this->format);
             return $this->cache;
         }
 
