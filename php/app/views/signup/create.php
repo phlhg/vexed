@@ -7,8 +7,9 @@
             <form action="" method="POST">
                 <input name="ph_signup_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
                 <label><input autofocus="" type="checkbox" name="ph_signup_cond" required /> Ich akzeptiere die <a href="/conditions/">allgemeinen Nutzungsbedingungen</a></label>
-                <span <?php echo (empty($view->v->form_error) ? 'style="display: none;" ': ''); ?>class="ph_login_error"><i class="material-icons">error</i> <?=$view->v->form_error?></span>
-                <span <?php echo (empty($view->v->form_info) ? 'style="display: none;" ': ''); ?>class="ph_login_info"><i class="material-icons">info</i> <?=$view->v->form_info?></span>
+                <span class="ph_form_error"><?=(isset($view->v->form_error) ? $view->v->form_error : '')?></span>
+                <span class="ph_form_info"><?=(isset($view->v->form_info) ? $view->v->form_info : '')?></span>
+                <span class="ph_inline_submit">Let's go! <i class="material-icons">chevron_right</i></span>
                 <input type="submit" value="Erstellen"/>
             </form>
         </div>

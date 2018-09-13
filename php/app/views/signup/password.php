@@ -7,13 +7,12 @@
             <form action="" method="POST">
                 <input name="ph_signup_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
                 <input autofocus="" name="ph_signup_password" autocomplete="off" required value="" type="password" placeholder="Passwort" title="Wähle ein möglichst starkes Passwort" />
-                <input name="ph_signup_password_confirm" autocomplete="off" required value="" type="password" placeholder="Passwort bestätigen" title="Bestätige dein passwort" />
-                <?php if(!empty($view->v->login_form_error)){ ?>
-                    <span class="ph_signup_error"><i class="material-icons">error</i> <?php echo $view->v->login_form_error; ?></span>
-                <?php } ?>
-                <?php if(!empty($view->v->login_form_info)){ ?>
-                    <span class="ph_signup_info"><i class="material-icons">info</i> <?php echo $view->v->login_form_info; ?></span>
-                <?php } ?>
+                <div class="ph_form_input_submit">
+                    <input name="ph_signup_password_confirm" autocomplete="off" required value="" type="password" placeholder="Passwort bestätigen" title="Bestätige dein passwort" />
+                    <span class="ph_fi_submit"><i class="material-icons">chevron_right</i></span>
+                </div>
+                <span class="ph_form_error"><?=(isset($view->v->form_error) ? $view->v->form_error : '')?></span>
+                <span class="ph_form_info"><?=(isset($view->v->form_info) ? $view->v->form_info : '')?></span>
                 <input type="submit" value="Weiter"/>
             </form>
         </div>

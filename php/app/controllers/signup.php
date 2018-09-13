@@ -11,12 +11,12 @@
             $this->view->v->signup_form_actcode = "";
             if(\Helpers\Post::exists("ph_signup_actcode") && \Helpers\Post::exists("ph_signup_tkn")){
                 if(!\Helpers\Token::check(\Helpers\Post::get("ph_signup_tkn"))){ 
-                    $this->view->v->signup_form_info = "Ungültiger Token - Anfrage blockiert";
+                    $this->view->v->form_info = "Ungültiger Token - Anfrage blockiert";
                     return;
                 }
                 $actcode = str_replace(" ","",\Helpers\Post::get("ph_signup_actcode"));
                 if(!\App\Models\Code::exists("signup",$actcode)){
-                    $this->view->v->signup_form_error = "Leider ist der Code ungültig oder gebraucht";
+                    $this->view->v->form_error = "Leider ist der Code ungültig oder gebraucht";
                     return;
                 }
                 \Core\Router::redirect("/signup/".$actcode."/1/");

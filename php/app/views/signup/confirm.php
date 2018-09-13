@@ -8,6 +8,7 @@
                 <input name="ph_login_tkn" type="hidden" value="<?=\Helpers\Token::get()?>" />
                 <input type="hidden" name="ph_login_username" value="<?=$view->v->signup_form_username?>" />
                 <input type="hidden" name="ph_login_password" value="<?=$view->v->signup_form_password?>" />
+                <span class="ph_inline_submit">Login <i class="material-icons">chevron_right</i></span>
                 <input type="submit" value="Starten!"/>
             </form>
         </div>

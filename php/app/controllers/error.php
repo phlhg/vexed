@@ -7,7 +7,7 @@
         public function E404(){
             header("HTTP/1.0 404 Not Found");
             $this->view = new \Core\View("errors/404");
-            $this->view->meta->title = "404 Fehler";
+            $this->view->meta->title = "404 Seite nicht gefunden";
         }
 
         public function Exception($_URL,$details){

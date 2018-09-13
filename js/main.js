@@ -2,7 +2,10 @@
 $(document).ready(function(){
     setTimeout(function(){
         $("body").removeClass("ph_loading");
-    },200);
+        setTimeout(function(){
+            $("body").removeClass("ph_page_init");
+        },1000);
+    },400);
 
     $("a[href]").on("click touchstart",function(e){
         var href = $(this).attr("href");
@@ -14,7 +17,7 @@ $(document).ready(function(){
                 setTimeout(function(){    
                     $("body").removeClass("ph_loading");
                 },1000);
-            }.bind(null,href),600);
+            }.bind(null,href),900);
         }
     });
 
@@ -26,9 +29,35 @@ $(document).ready(function(){
             setTimeout(function(){    
                 $("body").removeClass("ph_loading");
             },1000);
-        },600);
+        },900);
         return false;
     });
+
+    $(".ph_mham").click(function(){
+        $("body").toggleClass("ph_menu_open");
+    });
+
+    $(".ph_menu_container .ph_menu_bg").click(function(){
+        $("body").removeClass("ph_menu_open");
+    });
+
+    $(".ph_fi_submit, .ph_inline_submit").click(function(){
+        // .valid() by https://stackoverflow.com/questions/6658937/how-to-check-if-a-form-is-valid-programmatically-using-jquery-validation-plugin
+        var form = $(this).closest("form");
+        var error = $(form).find(".ph_form_error");
+        $(error).text("");
+        $(form).find("input").removeClass("invalid");
+        if($(form)[0].checkValidity()){
+            $(form).submit();
+        } else {
+            $(form).find("input").each(function(){
+                if(!$(this)[0].checkValidity()){
+                    $(this).addClass("invalid");
+                }
+            });
+            $(error).text("Bitte fülle das Formular korrekt aus");
+        }
+    })
 });
 
 function structureCode(e,el,length,amount){
