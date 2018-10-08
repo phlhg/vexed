@@ -2,6 +2,14 @@
 <html>
     <!--HEAD-->
     <head>
+        <!--     _____________    ______      ___    ______________ 
+                /  ____   /  /   /  /  /     /  /   /  /  ________/ 
+               /  /___/  /  /___/  /  /     /  /___/  /  / ______   _________  ___
+              /  _______/  ____   /  /     /  ____   /  / /__   /  /  ___/  /_/  / 
+             /  /      /  /   /  /  /_____/  /   /  /  /____/  /__/  /__/  __   /
+            /__/      /__/   /__/________/__/   /__/__________/__/_____/__/ /__/
+            (c) Philippe Hugo 2019 - phlhg.ch
+        -->
         <title><?php echo $view->getTitle(); ?></title>
         <!--// META //-->
         <meta charset="UTF-8"/>
@@ -27,6 +35,10 @@
         <meta name="application-name" content="<?php echo \Core\Config::get("application_title"); ?>">
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <!--// LINKS //-->
+        <!--FAVICON-->
+        <link href="/img/icons/favicon.png" type="image/x-icon" rel="shortcut icon">
+        <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="/img/icons/favicon.png"rel="apple-touch-icon" />
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,7 +50,7 @@
             <link href="<?=$url?>" rel="stylesheet" />
         <?php } ?>
         <!-- SCRIPTS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/js/jquery.js"></script>
         <script src="/js/main.js"></script>
         <?php foreach($view->scripts as $url){ ?>
         <script src="<?=$url?>"></script>
