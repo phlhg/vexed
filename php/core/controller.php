@@ -27,7 +27,7 @@
          * Constructor - Loads the client-instance 
         */
         public function __construct(){
-            $this->client = \App\Models\Client::get();
+            $this->client = \App::$client;
         }
 
         /**

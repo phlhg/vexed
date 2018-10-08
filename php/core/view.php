@@ -53,7 +53,7 @@
          */
         public function __construct(String $name){
             $this->view = $name;
-            $this->client = \App\Models\Client::get();
+            $this->client = \App::$client;
             $this->meta = new Repository();
                 $this->meta->title = "";
                 $this->meta->title_appendix = Config::get("default_meta_title_appendix");

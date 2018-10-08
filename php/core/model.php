@@ -6,7 +6,8 @@
 
         protected $db = null;
 
-        public function __construct(){
-            $this->db = DBM::get("ph");
+        public function __construct(\PDO $db = null){
+            if(!isset($db)){ $db = DBM::getMain(); }
+            $this->db = $db;
         }
     }
