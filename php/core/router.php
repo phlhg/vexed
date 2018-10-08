@@ -13,15 +13,15 @@
     class Router {
         /** Contains all registered routes in an array
          * @var Route[] $repository */
-        public static $repository = [];
+        public $repository = [];
 
         /** Url the router currently searches a route for. 
          * @var String  $url */
-        public static $url = "";
+        public $url = "";
 
         /** Current route taken by the router.
          * @var Route $route */
-        public static $route = null;
+        public $route = null;
 
         /**
          * Sets a route for a pattern and stores it in the repository
@@ -34,9 +34,9 @@
          * @param Mixed[]   $methodParams Array of parameters for the method in the controller
          * @param Mixed[]   $controllerParams Array of parameters for the constructor of the controller
          */
-        public static function set(String $pattern, String $action, Array $methodParams=[], Array $controllerParams=[]){
-            self::$repository[] = new Route($pattern,$action,$methodParams,$controllerParams);
-            return end(self::$repository);
+        public function set(String $pattern, String $action, Array $methodParams=[], Array $controllerParams=[]){
+            $this->repository[] = new Route($pattern,$action,$methodParams,$controllerParams);
+            return end($this->repository);
         }
 
         /**
@@ -48,13 +48,13 @@
          * 
          * @return Boolean Returns true if a route has matched
          */
-        public static function find(String $url){
-            self::$url = $url;
-            self::$route = null;
-            foreach(self::$repository as $route){
+        public function find(String $url){
+            $this->url = $url;
+            $this->route = null;
+            foreach($this->repository as $route){
                 if($route->match($url)){
-                    self::$route = $route;
-                        self::$route->execute($url);
+                    $this->route = $route;
+                        $this->route->execute($url);
                     return true;
                 }
             }
@@ -68,15 +68,15 @@
          * 
          * @return String Returns the content of the matching route
          */
-        public static function run(String $url){
+        public function run(String $url){
             try {
-                self::find($url);
+                $this->find($url);
             } catch( \Core\Error $e){
-                self::setRoute("Error/Exception",[$e->getDetails()]);
+                $this->setRoute("Error/Exception",[$e->getDetails()]);
             }
 
-            if(self::$route == null){ self::setRoute("Error/E404"); }
-            return self::$route->controller->view->getRender();
+            if($this->route == null){ $this->setRoute("Error/E404"); }
+            return $this->route->controller->view->getRender();
         }
 
         /**
@@ -88,9 +88,10 @@
          * @param Mixed[]   $methodParams Array of parameters for the method in the controller
          * @param Mixed[]   $controllerParams Array of parameters for the constructor of the controller
          */
-        public static function setRoute(String $action, Array $methodParams=[], Array $controllerParams=[]){
-            self::$route = new \Core\Route("",$action,$methodParams,$controllerParams);
-            self::$route->execute(Self::$url);
+        public function setRoute(String $action, Array $methodParams=[], Array $controllerParams=[]){
+            $this->route = null;
+            $this->route = new \Core\Route("",$action,$methodParams,$controllerParams);
+            $this->route->execute($this->url);
             return true;
         }
 
@@ -99,11 +100,11 @@
          * 
          * @todo add functionality
          */
-        public static function redirect(String $url){
+        public function redirect(String $url){
             header("Location: ".$url);
         }
 
-        public static function reload(){
+        public function reload(){
             header("Refresh:0");
         }
 
