@@ -15,6 +15,12 @@
             $this->view->v->login_used_password = $password;
             $this->view->v->login_used_remember = $remember;
         }
+
+        public function logout($_URL){
+            $this->view("out");
+            $this->client->logout();
+            \App::$router->redirect("/");
+        }
     }
 
 ?>
