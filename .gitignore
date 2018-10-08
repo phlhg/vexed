@@ -37,3 +37,4 @@ $RECYCLE.BIN/
 
 #Log-files
 *.log
+/js/jquery.js
