@@ -1,1 +1,4 @@
 https://codereview.stackexchange.com/questions/61864/user-authentication-system 17.08.18
+https://stackoverflow.com/questions/27389929/should-mvc-models-be-static 15.09.18
+https://stackoverflow.com/questions/5863870/how-should-a-model-be-structured-in-mvc 23.09.18
+https://stackoverflow.com/questions/16176990/proper-repository-pattern-design-in-php 07.10.18

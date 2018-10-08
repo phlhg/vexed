@@ -14,7 +14,7 @@
             return $_SESSION[Self::$prefix.$id];
         }
 
-        public static function set($id,$value,$expire=24,$path="/"){
+        public static function set($id,$value){
             $_SESSION[Self::$prefix.$id] = $value;
         }
 
