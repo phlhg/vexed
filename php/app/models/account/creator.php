@@ -12,7 +12,7 @@
     /**
      * Handles the process of creating a new Account.
      */
-    class CreatorService extends \Core\Model {
+    class Creator extends \Core\Model {
 
         /** Holds the returned id.
          * @var Int $id */
@@ -50,18 +50,18 @@
          * @param String $password The unhashed password to login with.
          * @param String $email The email to get in touch with the user.
          */
-        public function __construct($name,$password,$email){
-            $this->userService = new \App\Models\DB\UserService();
-            $this->name = $name;
-            $this->email = $email;
-            $this->password = \Helpers\Hash::ph1($password);
+        public function __construct(){
+            $this->userService = new \App\Models\Storage\Sql\UserService();
         }
 
         /**
          * Start process of creation.
          * @return Boolean Returns True if the creation was successfull otherwise returns False.
          */
-        public function go(){
+        public function create($name,$password,$email){
+            $this->name = $name;
+            $this->email = $email;
+            $this->password = password_hash($password,PASSWORD_DEFAULT);
             return $this->checkInput();
         }
 
@@ -73,8 +73,8 @@
             if(!\Helpers\Check::username($this->name)){ return $this->error("Nutzername enthält ungültige Zeichen"); }
             if(!\Helpers\Check::email($this->email)){ return $this->error("Ungültige E-Mail-Adresse [1]"); }
             if(!\Helpers\Check::emailProvider($this->email)){ return $this->error("Ungültige E-Mail-Adresse [2]"); }
-            if($this->userService->existsName($this->name)){ return $this->error("Dieser Name ist leider vergeben"); }
-            if($this->userService->existsEmail($this->email)){ return $this->error("Diese E-Mail-Adresse ist bereits mit einem Konto verknüpft"); }
+            if($this->existsName($this->name)){ return $this->error("Dieser Name ist leider vergeben"); }
+            if($this->existsEmail($this->email)){ return $this->error("Diese E-Mail-Adresse ist bereits mit einem Konto verknüpft"); }
             return $this->addToDb();
         }
 
@@ -112,6 +112,14 @@
                 return $this->error("Leider ist ein Problem mit dem Mail-Service aufgetreten - Versuche es erneut.");
             };
             return true;
+        }
+
+        public function existsName($name){
+            return $this->userService->existsName($name);
+        }
+
+        public function existsEmail($email){
+            return $this->userService->existsEmail($email);
         }
 
         /**

@@ -4,7 +4,7 @@
      * @copyright Philippe Hugo
      */
 
-    namespace App\Models\DB;
+    namespace App\Models\Storage\Sql;
 
     /**
      * Manages access to to the code table.

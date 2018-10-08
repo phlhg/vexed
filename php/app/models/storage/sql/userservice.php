@@ -4,14 +4,14 @@
      * @copyright Philippe Hugo
      */
 
-    namespace App\Models\DB;
+    namespace App\Models\Storage\Sql;
     use \Helpers\Hash;
 
     /**
      * Manages access to to the users table.
      */
     class UserService extends \Core\Model {
-
+        
         /**
          * Returns non security related information about the user.
          * @param Int $id The id of the user.
@@ -110,11 +110,59 @@
          * @return Boolean Returns True if the credentials are correct otherwise False.
          */
         public function checkCredentials($id,$password){
-            $password = \Helpers\Hash::ph1($password);
-            $q = $this->db->prepare("SELECT id FROM ph_users WHERE id = ? AND password = ? LIMIT 1");
-            $q->execute(array($id,$password));
+            $q = $this->db->prepare("SELECT password FROM ph_users WHERE id = ? LIMIT 1");
+            $q->execute(array($id));
             if($q->rowCount() < 1){ return false; }
-            return true;
+            $hash = $q->fetchObject()->password;
+            return password_verify($password,$hash);
+        }
+
+        /**
+         * Checks if the the user is banned.
+         * @param Int $id The id of the user.
+         * @return Bool Returns true if the user is banned.
+         */
+        public function isBanned($id){
+            $q = $this->db->prepare("SELECT id FROM ph_users WHERE id = ? AND banned != '0' LIMIT 1");
+            $q->execute(array($id));
+            if($q->rowCount() > 0){ return true; }
+            return false;
+        }
+
+        /**
+         * Checks if the user is confirmed.
+         * @param Int $id The id of the user.
+         * @return Bool Returns true if the user is confirmed.
+         */
+        public function isConfirmed($id){
+            $q = $this->db->prepare("SELECT id FROM ph_users WHERE id = ? AND confirmed = '1' LIMIT 1");
+            $q->execute(array($id));
+            if($q->rowCount() > 0){ return true; }
+            return false;
+        }
+
+        /**
+         * Gets the id from the username.
+         * @param String $name Name of the user
+         * @return Int Returns the id of the user on success otherwise returns -1
+         */
+        public function getIdByName($name){
+            $q = $this->db->prepare("SELECT id FROM ph_users WHERE username = ? LIMIT 1");
+            $q->execute(array($name));
+            if($q->rowCount() < 1){ return -1; }
+            return intval($q->fetchObject()->id);
+        }
+
+        /**
+         * Gets the id from the email.
+         * @param String $email Email of the user
+         * @return Int Returns the id of the user on success otherwise returns -1
+         */
+        public function getIdByEmail($email){
+            $q = $this->db->prepare("SELECT id FROM ph_users WHERE email = ? LIMIT 1");
+            $q->execute(array($email));
+            if($q->rowCount() < 1){ return -1; }
+            return intval($q->fetchObject()->email);
         }
 
 

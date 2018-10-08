@@ -27,7 +27,7 @@
         public $expires = 0;
 
         public function __construct($id){
-            $this->codeService = new \App\Models\DB\CodeService();
+            $this->codeService = new \App\Models\Storage\Sql\CodeService();
             $data = $this->codeService->get($id);
             if($data == false){ return; }
             $this->exists = true;
@@ -41,12 +41,12 @@
         }
 
         public static function exists($type,$code){
-            $codeService = new \App\Models\DB\CodeService();
+            $codeService = new \App\Models\Storage\Sql\CodeService();
             return $codeService->exists($type,$code);
         }
 
         public static function use($type,$code){
-            $codeService = new \App\Models\DB\CodeService();
+            $codeService = new \App\Models\Storage\Sql\CodeService();
             return $codeService->use($type,$code);
         }
         
