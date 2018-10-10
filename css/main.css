@@ -1,6 +1,6 @@
 * { background-repeat: no-repeat; font-weight: normal; padding: 0; margin: 0; font-family: 'Oxygen', sans-serif; -webkit-apperance: none; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 body { color: #fff; height: 100%; width: 100%; opacity: 1; overflow-x: hidden; }
-HTML { height: 100%; width: 100%; background-color: rgb(25,25,25); }
+HTML { height: 100%; width: 100%; background-color: rgb(10,10,10); }
 
 /*--- MAIN COLOR ---*/
 
@@ -36,7 +36,7 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+.ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
     transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
@@ -46,8 +46,8 @@ header .ph_menur, .ph_page_loader:after, .ph_page_loader, .ph_menu_container:aft
 
 /*-- ELEMENT STYLE --*/
 
-::selection{ background-color: rgb(255, 210, 0); color: rgb(25,25,25); }
-::-moz-selection{ background-color: rgb(255, 210, 0); color: rgb(25,25,25); }
+::selection{ background-color: rgb(255, 210, 0); color: rgb(10,10,10); }
+::-moz-selection{ background-color: rgb(255, 210, 0); color: rgb(10,10,10); }
 
 h1,h2,h3,h4,h5,h6{ font-weight: bold; text-decoration: none; margin: 20px 0; text-align: inherit; }
 h1 { font-size: 80px; line-height: 75px; }
@@ -55,7 +55,7 @@ h2 { font-size: 60px; line-height: 55px; }
 h3 { font-size: 30px; line-height: 40px; }
 h4 { font-size: 25px; line-height: 35px; color: #fff;}
 
-.ph_head_deposited { padding: 10px 100px; margin-left: 15px; color: rgb(25,25,25); display: inline-block; position: relative; font-size: 150px; line-height: 160px;}
+.ph_head_deposited { padding: 10px 100px; margin-left: 15px; color: rgb(10,10,10); display: inline-block; position: relative; font-size: 150px; line-height: 160px;}
 .ph_head_deposited:after { content: ''; transform: skewX(-10deg); z-index: -1; position: absolute; left: 0; top: 0; height: 100%; width: 100%; }
 
 a{ text-decoration: none; font-weight: bold; transition: all 0.2s; -webkit-transition: all 0.2s; -o-transition: all 0.2s; -moz-transition: all 0.2s; }
@@ -75,10 +75,10 @@ header .ph_menur { position: absolute; top: 0; right: 0; z-index: +5; height: 10
 header.login-menu .ph_menur { transform: translateY(-100%); opacity: 0;}
 .ph_menu_open header.login-menu .ph_menur { transition-delay: 800ms; transform: translateY(0); opacity: 1;}
 
-header .ph_menu_point { color: rgb(25,25,25); line-height: 44px; text-align: center; border-radius: 50%; background-color: rgb(255,210,0); overflow:hidden; position: relative; display: inline-block; vertical-align: top; width: 44px; height: 44px; margin: 10px 10px 10px 0; background-size: cover; background-position: center; }
+header .ph_menu_point { color: rgb(10,10,10); line-height: 44px; text-align: center; border-radius: 50%; background-color: rgb(255,210,0); overflow:hidden; position: relative; display: inline-block; vertical-align: top; width: 44px; height: 44px; margin: 10px 10px 10px 0; background-size: cover; background-position: center; }
 header .ph_menu_point img { z-index: +1; width: 120%; object-fit: cover; height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 
-header .ph_logo_wrapper { display: inline-block; vertical-align: top; position: relative; height: 100%; line-height: 60px; font-size: 18px; font-style: normal; margin-left: 10px; padding-left: 80px; padding-right: 30px; color: rgb(25,25,25);}
+header .ph_logo_wrapper { display: inline-block; vertical-align: top; position: relative; height: 100%; line-height: 60px; font-size: 18px; font-style: normal; margin-left: 10px; padding-left: 80px; padding-right: 30px; color: rgb(10,10,10);}
 header .ph_logo_wrapper:after { z-index: -1; content: ''; position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform: skewX(-10deg);}
 header .ph_logo_wrapper img { position: absolute; display: block; height: 30px; left: 30px; top: 15px;  }
 
@@ -103,7 +103,7 @@ header .ph_mham:hover > span:nth-child(3) { width: 100%; }
 header.transparent-menu { background-color: transparent; }
 header.transparent-menu:after { display: none; }
 
-.ph_menu_container { transition-delay: 500ms; transform: translateY(-100%); position: fixed; top: 0; left: 0; width: 100%; background-color: rgb(25,25,25);  height: 100%; z-index: 90; }
+.ph_menu_container { transition-delay: 500ms; transform: translateY(-100%); position: fixed; top: 0; left: 0; width: 100%; background-color: rgb(10,10,10);  height: 100%; z-index: 90; }
 .ph_menu_container:after { transition-delay: 700ms; content: ''; position: absolute; top: 100%; left: 0; width:100%; height: 0; background-color: rgb(255,210,0); }
 .ph_menu_open .ph_menu_container:after { transition-delay: 500ms; height: 100%; }
 .ph_menu_open .ph_menu_container { transition-delay: 700ms; visibility: visible; transform: translateY(0); }
@@ -118,7 +118,7 @@ header.transparent-menu:after { display: none; }
 .ph_menu_container .ph_menu_inner nav a > span:hover { color: rgb(255, 210, 0); }
 .ph_menu_container .ph_menu_inner nav a > span:hover:after { width: 100%; }
 
-.ph_page_loader { visibility: hidden; transition-duration: 0; position: fixed; top: 0; right: 0; width: 100%; transform: translateX(100%); height: 100%; z-index: 200; background-color: rgb(25,25,25); background-image: url(/img/icons/favicon_reverse.png); background-size: 70px;  background-position: center; background-repeat: no-repeat; }
+.ph_page_loader { visibility: hidden; transition-duration: 0; position: fixed; top: 0; right: 0; width: 100%; transform: translateX(100%); height: 100%; z-index: 200; background-color: rgb(10,10,10); background-image: url(/img/icons/favicon_reverse.png); background-size: 70px;  background-position: center; background-repeat: no-repeat; }
 .ph_page_loader:after { content: ''; position: absolute; display: block; width: 0; height: 100%; position: absolute; right: 100%; top: 0; background-color: rgb(255,210,0); }
 .ph_loading .ph_page_loader { visibility: visible; transition-delay: 550ms; transform: translateX(0); }
 .ph_loading .ph_page_loader:after { transition-delay: 350ms; width: 100%; }
@@ -145,7 +145,7 @@ form input[type='text']:not(:placeholder-shown), form input[type='email']:not(:p
 form input[type='text'].invalid, form input[type='email'].invalid, form input[type='password'].invalid, form input[type='text']:not(:placeholder-shown):invalid, form input[type='email']:not(:placeholder-shown):invalid, form input[type='password']:not(:placeholder-shown):invalid { outline: 0; border: none; border-right: 2px solid rgb(255, 53, 27); }
 
 form .ph_form_input_submit { position: relative; display: block; width: 100%; height: auto; }
-form .ph_fi_submit, form .ph_inline_submit { border-radius: 50%; text-align: center; cursor: pointer; position: absolute; display: block; line-height: 35px; color: rgb(25,25,25); height: 31px; width: 31px; background-color: rgb(255,210,0); right: 0; top: 12px; }
+form .ph_fi_submit, form .ph_inline_submit { border-radius: 50%; text-align: center; cursor: pointer; position: absolute; display: block; line-height: 35px; color: rgb(10,10,10); height: 31px; width: 31px; background-color: rgb(255,210,0); right: 0; top: 12px; }
 
 form .ph_inline_submit { margin-top: 20px; cursor: pointer; position: relative; padding: 0 20px; height: 40px; width: unset; display: inline-block; min-width: 40px; line-height: 40px; border-radius: 20px; }
 form .ph_inline_submit i { vertical-align: middle; }
@@ -168,7 +168,9 @@ form input[type='checkbox']:checked:after { transition: clip 0.25s ease-out; cli
 section { overflow: hidden; position: relative; display: block; padding: 0; margin: 0; width: 100%; }
 
 section.fullscreen { height: 100%; }
+section.halfscreen { height: 50%; }
 section.min-fullscreen { min-height: 100%; }
+section.min-halfscreen { min-height: 50%; }
 section:first-of-type.min-fullscreen { min-height: calc(100% - 80px); top: 80px; }
 section:first-of-type.fullscreen { height: calc(100% - 80px); top: 80px; }
 
@@ -233,6 +235,53 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_button:after { z-index: -1; content: ''; display: block; position: absolute; bottom: 0; left: 0;  width: 0; height: 3px; background-color: rgb(255,210,0); }
 .ph_button:hover:after { width: 100%; }
 .ph_button:hover { color: rgb(255,210,0); }
+
+/*-- PROFILE --*/
+.ph_profile_bg { position: absolute; left: 0; top: 0; height: 100%; width: 100%; overflow: hidden; }
+.ph_profile_bg > div { background-size: cover; background-position: center; filter: blur(10px); width: calc(100% + 20px); height: calc(100% + 20px); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ph_profile_bg_overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; opacity: 0.5;}
+
+.ph_profileh_content { margin: 140px 0 120px 0; z-index: +10; position: relative; left: 50%; display: inline-block; padding: 20px 240px 20px 20px; width: 100%; max-width: 1080px; transform: translate(-50%,0); }
+.ph_profileh_content h1 { color: #fff; }
+.ph_profileh_content .pb { position: absolute; right: 20px; border-radius: 50%; top: 20px; height: 200px; width: 200px; }
+
+.ph_profileh_content > .main { position: relative; display: block; width: 100%;}
+.ph_profileh_content > .main > h1 { height: auto; overflow-x: hidden; overflow-y: hidden; text-overflow: ''; white-space: nowrap; font-size: 100px; line-height: 125px; margin: 0; }
+.ph_profileh_content > .main > .meta { display: block; }
+.ph_profileh_content > .main > .meta > span { font-size: 12px; display: inline-block; margin: 0 10px 0 0; }
+.ph_profileh_content > .main > .meta > span > strong { font-size: 18px; color: rgb(255,210,0); font-weight: bold; display: inline-block; margin: 0 4px 0 0; }
+
+.ph_profileh_content > .ph_profile_submenu { cursor: pointer; margin-top: 65px; position: relative; display: flex; flex-wrap: nowrap; justify-content: space-between; align-content: stretch; width: calc(100% + 220px); }
+.ph_profileh_content > .ph_profile_submenu > span { top: 0; display: block; width: calc(100% / 3 - (40px / 3)); position: relative;}
+
+.ph_button_v2 { color: #fff; overflow: hidden; line-height: 24px; border-radius: 4px; text-align: center; display: block; position: relative; padding: 10px 20px; line-height: 24px; background-color: rgba(255,255,255,0.1); }
+.ph_button_v2:hover { background-color: rgba(255,255,255,0.15); }
+.ph_button_v2 i { line-height: 20px; margin: 0 2px; }
+.ph_button_v2.i { padding-right: 34px; }
+.ph_button_v2.i > .icon { position: absolute; right: 10px; top: 10px; height: 24px; width: 24px; border-radius: 2px; background-size: cover; display: block; }
+
+.ph_button_v2.multi { display: flex; padding: 0; justify-content: space-between; background-color: transparent; }
+.ph_button_v2.multi:hover { background-color: transparent; }
+.ph_button_v2.multi > .sect { color: #fff; border-radius: 4px; display: block; position: relative; padding: 10px 10px; background-color: rgba(255,255,255,0.1); }
+.ph_button_v2.multi > .sect:hover { background-color: rgba(255,255,255,0.15); }
+
+.ph_button_v2.multi.triple > .sect { width: calc(100% / 3 - (20px / 3)); }
+
+.ph_fs_button { border-radius: 4px; width: 100%; background-color: rgb(255,210,0); height: 44px; font-weight: bold; color: #0a0a0a;display: block; position: relative; padding: 10px 20px;}
+.ph_fs_button span { text-align: center; line-height: 24px; font-weight: bold; opacity: 0; transform: scale(0,0); display: block; width: calc(100% - 40px); position: absolute; left: 20px; top: 10px; }
+.ph_fs_button span i { line-height: 20px;}
+.ph_fs_button .follow { opacity: 1; transform: scale(1,1);}
+.ph_fs_button:hover .follow { opacity: 0; transform: scale(0,0);}
+.ph_fs_button:hover .following { opacity: 1; transform: scale(1,1); }
+
+.ph_profileh_content > .description { display: block; line-height: 25px; letter-spacing: 1px; margin: 20px 0 0 0; }
+
+/*-- POSTS --*/
+.ph_post_list { display: block; width: 100%; }
+.ph_post_list > .container { display: block; position: relative; column-count: 3; column-gap: 20px; }
+.ph_post_list a.post { max-height: 500px; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgb(5,5,5); }
+.ph_post_list a.post .main { position: relative; top: 0; left: 0; height: auto; width: 100%; }
+.ph_post_list a.post .meta { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); }
 
 /*#######################################
     Media Queries
