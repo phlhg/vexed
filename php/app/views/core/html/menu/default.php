@@ -6,6 +6,7 @@
     --><div class="ph_menur">
         <a href="/search/" class="ph_menu_point msearch"><i class="material-icons">search</i></a>
         <?php if($view->client->isLoggedIn()){ ?>
+            <a href="/create/" class="ph_menu_point mcreate"><i class="material-icons">add</i></a>
             <a href="/p/<?=$view->client->name?>" class="ph_menu_point mprofile"><img src="http://games.phlhg.ch/img/profile/pb.php?i=1" /></a>
         <?php } else { ?>
             <a href="/" class="ph_menu_point mprofile no_user"><i class="material-icons">person_outline</i></a>
