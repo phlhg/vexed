@@ -18,7 +18,7 @@
          * @return Mixed[]|Boolean Returns an Array with information about the user if the user was found otherwise False.
          */
         public function get(Int $id){
-            $q = $this->db->prepare("SELECT id, username, email, admin, verified, private, banned, description, created, conditions FROM ph_users WHERE id = ? LIMIT 1");
+            $q = $this->db->prepare("SELECT id, username, email, admin, verified, private, banned, description, website, created, conditions FROM ph_users WHERE id = ? LIMIT 1");
             $q->execute(array($id));
             if($q->rowCount() < 1){ return false; }
             return $q->fetch();

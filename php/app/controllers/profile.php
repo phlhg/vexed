@@ -7,8 +7,60 @@
         public function index($_URL){
             $this->client->authenticate();
             $this->view("profile/index");
-            $this->view->meta->title = $_URL["username"];
-            $this->view->meta->description = "Nutzernamen, Passwort und eine E-Mail-Adresse - Mehr braucht es nicht um ein Profil zu erstellen";
+            $profile = \App\Models\Account\User::getByName($_URL["username"]);
+        
+            $this->view->meta->title = $profile->displayName;
+            $this->view->meta->description = $profile->description;
+
+            $this->view->v->profile = $profile;
+        }
+
+        public function pb($_URL){
+            $this->client->authenticate();
+            $this->view("out");
+            $this->view->setTemplate("none");
+            $id = $_URL["id"];
+            if(!isset($id) && is_int($id)){ $id = 0; }
+            $folder = $_SERVER["DOCUMENT_ROOT"].'php/files/img/profile/pb/';
+            $filetype = false;
+            $filetypes = ["jpg","png","gif"];
+            foreach($filetypes as $type){
+                if(is_readable($folder.$id.'.'.$type)){
+                    $filetype = $type;
+                }
+            }
+
+            if($filetype !== false){
+                $this->view->setFormat("image/".$filetype);
+                $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
+            } else {
+                $this->view->setFormat("image/jpg");
+                $this->view->v->content = file_get_contents($folder."0.jpg");
+            }
+        }
+
+        public function pbg($_URL){
+            $this->client->authenticate();
+            $this->view("out");
+            $this->view->setTemplate("none");
+            $id = $_URL["id"];
+            if(!isset($id) && is_int($id)){ $id = 0; }
+            $folder = $_SERVER["DOCUMENT_ROOT"].'php/files/img/profile/bg/';
+            $filetype = false;
+            $filetypes = ["jpg","png"];
+            foreach($filetypes as $type){
+                if(is_readable($folder.$id.'.'.$type)){
+                    $filetype = $type;
+                }
+            }
+
+            if($filetype !== false){
+                $this->view->setFormat("image/".$filetype);
+                $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
+            } else {
+                $this->view->setFormat("image/jpg");
+                $this->view->v->content = file_get_contents($folder."0.jpg");
+            }
         }
     }
 

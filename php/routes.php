@@ -13,5 +13,6 @@
 
     //PROFILE
     App::$router->set("/p/{username}/","Profile/index")->where(["username" => 'nickname']);
-
+    App::$router->set("/img/pb/{id}/","Profile/pb")->where(["id" => "int"]);
+    App::$router->set("/img/pbg/{id}/","Profile/pbg")->where(["id" => "int"]);
 ?>

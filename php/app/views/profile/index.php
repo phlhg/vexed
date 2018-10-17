@@ -1,18 +1,17 @@
 <section style="overflow: visible;" class="min-halfscreen transparent-menu">
-    <div class="ph_profile_bg"><div style="background-image: url(http://games.phlhg.ch/img/profile/pb.php?i=1);"></div></div>
+    <div class="ph_profile_bg"><div style="background-image: url(/img/pbg/<?=$_var->profile->id?>);"></div></div>
     <div class="ph_profile_bg_overlay"></div>
     <div class="ph_profileh_content">
-        <img src="http://games.phlhg.ch/img/profile/pb.php?i=1" class="pb"/>
+        <img src="/img/pb/<?=$_var->profile->id?>" class="pb"/>
         <div class="main">
-            <span class="meta"><span><strong>ADMIN</strong></span><span><strong>21</strong>Beiträge</span><span><strong>54</strong>Abonnenten</span><span><strong>42</strong>abonniert</span></span>
-            <h1><!--tobinator--><?php echo $view->client->name; ?></h1>
+            <span class="meta">
+                <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
+                <span><strong><?=$_var->profile->posts?></strong>Beiträge</span>
+                <span><strong><?=$_var->profile->followers?></strong>Abonnenten</span>
+                <span><strong><?=$_var->profile->following?></strong>abonniert</span></span>
+            <h1><?=$_var->profile->name?></h1>
         </div>
-        <span class="description">
-            18y - ZURICH<br/>
-            📷 Photography<br/>
-            💻 Coding & Design<br/>
-            🎇 Developer of this site
-        </span>
+        <span class="description"><?=$_var->profile->description?></span>
         <div class="ph_profile_submenu">
             <span>
                 <div class="ph_fs_button">
@@ -21,18 +20,32 @@
                     <span class="following">Abonniert <i class="material-icons">done</i></span>
                 </div>
             </span>
-            <span>
-                <a href="http://phlhg.ch/" target="_blank" class="ph_button_v2 i">
-                    <span class="icon"><i class="material-icons">public</i></span> phlhg.ch
-                </a>
-            </span>
-            <span>
-                <div class="ph_button_v2 multi triple">
-                    <a class="sect" href="/chat/"><i class="material-icons">chat_bubble_outline</i></a>
-                    <span class="sect" ><i class="material-icons">block</i></span>
-                    <span class="sect" ><i class="material-icons">outlined_flag</i></span>
-                </div>
-            </span>
+            <?php if($_var->profile->website != ''){ ?>
+                <span>
+                    <a href="http://<?=$_var->profile->website?>" target="_blank" class="ph_button_v2 i">
+                        <span class="icon"><i class="material-icons">public</i></span> <?=$_var->profile->website?>
+                    </a>
+                </span>
+                <span>
+                    <div class="ph_button_v2 multi triple">
+                        <a class="sect" href="/chat/"><i class="material-icons">chat_bubble_outline</i></a>
+                        <span class="sect" ><i class="material-icons">block</i></span>
+                        <span class="sect" ><i class="material-icons">outlined_flag</i></span>
+                    </div>
+                </span>
+            <?php } else { ?>
+                <span>
+                    <a href="/chat/" target="_blank" class="ph_button_v2 i">
+                        Nachricht <i class="material-icons">chat_bubble_outline</i>
+                    </a>
+                </span>
+                <span>
+                    <div class="ph_button_v2 multi double">
+                        <span class="sect" ><i class="material-icons">block</i></span>
+                        <span class="sect" ><i class="material-icons">outlined_flag</i></span>
+                    </div>
+                </span>
+            <?php } ?>
         </div>
     </div>
 </section>

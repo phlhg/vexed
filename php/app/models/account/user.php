@@ -11,11 +11,15 @@
         public $name = "guest";
         public $displayName = "Gast";
         protected $email = "";
-        protected $admin = "";
+        public $admin = "";
         protected $verified = false;
         protected $private = false;
         protected $banned = false;
         public $description = "";
+        public $website = "";
+        public $followers = 0;
+        public $following = 0;
+        public $posts = 0;
         public $created = 0;
         public $conditions = 0;
 
@@ -43,12 +47,18 @@
             $this->private = ($info["private"] == "1" ? true : false);
             $this->banned = intval($info["banned"]);
             $this->description = $info["description"];
+            $this->website = $info["website"];
             $this->created = intval($info["created"]);
             $this->conditions = intval($info["conditions"]);
         }
 
+        public static function getByName($name){
+            $userService = new \App\Models\Storage\Sql\UserService();
+            return new Self($userService->getIdByName($name));
+        }
+
         public static function hasEmail($email){
-            $userService = new \App\Models\DB\UserService();
+            $userService = new \App\Models\Storage\Sql\UserService();
             return $userService->existsEmail($email);
         }
     }
