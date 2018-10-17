@@ -38,3 +38,7 @@ $RECYCLE.BIN/
 #Log-files
 *.log
 /js/jquery.js
+
+#profile-pictures
+php/files/img/profile/pb/*.jpg
+php/files/img/profile/bg/*.jpg
