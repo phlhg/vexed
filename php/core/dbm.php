@@ -27,7 +27,7 @@
             if(count(Self::$repository) < 1){ Self::$main = $identifier; }
             $connection = new \PDO('mysql:host='.$credentials["host"].';dbname='.$credentials["database"],$credentials["username"],$credentials["password"]);
             $connection->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
-            $connection->exec("set CHARSET UTF8");
+            //$connection->exec("set CHARSET UTF8");
             self::$repository[$identifier] = $connection;
         }
 
