@@ -138,11 +138,13 @@ header.transparent-menu:after { display: none; }
 
 form { color: rgb(200,200,200); display: block; position: relative; margin-bottom: 20px;}
 input::-webkit-input-placeholder { color: inherit; }
-form input[type='text'], form input[type='email'], form input[type='password'], form input[type='submit'] { outline: none; color: #fff; margin: 20px 0 0 -20px; background-color: rgba(0,0,0,0.25); font-size: 16px; line-height: 25px; width: calc(100% + 40px); padding: 15px 18px 15px 20px; outline: 0; border: 0; border-right: 2px solid transparent; border-radius: 0; -webkit-apperance: none; display: block; position: relative;}
-form input[type='text']:focus, form input[type='email']:focus, form input[type='password']:focus { color: #fff; }
+form textarea, form input[type='file'], form input[type='text'], form input[type='email'], form input[type='password'], form input[type='submit'] { outline: none; color: #fff; margin: 20px 0 0 -20px; background-color: rgba(0,0,0,0.25); font-size: 16px; line-height: 25px; width: calc(100% + 40px); padding: 15px 18px 15px 20px; outline: 0; border: 0; border-right: 2px solid transparent; border-radius: 0; -webkit-apperance: none; display: block; position: relative;}
+form textarea:focus, form input[type='text']:focus, form input[type='email']:focus, form input[type='password']:focus { color: #fff; }
 form input:invalid { box-shadow: none; outline: 0; }
-form input[type='text']:not(:placeholder-shown), form input[type='email']:not(:placeholder-shown), form input[type='password']:not(:placeholder-shown) { color: #fff; }
-form input[type='text'].invalid, form input[type='email'].invalid, form input[type='password'].invalid, form input[type='text']:not(:placeholder-shown):invalid, form input[type='email']:not(:placeholder-shown):invalid, form input[type='password']:not(:placeholder-shown):invalid { outline: 0; border: none; border-right: 2px solid rgb(255, 53, 27); }
+form textarea:not(:placeholder-shown), form input[type='text']:not(:placeholder-shown), form input[type='email']:not(:placeholder-shown), form input[type='password']:not(:placeholder-shown) { color: #fff; }
+form textarea.invalid, form input[type='text'].invalid, form input[type='email'].invalid, form input[type='password'].invalid, form textarea:not(:placeholder-shown):invalid, form input[type='text']:not(:placeholder-shown):invalid, form input[type='email']:not(:placeholder-shown):invalid, form input[type='password']:not(:placeholder-shown):invalid { outline: 0; border: none; border-right: 2px solid rgb(255, 53, 27); }
+
+form textarea { resize: vertical; min-height: 150px; max-height: 400px; min-width: calc(100% + 40px); max-width:  0; }
 
 form .ph_form_input_submit { position: relative; display: block; width: 100%; height: auto; }
 form .ph_fi_submit, form .ph_inline_submit { border-radius: 50%; text-align: center; cursor: pointer; position: absolute; display: block; line-height: 35px; color: rgb(10,10,10); height: 31px; width: 31px; background-color: rgb(255,210,0); right: 0; top: 12px; }
@@ -151,6 +153,7 @@ form .ph_inline_submit { margin-top: 20px; cursor: pointer; position: relative; 
 form .ph_inline_submit i { vertical-align: middle; }
 
 form input[type='submit'] { display: none; }
+form input[type='submit'].visible { display: block; }
 
 form label { cursor: pointer; display: block; color: inherit; font-size: 14px; font-weight: 300; margin-top: 20px; padding: 5px 0; line-height: 25px; }
 form label.inline { display: inline-block; vertical-align: top; }
@@ -278,6 +281,15 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_profileh_content > .description { display: block; line-height: 25px; letter-spacing: 1px; margin: 20px 0 0 0; }
 
 /*-- POSTS --*/
+.ph_post { position: relative; display: block; }
+.ph_post > .ph_post_media { position: relative; display: block; }
+.ph_post > .ph_post_info { position: relative; display: block; padding: 10px 10px 10px 80px; }
+.ph_post > .ph_post_info > .profile { position: absolute; display: block; left: 0; top: 0; width: 80px; height: auto; padding: 10px 10px 0 0; }
+.ph_post > .ph_post_info > .profile > .pb { border-radius: 50%; }
+.ph_post > .ph_post_info > .profile > .name { padding: 5px 0; overflow: hidden; text-overflow: ellipsis;  letter-spacing: 1px;  color: #c8c8c8; display: block; text-align: center; font-size: 12px;  }
+.ph_post > .ph_post_info > .description { position: relative; display: block; }
+.ph_post > .ph_post_info > textarea.description { resize: vertical; border: none; max-height: 400px; min-height: 200px; background-color: transparent; color: #fff; width: 100%; display: inline-block;  }
+
 .ph_post_list { display: block; width: 100%; }
 .ph_post_list > .container { display: block; position: relative; column-count: 3; column-gap: 20px; }
 .ph_post_list a.post { max-height: 500px; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgb(5,5,5); }
