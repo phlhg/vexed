@@ -15,6 +15,8 @@
             $this->authservice = new \App\Models\Auth\AuthService();
             if($this->authservice->identified){
                 $this->id = $this->authservice->id;
+                //WORKAROUND: To have access to the id of the client from within the constructor of the user class.
+                \App::$client = (object)["id" => $this->id];
                 parent::__construct($this->id);
             }
         }
