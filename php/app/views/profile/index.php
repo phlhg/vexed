@@ -7,14 +7,26 @@
             <span class="meta">
                 <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
                 <span><strong><?=$_var->profile->posts?></strong>Beiträge</span>
-                <span><strong><?=$_var->profile->followers?></strong>Abonnenten</span>
-                <span><strong><?=$_var->profile->following?></strong>abonniert</span></span>
+                <a href="/p/<?=$_var->profile->name?>/followers/"><strong><?=count($_var->profile->followers)?></strong>Abonnenten</a>
+                <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</span></a>
             <h1><?=$_var->profile->name?></h1>
         </div>
-        <span class="description"><?=$_var->profile->description?></span>
+        <span class="description"><?=$_var->profile->description?>
+        </span>
         <div class="ph_profile_submenu">
             <span>
-                <div class="ph_fs_button">
+                <?php if($_var->profile->relation == \App\Models\Account\Relation::ME){ ?>
+                    <div class="ph_fs_button SELF">
+                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::STRANGER){ ?>
+                    <div class="ph_fs_button STRANGER">
+                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::REQUESTED){ ?>
+                    <div class="ph_fs_button REQUESTED">
+                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::FOLLOWING){ ?>
+                    <div class="ph_fs_button FOLLOWING">
+                <?php } else { ?>   
+                    <div class="ph_fs_button">
+                <?php } ?>
+                    <span class="edit">Bearbeiten <i class="material-icons">create</i></span>
                     <span class="follow">Folgen <i class="material-icons">add</i></span>
                     <span class="requested">Angefragt <i class="material-icons">send</i></span>
                     <span class="following">Abonniert <i class="material-icons">done</i></span>
