@@ -276,7 +276,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_fs_button span i { line-height: 20px;}
 .ph_fs_button.STRANGER .follow { opacity: 1; transform: scale(1,1);}
 .ph_fs_button.REQUESTED .requested { opacity: 1; transform: scale(1,1);}
-.ph_fs_button.FOLLOWING .folllowing { opacity: 1; transform: scale(1,1);}
+.ph_fs_button.FOLLOWING .following { opacity: 1; transform: scale(1,1);}
 .ph_fs_button.SELF .edit { opacity: 1; transform: scale(1,1);}
 
 .ph_profileh_content > .description { display: block; line-height: 25px; letter-spacing: 1px; margin: 20px 0 0 0; }
