@@ -18,4 +18,8 @@
 
     //POST
     App::$router->set("/create/","CreatePost/index");
+
+    //AJAX
+    App::$router->set("/ajax/f/{function}/","Ajax/switch");
+
 ?>

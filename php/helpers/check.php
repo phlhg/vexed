@@ -20,6 +20,13 @@
             return checkdnsrr($ex[1]);
         }
 
+        public function isAjax(){
+            if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) OR $_SERVER['HTTP_X_REQUESTED_WITH'] != "XMLHttpRequest"){
+                return false;
+            }
+            return true;
+        }
+
     }
 
 ?>
