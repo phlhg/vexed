@@ -4,6 +4,12 @@
 
     class Error extends \Core\Controller {
 
+        public function E403(){
+            header("HTTP/1.0 403 Forbidden");
+            $this->view("errors/403");
+            $this->view->meta->title = "403 Keine Berechtigung";
+        }
+
         public function E404(){
             header("HTTP/1.0 404 Not Found");
             $this->view("errors/404");
