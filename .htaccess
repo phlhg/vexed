@@ -30,4 +30,6 @@ RewriteRule ^.*[^/]$ /$0/ [L,R]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php?_url=%{REQUEST_FILENAME}
+RewriteRule ^(.*)$ index.php?_url=%{REQUEST_FILENAME} [QSA,L]
+
+#by https://stackoverflow.com/questions/6656413/htaccess-get-variables-are-lost-in-rewrite
