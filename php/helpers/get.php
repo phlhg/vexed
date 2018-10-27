@@ -2,19 +2,19 @@
 
     namespace Helpers;
 
-    Class Post {
+    Class Get {
 
         /**
-         * Checks if an POST element exists.
+         * Checks if an GET element exists.
          * @param String $id Identifier of the element.
          * @return Boolean Returns True if the elemant exists.
          */
         public static function exists($id){
-            return isset($_POST[$id]);
+            return isset($_GET[$id]);
         }
 
         /**
-         * Checks if multiple POST elements exist.
+         * Checks if multiple GET elements exist.
          * @param String[] $array Array of identifiers to check.
          * @return Boolean Returns True if all elements exist.
          */
@@ -27,12 +27,12 @@
         }
 
         /**
-         * Returns a POST element.
+         * Returns a GET element.
          * @param String $id Identifier of the element.
          * @return Mixed Returns the content of the element.
          */
         public static function get($id){
-            return $_POST[$id];
+            return $_GET[$id];
         }
 
     }
