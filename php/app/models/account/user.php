@@ -8,6 +8,8 @@
         protected $userservice;
         protected $relationservice;
 
+        public $exists = false;
+
         public $id = -1;
         public $name = "guest";
         public $displayName = "Gast";
@@ -37,6 +39,7 @@
         public function load(){
             $info = $this->userservice->get($this->id);
             if($info == false){ return false; }
+            $this->exists = true;
             $this->name = $info["username"];
             $this->displayName = $this->name;
             $this->email = $info["email"];
@@ -65,31 +68,57 @@
 
         /**
          * Follows this user.
+         * @return Boolean Returns True if the user is followed.
          */
         public function follow(){
             if($this->relation != \App\Models\Account\Relation::STRANGER){ return false; }
             if($this->private){
                 $this->relationservice->create($this->id);
-                return $this->relationservice->setState($this->id,\App\Models\Account\Relation::REQUESTED);
+                if(!$this->relationservice->setState($this->id,\App\Models\Account\Relation::REQUESTED)){
+                    $this->relation = \App\Models\Account\Relation::STRANGER;
+                    return false;
+                }
+                $this->relation = \App\Models\Account\Relation::REQUESTED;
+                return true;
             } else {
                 $this->relationservice->create($this->id);
-                return $this->relationservice->setState($this->id,\App\Models\Account\Relation::FOLLOWING);
+                if(!$this->relationservice->setState($this->id,\App\Models\Account\Relation::FOLLOWING)){
+                    $this->relation = \App\Models\Account\Relation::STRANGER;
+                    return false;
+                }
+                $this->relation = \App\Models\Account\Relation::FOLLOWING;
+                return true;
             }
         }
 
         /**
          * Unfollows this user.
+         * @return Boolean Returns True if the user was unfollowed.
          */
         public function unfollow(){
             if($this->relation != \App\Models\Account\Relation::FOLLOWING){ return false; }
-            return $this->relationservice->delete($this->id);
+            if(!$this->relationservice->delete($this->id)){
+                $this->relation = \App\Models\Account\Relation::FOLLOWING;
+                return false;
+            }
+            $this->relation = \App\Models\Account\Relation::STRANGER;
+            return true;
         }
 
         /**
          * Accepts a relation request from this user.
+         * @return Boolean Returns True if the request was accepted.
          */
-        public function accept(){
+        public function relationAccept(){
             return $this->relationservice->accept($this->id);
+        }
+
+        /**
+         * Denies a relation request from this user.
+         * @return Boolean Returns True if the request was denied.
+         */
+        public function relationDeny(){
+            return $this->relationservice->deny($this->id);
         }
 
         /* STATIC */

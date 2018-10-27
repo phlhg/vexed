@@ -55,7 +55,7 @@
         public function create(Int $follow){
             $client = \App::$client->id;
             $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_relations (user, follow, state, date) VALUES (?,?,?,?);");
-            $q->execute([$client,$follow,\App\Models\Account\Relation::REQUESTED,time()]);
+            if(!$q->execute([$client,$follow,\App\Models\Account\Relation::REQUESTED,time()])){ return false; }
             if($q->rowCount() < 1){ return false; }
             return true;
         }
@@ -68,7 +68,7 @@
         public function setState(Int $follow, Int $state){
             $client = \App::$client->id;
             $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? LIMIT 1");
-            $q->execute([$state,$client,$follow]);
+            if(!$q->execute([$state,$client,$follow])){ return false; };
             if($q->rowCount() < 1){ return false; }
             return true;
         }
@@ -87,6 +87,19 @@
         }
 
         /**
+         * Denies a request.
+         * @param Int $follower The id of the denied follower.
+         * @return Boolean Returns True on success otherwise False.
+         */
+        public function deny(Int $follower){
+            $client = \App::$client->id;
+            $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? AND state = ? LIMIT 1");
+            $q->execute([\App\Models\Account\Relation::STRANGER,$follower,$client,\App\Models\Account\Relation::REQUESTED]);
+            if($q->rowCount() < 1){ return false; }
+            return true;
+        }
+
+        /**
          * Deletes a Relation.
          * @param Int $follow The id of the user to unfollow.
          * @return Boolean Returns True if the Friendship was deleted otherwise false.
@@ -94,9 +107,9 @@
         public function delete(Int $follow){
             $client = \App::$client->id;
             $q = $this->db->prepare("DELETE FROM ph_relations WHERE user = ? AND follow = ? LIMIT 1");
-            $q->execute([$client,$follow]);
+            if(!$q->execute([$client,$follow])){ return false; }
             if($q->rowCount() < 1){ return false; }
-            return $q->fetch();
+            return true;
         }
 
     }
