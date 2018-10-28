@@ -11,9 +11,43 @@
         
             $this->view->meta->title = $profile->displayName;
             $this->view->meta->description = $profile->description;
-
+            $this->view->v->p_site = false;
             $this->view->v->profile = $profile;
         }
+
+        public function switch($_URL){
+            $this->client->authenticate();
+            $profile = \App\Models\Account\User::getByName($_URL["username"]);
+            if(!isset($_URL["site"])){ return \App::$router->redirect("/p/".$_URL["username"]."/"); }
+            switch($_URL["site"]){
+                case "followers":
+                    $this->followers($profile);
+                    break;
+                case "subscriptions":
+                    $this->subscriptions($profile);
+                    break;
+                default:
+                    return \App::$router->redirect("/p/".$_URL["username"]."/");
+            }
+            $this->view->meta->title = $profile->displayName;
+            $this->view->meta->description = $profile->description;
+            $this->view->v->p_site = true;
+            $this->view->v->profile = $profile;
+        }
+
+        /* SITES */
+
+        private function followers($profile){
+            $this->view("profile/followers");
+            $this->view->v->p_site_title = "Abonnenten";
+        }
+
+        private function subscriptions($profile){
+            $this->view("profile/subscriptions");
+            $this->view->v->p_site_title = "Abonniert";
+        }
+
+        /* IMAGES */
 
         public function pb($_URL){
             $this->client->authenticate();
