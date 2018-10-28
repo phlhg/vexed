@@ -19,7 +19,7 @@
         public function getFollowers(Int $user){
             $q = \Core\DBM::getMain()->prepare("SELECT user FROM ph_relations WHERE follow = ?");
             if(!$q->execute([$user])){ return []; };
-            return $q->fetchAll();
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
         /**
@@ -30,7 +30,7 @@
         public function getSubscriptions(Int $user){
             $q = \Core\DBM::getMain()->prepare("SELECT follow FROM ph_relations WHERE user = ?");
             if(!$q->execute([$user])){ return []; };
-            return $q->fetchAll();
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
         /**
