@@ -17,8 +17,8 @@
          * @return Mixed[] Returns an array with ids on success otherwise an empty array.
          */
         public function getFollowers(Int $user){
-            $q = \Core\DBM::getMain()->prepare("SELECT user FROM ph_relations WHERE follow = ?");
-            if(!$q->execute([$user])){ return []; };
+            $q = \Core\DBM::getMain()->prepare("SELECT user FROM ph_relations WHERE follow = ? AND state = ?");
+            if(!$q->execute([$user,\App\Models\Account\Relation::FOLLOWING])){ return []; };
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
@@ -28,8 +28,8 @@
          * @return Mixed[] Returns an array with ids on success otherwise an empty array.
          */
         public function getSubscriptions(Int $user){
-            $q = \Core\DBM::getMain()->prepare("SELECT follow FROM ph_relations WHERE user = ?");
-            if(!$q->execute([$user])){ return []; };
+            $q = \Core\DBM::getMain()->prepare("SELECT follow FROM ph_relations WHERE user = ? AND state = ?");
+            if(!$q->execute([$user,\App\Models\Account\Relation::FOLLOWING])){ return []; };
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
@@ -69,7 +69,6 @@
             $client = \App::$client->id;
             $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? LIMIT 1");
             if(!$q->execute([$state,$client,$follow])){ return false; };
-            if($q->rowCount() < 1){ return false; }
             return true;
         }
 
