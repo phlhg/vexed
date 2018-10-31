@@ -12,8 +12,8 @@
 
             $this->view->v->content = "";
 
-            $postservice = new \App\Models\Storage\Sql\PostService();
-            foreach($postservice->getAll() as $id){
+            $feed = new \App\Models\Post\Feed();
+            foreach($feed->postlist as $id){
                 $post = new \App\Models\Post\Post($id);
                 $this->view->v->content .= $post->toHtmlFeed();
             }

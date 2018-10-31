@@ -43,10 +43,17 @@
          */
         public function byUser(Int $id){
             $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = ? ORDER BY date DESC");
-            if($q->execute([$id])){ return []; }
+            if(!$q->execute([$id])){ return []; }
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
+        public function getByUsers($subs){
+            $subs = array_filter($subs,function($a){ return preg_match('/[0-9]+/i',$a); });
+            $s = join('\' OR user = \'',$subs);
+            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = '".$s."' ORDER BY date DESC");
+            if(!$q->execute()){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
 
         /**
          * Creats a text-post.
