@@ -243,6 +243,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_profile_bg { position: absolute; left: 0; top: 0; height: 100%; width: 100%; overflow: hidden; }
 .ph_profile_bg > div { background-size: cover; background-position: center; filter: blur(10px); width: calc(100% + 20px); height: calc(100% + 20px); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 .ph_profile_bg_overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; opacity: 0.5;}
+.ph_profile_bg_easing { position: absolute; bottom: 0; left: 0; width: 100%; height: 140px; background: linear-gradient(0deg,rgba(10,10,10,1),rgba(10,10,10,0.8),rgba(10,10,10,0.4),rgba(10,10,10,0)); }
 
 .ph_profileh_content { margin: 140px 0 120px 0; z-index: +10; position: relative; left: 50%; display: inline-block; padding: 20px 240px 20px 20px; width: 100%; max-width: 1080px; transform: translate(-50%,0); }
 .ph_profileh_content h1 { color: #fff; }
@@ -274,21 +275,29 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_fs_button { border-radius: 4px; width: 100%; background-color: rgb(255,210,0); height: 44px; font-weight: bold; color: #0a0a0a;display: block; position: relative; padding: 10px 20px;}
 .ph_fs_button span { text-align: center; line-height: 24px; font-weight: bold; opacity: 0; transform: scale(0,0); display: block; width: calc(100% - 40px); position: absolute; left: 20px; top: 10px; }
 .ph_fs_button span i { line-height: 20px;}
-.ph_fs_button.STRANGER .follow { opacity: 1; transform: scale(1,1);}
-.ph_fs_button.REQUESTED .requested { opacity: 1; transform: scale(1,1);}
-.ph_fs_button.FOLLOWING .following { opacity: 1; transform: scale(1,1);}
-.ph_fs_button.SELF .edit { opacity: 1; transform: scale(1,1);}
+.ph_fs_button[data-rel='0'] .follow { opacity: 1; transform: scale(1,1);}
+.ph_fs_button[data-rel='1'] .requested { opacity: 1; transform: scale(1,1);}
+.ph_fs_button[data-rel='2'] .following { opacity: 1; transform: scale(1,1);}
+.ph_fs_button[data-rel='9'] .edit { opacity: 1; transform: scale(1,1);}
 
 .ph_profileh_content > .description { display: block; line-height: 25px; letter-spacing: 1px; margin: 20px 0 0 0; }
 
+.ph_profile_list { position: relative; display: block; }
+.ph_profile_banner_small { position: relative; display: block; height: 70px; margin: 0 0 10px 0; padding: 10px 10px 10px 90px; border-radius: 4px; background-color: rgba(0,0,0,0.25); }
+.ph_profile_banner_small > .pb { position: absolute; left: 20px; top: 10px; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center;}
+.ph_profile_banner_small > .name { display: block; font-size: 20px; line-height: 24px; font-weight: bold; }
+.ph_profile_banner_small > .description { display: block; font-size: 14px; line-height: 26px; color: #fff; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
+
 /*-- POSTS --*/
-.ph_post { position: relative; display: block; }
+.ph_post { min-height: 90px; margin: 0 0 20px 0; position: relative; display: block; }
 .ph_post > .ph_post_media { position: relative; display: block; }
-.ph_post > .ph_post_info { position: relative; display: block; padding: 10px 10px 10px 80px; }
-.ph_post > .ph_post_info > .profile { position: absolute; display: block; left: 0; top: 0; width: 80px; height: auto; padding: 10px 10px 0 0; }
+.ph_post > .ph_post_info { position: relative; display: block; padding: 10px 10px 10px 70px; }
+.ph_post > .ph_post_info > .profile { position: absolute; display: block; left: 0; top: 0; width: 60px; height: auto; padding: 10px 10px 0 0; }
 .ph_post > .ph_post_info > .profile > .pb { border-radius: 50%; }
-.ph_post > .ph_post_info > .profile > .name { padding: 5px 0; overflow: hidden; text-overflow: ellipsis;  letter-spacing: 1px;  color: #c8c8c8; display: block; text-align: center; font-size: 12px;  }
-.ph_post > .ph_post_info > .description { position: relative; display: block; }
+.ph_post > .ph_post_info > .profile > .name { padding: 5px 0; overflow: hidden; text-overflow: ellipsis;  color: #c8c8c8; display: block; text-align: center; font-size: 12px;  }
+.ph_post > .ph_post_info > .description { letter-spacing: 1px; font-size: 20px; color: #fff; position: relative; display: block; }
+.ph_post > .ph_post_info > .meta { color: rgb(180,180,180); font-size: 14px; display: block; margin: 6px 0 0 0;}
+.ph_post > .ph_post_info > .meta a { color: inherit; font-size: inherit; font-weight: normal; }
 .ph_post > .ph_post_info > textarea.description { resize: vertical; border: none; max-height: 400px; min-height: 200px; background-color: transparent; color: #fff; width: 100%; display: inline-block;  }
 
 .ph_post_list { display: block; width: 100%; }

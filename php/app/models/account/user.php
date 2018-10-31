@@ -121,6 +121,17 @@
             return $this->relationservice->deny($this->id);
         }
 
+        /* HTML */
+
+        public function toHtml(){
+            $html = '<a class="ph_profile_banner_small" href="/p/'.$this->name.'/">
+                <div class="pb" style="background-image: url(/img/pb/'.$this->id.'/);"></div>
+                <span class="name">'.$this->displayName.'</span>
+                <span class="description">'.str_replace("<br/>"," ",nl2br($this->description)).'</span>
+            </a>';
+            return $html;
+        }
+
         /* STATIC */
 
         public static function getByName($name){
