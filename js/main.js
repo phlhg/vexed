@@ -33,6 +33,26 @@ $(document).ready(function(){
         return false;
     });
 
+    $(".ph_fs_button[data-rel][data-id]").click(function(e){
+        var btn = this;
+        var rel = parseInt($(this).attr("data-rel"));
+        var id = parseInt($(this).attr("data-id"));
+        if([0,2].indexOf(rel) == -1 || id < 1){ return false; }
+        if(rel == 0){
+            $.get("/ajax/f/rel_follow/?user="+id,function(data){
+                if(data.rspn == 0){
+                    $(".ph_fs_button[data-id='"+id+"']").attr("data-rel",data.value.state);
+                }
+            });
+        } else {
+            $.get("/ajax/f/rel_unfollow/?user="+id,function(data){
+                if(data.rspn == 0){
+                    $(".ph_fs_button[data-id='"+id+"']").attr("data-rel",data.value.state);
+                }
+            });
+        }
+    });
+
     $(".ph_mham").click(function(){
         $("body").toggleClass("ph_menu_open");
     });
