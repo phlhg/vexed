@@ -18,7 +18,7 @@
             header("Charset: utf-8");
             $this->view("out");
             $this->view->setTemplate("none");
-            $this->view->setFormat("text/javascript");
+            $this->view->setFormat("application/json");
             $this->ajax = new \App\Models\Ajax\Ajax();
             $this->url = $_URL;
             if($this->client->isLoggedIn()){
