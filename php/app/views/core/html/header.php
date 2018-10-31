@@ -50,10 +50,10 @@
             <link href="<?=$url?>" rel="stylesheet" />
         <?php } ?>
         <!-- SCRIPTS -->
-        <script src="/js/jquery.js"></script>
-        <script src="/js/main.js"></script>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/main.js"></script>
         <?php foreach($view->scripts as $url){ ?>
-        <script src="<?=$url?>"></script>
+        <script type="text/javascript" src="<?=$url?>"></script>
     <?php } ?>
     </head>
     <body>
