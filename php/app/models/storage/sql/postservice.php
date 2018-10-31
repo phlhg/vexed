@@ -27,13 +27,24 @@
         /**
          * Loads all posts.
          * @deprecated Only temporary
-         * @return Mixed[]|Boolean Returns an Array with post on success otherwise False.
+         * @return Int[] Returns an Array with post ids.
          */
         public function getAll(){
             $q = $this->db->prepare("SELECT id, user, type, description, date FROM ph_posts ORDER BY date DESC");
             $q->execute();
-            if($q->rowCount() < 1){ return false; }
-            return $q->fetchAll();
+            if($q->rowCount() < 1){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
+        /**
+         * Loads all Posts of a user.
+         * @param Int $id The id of the user.
+         * @return Int[] Returns an array with ids of posts.
+         */
+        public function byUser(Int $id){
+            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = ? ORDER BY date DESC");
+            if($q->execute([$id])){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
 
