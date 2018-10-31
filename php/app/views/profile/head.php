@@ -16,17 +16,7 @@
         </span>
         <div class="ph_profile_submenu">
             <span>
-                <?php if($_var->profile->relation == \App\Models\Account\Relation::ME){ ?>
-                    <div class="ph_fs_button SELF">
-                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::STRANGER){ ?>
-                    <div class="ph_fs_button STRANGER">
-                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::REQUESTED){ ?>
-                    <div class="ph_fs_button REQUESTED">
-                <?php } else if($_var->profile->relation == \App\Models\Account\Relation::FOLLOWING){ ?>
-                    <div class="ph_fs_button FOLLOWING">
-                <?php } else { ?>   
-                    <div class="ph_fs_button">
-                <?php } ?>
+                <div class="ph_fs_button" data-rel="<?=$_var->profile->relation?>" data-id="<?=$_var->profile->id?>">
                     <span class="edit">Bearbeiten <i class="material-icons">create</i></span>
                     <span class="follow">Folgen <i class="material-icons">add</i></span>
                     <span class="requested">Angefragt <i class="material-icons">send</i></span>
