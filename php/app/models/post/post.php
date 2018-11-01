@@ -31,6 +31,14 @@
 
         /* HTML */
 
+        public function toHtmlBanner(){
+            $html = '<a href="/post/'.$this->id.'/" class="ph_post_banner TEXT">
+                '.$this->text.'
+                <span class="meta">2+ | '.\Helpers\Date::beautify($this->date).'</span>
+                </a>';
+            return $html;
+        }
+
         public function toHtmlFeed(){
             $user = new \App\Models\Account\User($this->user);
             $html = '<article class="ph_post">
@@ -41,7 +49,7 @@
                     </div>
                     <p class="description">'.$this->text.'</p>
                     <span class="meta">
-                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.date("d.m.Y",$this->date).' 
+                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
                     <div class="voting" style="opacity: 0.25" data-vote="0" data-id="'.$this->id.'">
                         <div class="actions up">+</div>

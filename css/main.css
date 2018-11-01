@@ -305,15 +305,13 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .voting[data-vote='-1'] > .down { background-color: rgb(255,210,0); }
 .ph_post > .ph_post_info > .voting > span { min-width: 42px; text-align: center; font-weight: 700; font-size: 18px; color: #fff; line-height: 15px; display: inline-block; position: relative;padding: 0 5px; }
 
-
-
 .ph_post > .ph_post_info > textarea.description { resize: vertical; border: none; max-height: 400px; min-height: 200px; background-color: transparent; color: #fff; width: 100%; display: inline-block;  }
 
+/* BANNER */
 .ph_post_list { display: block; width: 100%; }
 .ph_post_list > .container { display: block; position: relative; column-count: 3; column-gap: 20px; }
-.ph_post_list a.post { max-height: 500px; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgb(5,5,5); }
-.ph_post_list a.post .main { position: relative; top: 0; left: 0; height: auto; width: 100%; }
-.ph_post_list a.post .meta { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); }
+.ph_post_list a.ph_post_banner { font-size: 20px; min-height: 66px; max-height: 500px; padding: 20px 40px; color: #fff; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgba(0,0,0,0.25); }
+.ph_post_list a.ph_post_banner .meta { position: relative; display: block; font-size: 11px; color: rgb(180,180,180); }
 
 /*#######################################
     Media Queries
