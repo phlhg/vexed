@@ -21,7 +21,7 @@
         }
         
         private function getSubscriptions(){
-            $subs = \App::$client->subscriptions;
+            $subs = (\App::$client->subscriptions ? \App::$client->subscriptions : []);
             $subs[] = \App::$client->id;
             return $subs;
         }
