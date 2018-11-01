@@ -5,7 +5,7 @@
      */
 
     namespace App\Models\Storage\Sql;
-    use \Helpers\Hash;
+    use \Helpers\Password;
 
     /**
      * Manages access to to the users table.
@@ -71,7 +71,7 @@
         public function create(String $name, String $password, String $email, String $security){
             $created = time();
             $conditions = \Core\Config::get("conditions_version_last");
-            $security = \Helpers\Hash::ph1($security);
+            $security = \Helpers\Password::hash_ph1($security);
             $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_users (username, password, email, security, created, conditions) VALUES (?,?,?,?,?,?);");
             if(!$q->execute([$name,$password,$email,$security,$created,$conditions])){ return -1; }
             // MAX() by https://stackoverflow.com/questions/3422168/safest-way-to-get-last-record-id-from-a-table
@@ -96,7 +96,7 @@
          * Confirms an account if the code is correct.
          */
         public function confirm($id,$code){
-            $code = \Helpers\Hash::ph1($password);
+            $code = \Helpers\Password::hash_ph1($password);
             $q = \Core\DBM::getMain()->prepare("UPDATE ph_users SET confirmed = '1', security = '' WHERE id = ? AND security = ? LIMIT 1");
             $q->execute(array($id,$code));
             if($q->rowCount() < 1){ return false; }

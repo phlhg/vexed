@@ -7,7 +7,7 @@
     namespace App\Models\Account;
     use \Core\Config;
     use \Helpers\Email;
-    use \Helpers\Hash;
+    use \Helpers\Password;
 
     /**
      * Handles the process of creating a new Account.
@@ -61,7 +61,7 @@
         public function create($name,$password,$email){
             $this->name = $name;
             $this->email = $email;
-            $this->password = password_hash($password,PASSWORD_DEFAULT);
+            $this->password = \Helpers\Password::hash($password);
             return $this->checkInput();
         }
 

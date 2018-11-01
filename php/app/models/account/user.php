@@ -59,7 +59,7 @@
 
         public function confirm($seccode){
             $q = \Core\DBM::getMain()->prepare("UPDATE ph_users SET confirmed = '1', security = '' WHERE id = ? AND security = ? LIMIT 1");
-            $q->execute(array($this->id,\Helpers\Hash::ph1($seccode)));
+            $q->execute(array($this->id,\Helpers\Password::hash_ph1($seccode)));
             if($q->rowCount() > 0){ return true; }
             return false;
         }

@@ -41,7 +41,7 @@
 
         private function initSession($id,$password){
             \Helpers\Session::set("login_id",$id);
-            \Helpers\Session::set("login_pw",\Helpers\Hash::ph1($password));
+            \Helpers\Session::set("login_pw",\Helpers\Password::hash($password));
             \Helpers\Session::set("login_expires",time()+3600);
             $this->id = $id;
         }
