@@ -9,8 +9,8 @@
     $_CONFIG = [];
 
     //APPLICATION
-    $_CONFIG["application_domain"] = "ecccho.vs";
-    $_CONFIG["application_title"] = "ECCCHO";
+    $_CONFIG["application_domain"] = "vexed.vs";
+    $_CONFIG["application_title"] = "VEXED";
     $_CONFIG["application_version"] = "1.0.0";
     $_CONFIG["application_version_stage"] = false; //For future error reporting
 
@@ -18,7 +18,7 @@
     $_CONFIG["conditions_version_last"] = 1536078668; 
 
     //DEFAULT
-    $_CONFIG["default_meta_title_appendix"] = " | ECCCHO";
+    $_CONFIG["default_meta_title_appendix"] = " | VEXED";
     $_CONFIG["default_meta_keywords"] = array("social network","social","share");
     $_CONFIG["default_meta_menu"] = true;
     $_CONFIG["default_meta_image"] = "image";
@@ -26,7 +26,7 @@
 
     //E-MAIL
     $_CONFIG["email_noreply"] = "noreply@phlhg.ch";
-    $_CONFIG["email_noreply_name"] = "ECCCHO";
+    $_CONFIG["email_noreply_name"] = "VEXED";
 
     //HASH
     $_CONFIG["hash_salt"] = "ph_73238813";
