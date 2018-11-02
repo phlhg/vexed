@@ -1,84 +1,273 @@
+/* © Philippe Hugo <info@phlhg.ch> */
 
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded",function(){ App.init(); });
+
+/* APP */
+
+var App = {}
+
+App.init = function(){
+    App.client = new Client();
+    App.site = new Site();
+}
+
+/* CONFIG */
+
+var Config = {}
+
+Config.get = function(id){
+    return (s_config[id] ? s_config[id] : false);
+}
+
+/* CLIENT */
+function Client(){
+    this.id = -1;
+}
+
+Client.prototype.load = function(){
+    this.id = Config.get("client_id");
+}
+
+Client.prototype = Object.create(Client.prototype);
+Client.prototype.constructor = Client;
+
+/* SITE */
+
+function Site(){
+    this.loaded();
+    this.menu = new Menu();
+    this.setEvents();
+}
+
+Site.prototype.loaded = function(){
     setTimeout(function(){
-        $("body").removeClass("ph_loading");
+        document.getElementsByTagName("body")[0].classList.remove("ph_loading");
         setTimeout(function(){
-            $("body").removeClass("ph_page_init");
+            document.getElementsByTagName("body")[0].classList.remove("ph_page_init");
         },1000);
     },400);
+}
 
-    $("a[href]").on("click touchstart",function(e){
-        var href = $(this).attr("href");
-        if(href.startsWith("/") && !href.startsWith("//")){
-            e.preventDefault();
-            $("body").addClass("ph_loading");
-            setTimeout(function(href){
-                window.location.href = href;
-                setTimeout(function(){    
-                    $("body").removeClass("ph_loading");
-                },1000);
-            }.bind(null,href),900);
+Site.prototype.load = function(href){
+    if(!href.startsWith("/") || href.startsWith("//")){ return false; }
+    this.obscure(function(){
+        window.location.href = href;
+    }.bind(null,href));
+    return true;
+}
+
+Site.prototype.obscure = function(callback){
+    document.getElementsByTagName("body")[0].classList.add("ph_loading");
+    setTimeout(function(callback){
+        callback();
+        setTimeout(function(){    
+            document.getElementsByTagName("body")[0].classList.remove("ph_loading");
+        },1000);
+    }.bind(null,callback),900);
+}
+
+Site.prototype.setEvents = function(){
+    var site = this;
+
+    document.querySelectorAll("a[href]").forEach(function(el){
+        el.onclick = function(e){
+            if(site.load(el.getAttribute("href")))
+                e.preventDefault();
         }
     });
 
-    $("form").submit(function(e){
-        var form = this;
-        $("body").addClass("ph_loading");
-        setTimeout(function(href){
-            form.submit();
-            setTimeout(function(){    
-                $("body").removeClass("ph_loading");
-            },1000);
-        },900);
+    document.querySelectorAll(".ph_mham").forEach(function(el){
+        el.onclick = function(){ App.site.menu.toggle(); }
+    });
+
+    document.querySelectorAll(".ph_menu_container .ph_menu_bg").forEach(function(el){
+        el.onclick = function(){ App.site.menu.close(); }
+    });
+
+    document.querySelectorAll(".ph_fs_button[data-rel][data-id]").forEach(function(el){
+        new FSButton(el);
+    });
+
+    document.querySelectorAll("form").forEach(function(el){
+        new Form(el);
+    });
+}  
+
+Site.prototype = Object.create(Site.prototype);
+Site.prototype.constructor = Site;
+
+/* MENU */
+
+function Menu(){
+    this.body = document.getElementsByTagName("body")[0];
+}
+
+Menu.prototype.open = function(){
+    this.body.classList.add("ph_menu_open");
+}
+
+Menu.prototype.close = function(){
+    this.body.classList.remove("ph_menu_open");
+}
+
+Menu.prototype.toggle = function(){
+    if(this.body.classList.contains("ph_menu_open")){
+        this.close();
+    } else {
+        this.open();
+    }
+}
+
+Menu.prototype = Object.create(Menu.prototype);
+Menu.prototype.constructor = Menu;
+
+/* FORM */
+
+function Form(element){
+    this.form = element;
+    this.el_error = this.form.getElementsByClassName("ph_form_error")[0];
+    this.el_info = this.form.getElementsByClassName("ph_form_info")[0];
+    this.valid = false;
+    this.setEvents();
+    Form.list.push(this);
+}
+
+Form.list = [];
+
+Form.prototype.setEvents = function(){
+    var form = this;
+
+    this.form.onsubmit = function(e){
+        e.preventDefault();
+        form.send();
+    }
+
+    this.form.querySelectorAll(".ph_fi_submit, .ph_inline_submit").forEach(function(el){
+        el.onclick = function(e){
+            form.send();
+            return false;
+        }
+    });
+}
+
+Form.prototype.send = function(){
+    if(this.validate()){
+        App.site.obscure(function(){
+            this.form.submit();
+        }.bind(this));
+        this.reset();
+    }
+}
+
+Form.prototype.reset = function(){
+    this.valid = false;
+}
+
+Form.prototype.validate = function(){
+    var form = this;
+    this.el_error.textContent = "";
+    this.el_info.textContent = "";
+
+    error = "";
+    this.valid = true;
+    this.form.querySelectorAll("input").forEach(function(el){
+        el.classList.remove("invalid");
+        if(!el.checkValidity()){
+            form.valid = false;
+            el.classList.add("invalid");
+        }
+    });
+
+    if(!this.valid){
+        this.el_error.textContent = "Bitte fülle alle Felder korrekt aus";
         return false;
-    });
+    }
 
-    $(".ph_fs_button[data-rel][data-id]").click(function(e){
-        var btn = this;
-        var rel = parseInt($(this).attr("data-rel"));
-        var id = parseInt($(this).attr("data-id"));
-        if([0,2].indexOf(rel) == -1 || id < 1){ return false; }
-        if(rel == 0){
-            $.get("/ajax/f/rel_follow/?user="+id,function(data){
-                if(data.rspn == 0){
-                    $(".ph_fs_button[data-id='"+id+"']").attr("data-rel",data.value.state);
-                }
-            });
-        } else {
-            $.get("/ajax/f/rel_unfollow/?user="+id,function(data){
-                if(data.rspn == 0){
-                    $(".ph_fs_button[data-id='"+id+"']").attr("data-rel",data.value.state);
-                }
-            });
+    return true;
+}
+
+Form.prototype = Object.create(Form.prototype);
+Form.prototype.constructor = Form;
+
+/* FS-BUTTON */
+
+FState = {
+    STRANGER: 0,
+    REQUESTED: 1,
+    FOLLOWING: 2,
+    ME: 3,
+}
+
+function FSButton(element){
+    this.element = element;
+    this.state = parseInt(element.getAttribute("data-rel") || 0);
+    this.id = parseInt(element.getAttribute("data-id") || -1);
+    this.setEvents();
+    FSButton.list.push(this);
+}
+
+FSButton.list = [];
+
+FSButton.set = function(id,state){
+    FSButton.find(id).forEach(function(el){
+        el.set(state);
+    });
+}
+
+FSButton.find = function(id){
+    return FSButton.list.filter(function(el){
+        return (el.id == id);
+    });
+}
+
+FSButton.prototype.setEvents = function(){
+
+    this.element.onclick = function(e){
+        e.preventDefault();
+        this.clicked();
+    }.bind(this);
+}
+
+FSButton.prototype.set = function(state){
+    this.state = state;
+    this.element.setAttribute("data-rel",this.state);
+}
+
+FSButton.prototype.clicked = function(){
+    if([FState.STRANGER,FState.FOLLOWING].indexOf(parseInt(this.state)) == -1 || this.id < 1){ return false; }
+    if(this.state == FState.STRANGER){ return Relation.follow(this.id);  }
+    if(this.state == FState.FOLLOWING){ return Relation.unfollow(this.id); }
+    return false;
+}
+
+FSButton.prototype = Object.create(FSButton.prototype);
+FSButton.prototype.constructor = FSButton;
+
+/* RELATION */
+
+var Relation = {}
+
+Relation.follow = function(id,callback){
+    var callback = callback || function(){};
+    $.get("/ajax/f/rel_follow/?user="+id,function(data){
+        if(data.rspn == 0){
+            FSButton.set(id,data.value.state);
+            callback(data);
         }
     });
+    return true;
+}
 
-    $(".ph_mham").click(function(){
-        $("body").toggleClass("ph_menu_open");
-    });
-
-    $(".ph_menu_container .ph_menu_bg").click(function(){
-        $("body").removeClass("ph_menu_open");
-    });
-
-    $(".ph_fi_submit, .ph_inline_submit").click(function(){
-        // .valid() by https://stackoverflow.com/questions/6658937/how-to-check-if-a-form-is-valid-programmatically-using-jquery-validation-plugin
-        var form = $(this).closest("form");
-        var error = $(form).find(".ph_form_error");
-        $(error).text("");
-        $(form).find("input").removeClass("invalid");
-        if($(form)[0].checkValidity()){
-            $(form).submit();
-        } else {
-            $(form).find("input").each(function(){
-                if(!$(this)[0].checkValidity()){
-                    $(this).addClass("invalid");
-                }
-            });
-            $(error).text("Bitte fülle das Formular korrekt aus");
+Relation.unfollow = function(id,callback){
+    var callback = callback || function(){};
+    $.get("/ajax/f/rel_unfollow/?user="+id,function(data){
+        if(data.rspn == 0){
+            FSButton.set(id,data.value.state);
+            callback(data);
         }
-    })
-});
+    });
+    return true;
+}
 
 function structureCode(e,el,length,amount){
     amount = parseInt(amount);

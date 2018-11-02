@@ -50,7 +50,15 @@
             <link href="<?=$url?>" rel="stylesheet" />
         <?php } ?>
         <!-- SCRIPTS -->
-        <script type="text/javascript" src="/js/jquery.js"></script>
+        <!--<script type="text/javascript" src="/js/jquery.js"></script>-->
+        <?php
+            $s_config = array(
+                "client_id" => $view->client->id
+            )
+        ?>
+        <script>
+            s_config = <?=json_encode($s_config)?>;
+        </script>
         <script type="text/javascript" src="/js/main.js"></script>
         <?php foreach($view->scripts as $url){ ?>
         <script type="text/javascript" src="<?=$url?>"></script>
