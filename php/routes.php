@@ -23,4 +23,7 @@
     //AJAX
     App::$router->set("/ajax/f/{function}/","Ajax/switch");
 
+    //ABOUT
+    App::$router->set("/about/","etc/about");
+
 ?>
