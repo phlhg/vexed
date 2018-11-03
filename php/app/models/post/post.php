@@ -34,7 +34,7 @@
         public function toHtmlBanner($showUser = false){
             $user = new \App\Models\Account\User($this->user);
             $html = '<a href="/p/'.$user->name.'/" class="ph_post_banner TEXT">
-                '.$this->text.'
+                '.(strlen($this->text) > 255 ? substr($this->text,0,255).'...' : $this->text).'
                 <span class="meta">'.($showUser ? '<strong>'.$user->displayName.'</strong> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
                 </a>';
             return $html;
