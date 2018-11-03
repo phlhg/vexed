@@ -11,7 +11,7 @@
         private $ajax;
         private $url;
 
-        public function switch($_URL){
+        public function _switch($_URL){
             if((!\Helpers\Check::isAjax() && \Core\Config::get("application_version_stage") == true) OR !\Helpers\Token::check(\Helpers\Token::get())){ \App::$router->setRoute("Error/E403"); }
             header("Cache-Control: no-cache, must-revalidate");
             header("Pragma: no-cache");

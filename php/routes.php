@@ -21,7 +21,7 @@
     App::$router->set("/create/","CreatePost/index");
 
     //AJAX
-    App::$router->set("/ajax/f/{function}/","Ajax/switch");
+    App::$router->set("/ajax/f/{function}/","Ajax/_switch");
 
     //ABOUT
     App::$router->set("/about/","etc/about");
