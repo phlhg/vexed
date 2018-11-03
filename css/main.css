@@ -56,8 +56,8 @@ header .ph_menur, .ph_page_loader:after, .ph_page_loader, .ph_menu_container:aft
 h1,h2,h3,h4,h5,h6{ font-family: 'Aldrich', sans-serif; font-weight: bold; text-decoration: none; margin: 30px 0 10px 0; text-align: inherit; }
 h1 { font-size: 80px; line-height: 75px; }
 h2 { font-size: 60px; line-height: 55px; }
-h3 { font-size: 30px; line-height: 40px; }
-h4 { font-size: 25px; line-height: 35px; color: #fff;}
+h3 { font-size: 30px; line-height: 40px; font-family: 'Oxygen', sans-serif; color: #fff; }
+h4 { font-size: 25px; line-height: 35px; font-family: 'Oxygen', sans-serif; color: #fff;}
 
 .ph_head_deposited { padding: 10px 100px; margin-left: 15px; color: rgb(10,10,10); display: inline-block; position: relative; font-size: 150px; line-height: 160px;}
 .ph_head_deposited:after { content: ''; transform: skewX(-10deg); z-index: -1; position: absolute; left: 0; top: 0; height: 100%; width: 100%; }
@@ -290,7 +290,9 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_profileh_content > .description { display: block; line-height: 25px; letter-spacing: 1px; margin: 20px 0 0 0; }
 
 .ph_profile_list { position: relative; display: block; }
-.ph_profile_banner_small { position: relative; display: block; height: 70px; margin: 0 0 10px 0; padding: 10px 10px 10px 90px; border-radius: 4px; background-color: rgba(0,0,0,0.25); }
+.ph_profile_list.duo { column-count: 2; }
+/* by https://stackoverflow.com/questions/7785374/how-to-prevent-column-break-within-an-element*/
+.ph_profile_banner_small { overflow: hidden; break-inside: avoid-column; -webkit-column-break-inside: avoid; position: relative; display: block; height: 70px; margin: 0 0 10px 0; padding: 10px 10px 10px 90px; border-radius: 4px; background-color: rgba(0,0,0,0.25); }
 .ph_profile_banner_small > .pb { position: absolute; left: 20px; top: 10px; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center;}
 .ph_profile_banner_small > .name { display: block; font-size: 20px; line-height: 24px; font-weight: bold; }
 .ph_profile_banner_small > .description { display: block; font-size: 14px; line-height: 26px; color: #fff; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }

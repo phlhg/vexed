@@ -26,4 +26,8 @@
     //ABOUT
     App::$router->set("/about/","etc/about");
 
+    //SEARCH
+    App::$router->set("/search/","Search/index");
+    App::$router->set("/search/{query}/","Search/query");
+
 ?>

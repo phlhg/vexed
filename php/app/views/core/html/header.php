@@ -50,7 +50,7 @@
             <link href="<?=$url?>" rel="stylesheet" />
         <?php } ?>
         <!-- SCRIPTS -->
-        <!--<script type="text/javascript" src="/js/jquery.js"></script>-->
+        <script type="text/javascript" src="/js/jquery.js"></script>
         <?php
             $s_config = array(
                 "client_id" => $view->client->id
