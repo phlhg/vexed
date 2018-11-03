@@ -12,7 +12,7 @@
             <a href="/" class="ph_menu_point mprofile no_user"><i class="material-icons">person_outline</i></a>
         <?php } ?>
         <a href="/" class="ph_logo_wrapper">
-            <img src="/img/icons/favicon_dark.png" /><?php echo \Core\Config::get("application_title"); ?>
+            <img src="/img/icons/logo.svg" />
         </a>
     </div><!--
 --></div></header>

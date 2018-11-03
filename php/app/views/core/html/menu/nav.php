@@ -19,11 +19,6 @@
                     --><nav>
                 </td>
                 <td>
-                    <span class="ph_menu_head"><i>ANTISOCIAL</i> - A social Network</span>
-                    Dieses Projekt entsteht im Rahmen meiner Maturarbeit am MNG Rämibühl, Zürich. 
-                    Das Ziel ist es ein einfaches soziales Netzwerk zu erstellen in welchem Nutzer sich Nutzer mit Bildern, Videos und Text austauschen können.
-                    Im schriftlichen Teil der Arbeit wird danach auf Probleme eingegangen, welche sich im Verlaufe der Entwicklung gestellt haben.
-                     - Philippe Hugo, 2018
                 </td>
             </tr>
         </table>
