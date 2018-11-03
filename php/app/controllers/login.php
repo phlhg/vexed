@@ -19,7 +19,10 @@
         public function logout($_URL){
             $this->view("out");
             $this->client->logout();
-            \App::$router->redirect("/");
+            $re = (\Helpers\Get::exists("re") ? \Helpers\Get::get("re") : "/");
+            if(substr($re,0,1) != "/" OR strpos($re,"http") === 0){ $re = "/"; }
+            $this->view->v->content = $re;
+            \App::$router->redirect($re);
         }
     }
 
