@@ -114,7 +114,7 @@
             $q->execute(array($id));
             if($q->rowCount() < 1){ return false; }
             $hash = $q->fetchObject()->password;
-            return password_verify($password,$hash);
+            return \Helpers\Password::check($password,$hash);
         }
 
         /**

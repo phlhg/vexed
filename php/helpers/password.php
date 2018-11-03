@@ -10,15 +10,16 @@
         }
 
         public static function hash($string){
+            return password_hash(Self::hashfactory($string),PASSWORD_DEFAULT);
+        }
+
+        private static function hashfactory($string){
             $salt = Config::get("hash_salt");
-            $string = $salt.$string;
-            return password_hash($string,PASSWORD_DEFAULT);
+            return $salt.$string;
         }
 
         public static function check($string,$hash){
-            $salt = Config::get("hash_salt");
-            $string = $salt.$string;
-            return password_verify($string, $hash);
+            return password_verify(Self::hashfactory($string), $hash);
         }
     }
 ?>
