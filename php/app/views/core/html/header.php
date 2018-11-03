@@ -40,7 +40,7 @@
         <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="/img/icons/favicon.png"rel="apple-touch-icon" />
         <!-- FONTS -->
-        <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Aldrich|Oxygen:300,400,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <!-- STYLESHEETS -->
