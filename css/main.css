@@ -304,13 +304,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 }
 
-/*----TABLETS----*/
-@media only screen and (max-width: 760px){
-
-}
-
 /*----SMARTPHONES----*/
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 760px){
     h1 { font-size: 70px; line-height: 75px; margin: 10px 0; }
     h2 { font-size: 50px; line-height: 55px; }
     h3 { font-size: 20px; line-height: 30px; margin: 10px 0; }
@@ -331,15 +326,18 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     form label { margin-top: 10px; }
 
     .mobile_header { display: block; }
+    .mobile_header.login-menu { background-color: transparent; border: 0; }
     header { padding: 5px 20px; bottom: 0; top: unset; background-color: rgb(20,20,20); border-top: 1px solid rgb(35,35,35); height: 50px; }
+    header.login-menu { display: none; }
     header .ph_logo_wrapper { display: none; }
     header .ph_menur { position: relative; flex-direction: row; justify-content: space-between; width: 100%; height: 100%; display: flex; }
-    header .ph_menu_point { height: 40px; width: 40px; background-color: transparent; color: rgb(100,100,100); border-radius: 0; margin: 0; }
+    header .ph_menu_point { box-shadow: none; height: 40px; width: 40px; background-color: transparent; color: rgb(100,100,100); border-radius: 0; margin: 0; }
     header .ph_menu_point.mprofile { border-radius: 50%; }
     header .ph_menu_point:hover { color: rgb(255,210,0); }
     header .ph_menu_point i { font-size: 26px; }
 
     section:first-of-type.min-fullscreen { min-height: calc(100% - 50px); top: 50px; }
+    section:first-of-type.min-fullscreen.transparent-menu { min-height: 100%; top: 0; }
     section:last-of-type.min-fullscreen { padding-bottom: 50px; }
     section:first-of-type.fullscreen { height: calc(100% - 50px); top: 50px; }
 

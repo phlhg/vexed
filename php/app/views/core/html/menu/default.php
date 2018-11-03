@@ -1,6 +1,5 @@
 <!--MENU-->
 <header class="<?=(isset($view->v->page_menu_class) ? $view->v->page_menu_class : '')?>"><div class="ph_inner"><!--
-    --<div class="ph_mham"><span></span><span></span><span></span><span></span><span></span></div>--
     --><a href="/" class="ph_logo_wrapper">
             <img src="/img/icons/logo.svg" />
     </a><!--
@@ -16,7 +15,7 @@
         <?php } ?>
     </div><!--
 --></div></header>
-<div class="mobile_header">
+<div class="mobile_header <?=(isset($view->v->page_menu_class) ? $view->v->page_menu_class : '')?>">
     <a href="/" class="ph_logo_wrapper">
         <img src="/img/icons/logo.svg" />
     </a>
