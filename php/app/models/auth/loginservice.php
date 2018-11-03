@@ -13,7 +13,7 @@
 
         private $displayed = false;
 
-        public function set(String $username, String $password, Bool $preserve){
+        public function set($username, $password, $preserve){
             $this->username = $username;
             $this->password = $password;
             $this->preserve = $preserve;

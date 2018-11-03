@@ -9,7 +9,7 @@
      * @param Int $lenght The amount of chars in the code
      * @return String Retuns a Random Code as a String
      */
-    function generateSecurityCode(Int $lenght){
+    function generateSecurityCode($lenght){
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $chars_len = strlen($chars)-1;
         $code = "";
@@ -25,7 +25,7 @@
      * @param String $code The security code
      * @return String A security code with spaces
      */
-    function formatSecurityCode(String $code){
+    function formatSecurityCode($code){
         $return = preg_replace('([\dA-Z]{3})','$0 ',$code);
         return $return;
     }

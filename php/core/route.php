@@ -52,7 +52,7 @@
          * @return Self Returns itself for chaining
          */
 
-        public function __construct(String $pattern, String $action, Array $methodParams=[], Array $controllerParams=[]){
+        public function __construct($pattern, $action, $methodParams=[], $controllerParams=[]){
             $this->pattern = $pattern;
             $action = explode("/",$action);
             if(count($action) < 2){ throw new Error("Invalid action supplied"); }
@@ -92,7 +92,7 @@
          * 
          * @return Boolean Returns true if the route matches.
          */
-        public function match(String $url){
+        public function match($url){
             $preg = preg_match($this->getRegex(),$url,$matches);
             return $preg;
         }
@@ -103,7 +103,7 @@
          * @param String $url Variables get extracted from this url
          * 
          */
-        public function execute(String $url){
+        public function execute($url){
             $this->extractValues($url);
             $nameController = '\App\Controllers\\'.$this->nameController;
             $nameMethod = $this->nameMethod;
@@ -134,7 +134,7 @@
         /**
          * @todo
          */
-        public function extractValues(String $url){
+        public function extractValues($url){
             preg_match($this->getRegex(),$url,$matches);
             foreach($this->variables as $variable){
                 $name = urlencode($variable["name"]);
@@ -164,7 +164,7 @@
          *
          * @return Self Returns itself for chaining
          */
-        public function where(Array $settings){
+        public function where($settings){
             foreach($settings as $name => $regex){
                 $this->setVariableRegex($name,$this->type2Regex($regex));
             }
@@ -181,7 +181,7 @@
          * 
          * @return String Returns a regular expression if a type was found, otherwise the supplied $type parameter.
          */
-        public function type2Regex(String $type){
+        public function type2Regex($type){
             $regex = $type;
             switch($type){
                 case 'int':
@@ -206,7 +206,7 @@
          * 
          * @param String $name Name of the new variable
          */
-        public function addVariable(String $name){
+        public function addVariable($name){
             $this->variables[urlencode($name)]["name"] = $name;
             $this->variables[urlencode($name)]["regex"] = '.+';
             $this->variables[urlencode($name)]["value"] = null;
@@ -215,7 +215,7 @@
         /**
          * @todo
          */
-        public function setVariable(String $name, $value){
+        public function setVariable($name, $value){
             $this->variables[urlencode($name)]["value"] = $value;
         }
 
@@ -227,7 +227,7 @@
          * @param String $name Name of the affected variable
          * @param String $regex New regular expression (Without wrapping slashes and modifiers!)
          */
-        public function setVariableRegex(String $name, String $regex){
+        public function setVariableRegex($name, $regex){
             $this->variables[urlencode($name)]["regex"] = $regex;
         }
 
@@ -238,7 +238,7 @@
          * 
          * @return Boolean Returns true if the variable exists
          */
-        public function existsVariable(String $name){
+        public function existsVariable($name){
             return isset($this->variables[$name]);
         }
         

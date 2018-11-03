@@ -29,7 +29,7 @@
             return Self::$token;
         }
 
-        public static function check(String $reference){
+        public static function check($reference){
             if($reference == Self::$token) return true;
             return false;
         }

@@ -26,7 +26,7 @@
          */
         public static function load(){
             if(self::$loaded){ return false; }
-                require $_SERVER["DOCUMENT_ROOT"]."php/config/config.php";
+                require $_SERVER["DOCUMENT_ROOT"]."/php/config/config.php";
                 self::$settings = $_CONFIG;
                 self::$loaded = true;
                 return true;
@@ -39,7 +39,7 @@
          * 
          * @return Mixed Returns the value of the property.
          */
-        public static function get(String $property){
+        public static function get($property){
             self::load();
             if(!self::exists($property)){ return false; }
             return self::$settings[$property];
@@ -53,7 +53,7 @@
          * 
          * @return Boolean Returns true if the property was overridden. Returns false if it doesn't exist.
          */
-        public static function set(String $property, Mixed $value){
+        public static function set($property, $value){
             if(!self::exists($property)){ return false; }
             self::$settings[$property] = $value;
             return true;
@@ -66,7 +66,7 @@
          * 
          * @return Boolean Returns true if the property exists, otherwise returns false.
          */
-        public static function exists(String $property){
+        public static function exists($property){
             return isset(self::$settings[$property]);
         }
     }

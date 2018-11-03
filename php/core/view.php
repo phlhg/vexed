@@ -51,7 +51,7 @@
          * Create a new View
          * @param String $name Name of the view
          */
-        public function __construct(String $name){
+        public function __construct($name){
             $this->view = $name;
             $this->client = \App::$client;
             $this->meta = new Repository();
@@ -133,7 +133,7 @@
          */
         public function render(){
             $this->cache = "";
-            require $_SERVER["DOCUMENT_ROOT"]."php/app/templates/".strtolower($this->template).".php";
+            require $_SERVER["DOCUMENT_ROOT"]."/php/app/templates/".strtolower($this->template).".php";
         }
 
         /**
@@ -151,7 +151,7 @@
          * @return String Returns the Location of the view-file
          */
         private function getLocation($name){
-           return $_SERVER["DOCUMENT_ROOT"]."php/app/views/".strtolower($name).".php";
+           return $_SERVER["DOCUMENT_ROOT"]."/php/app/views/".strtolower($name).".php";
         }
 
         /**

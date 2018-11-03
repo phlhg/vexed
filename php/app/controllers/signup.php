@@ -63,7 +63,7 @@
                 $this->view->meta->title = "Erstellen";
                 if(\Helpers\Post::exists("ph_signup_cond")){
                     if($creationService->create($signup_data["username"],$signup_data["password"],$signup_data["email"])){
-                        \App\Models\Code::use("signup",$actcode);
+                        \App\Models\Code::redeem("signup",$actcode);
                         $signup_data["confirmed"] = true; 
                         \App::$router->redirect("/signup/".$actcode."/5/");
                     } else {

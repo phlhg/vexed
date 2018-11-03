@@ -16,7 +16,7 @@
          * @param Int $id Id of a code
          * @return Mixed[]|Boolean Returns an array with infos on success otherwise returns False.
          */
-        public function get(Int $id){
+        public function get($id){
             $q = $this->db->prepare("SELECT id, description, type, code, uses, uses_init, expires FROM ph_codes WHERE id = ? LIMIT 1");
             $q->execute(array($id));
             if($q->rowCount() < 1){ return false; }
@@ -40,7 +40,7 @@
          * @param String $code Code to look for
          * @return Boolean Returns True if the code was used otherwise returns False.
          */
-        public function use($type,$code){
+        public function redeem($type,$code){
             $q = $this->db->prepare("UPDATE ph_codes SET uses = uses - 1 WHERE type = ? AND code = ? AND uses > 0 AND expires > ? LIMIT 1");
             $q->execute(array($type,$code,time()));
             if($q->rowCount() > 0){ return true; }
@@ -67,7 +67,7 @@
          * @param Int $time Amount of seconds the code is valid after creation.
          * @param Int $uses Amount of times a code can be used.
          */
-        public function create(String $type, String $code, Int $time, Int $uses=1, String $description=''){
+        public function create($type, $code, $time, $uses=1, $description=''){
             $expires = time() + $time;
             $q = $this->db->prepare("INSERT INTO ph_codes (description, type, code, uses, uses_init, expires) VALUES (?,?,?,?,?,?)");
             $q->execute(array($description,$type,$code,$uses,$uses,$expires));

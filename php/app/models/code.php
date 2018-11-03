@@ -45,9 +45,9 @@
             return $codeService->exists($type,$code);
         }
 
-        public static function use($type,$code){
+        public static function redeem($type,$code){
             $codeService = new \App\Models\Storage\Sql\CodeService();
-            return $codeService->use($type,$code);
+            return $codeService->redeem($type,$code);
         }
         
 

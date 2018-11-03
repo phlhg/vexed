@@ -34,7 +34,7 @@
          * @param Mixed[]   $methodParams Array of parameters for the method in the controller
          * @param Mixed[]   $controllerParams Array of parameters for the constructor of the controller
          */
-        public function set(String $pattern, String $action, Array $methodParams=[], Array $controllerParams=[]){
+        public function set($pattern, $action, $methodParams=[], $controllerParams=[]){
             $this->repository[] = new Route($pattern,$action,$methodParams,$controllerParams);
             return end($this->repository);
         }
@@ -48,7 +48,7 @@
          * 
          * @return Boolean Returns true if a route has matched
          */
-        public function find(String $url){
+        public function find($url){
             $this->url = $url;
             $this->route = null;
             foreach($this->repository as $route){
@@ -68,7 +68,7 @@
          * 
          * @return String Returns the content of the matching route
          */
-        public function run(String $url){
+        public function run($url){
             try {
                 $this->find($url);
             } catch( \Core\Error $e){
@@ -88,7 +88,7 @@
          * @param Mixed[]   $methodParams Array of parameters for the method in the controller
          * @param Mixed[]   $controllerParams Array of parameters for the constructor of the controller
          */
-        public function setRoute(String $action, Array $methodParams=[], Array $controllerParams=[]){
+        public function setRoute($action, $methodParams=[], $controllerParams=[]){
             $this->route = null;
             $this->route = new \Core\Route("",$action,$methodParams,$controllerParams);
             $this->route->execute($this->url);
@@ -100,7 +100,7 @@
          * 
          * @todo add functionality
          */
-        public function redirect(String $url){
+        public function redirect($url){
             header("Location: ".$url);
         }
 

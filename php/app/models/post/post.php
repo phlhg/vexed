@@ -62,7 +62,7 @@
             return $html;
         }
 
-        public static function byUser(Int $id){
+        public static function byUser($id){
             $postservice = new \App\Models\Storage\Sql\PostService();
             return $postservice->byUser($id);
         }

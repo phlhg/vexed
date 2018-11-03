@@ -13,8 +13,8 @@ Options -Indexes
 
 Options +FollowSymLinks -MultiViews
 
-AddType x-mapp-php6 .php
-AddHandler x-mapp-php6 .php
+#AddType x-mapp-php6 .php
+#AddHandler x-mapp-php6 .php
 
 RewriteEngine on
 RewriteBase /

@@ -16,7 +16,7 @@
         }
 
         private function loadRoutes(){
-            require_once $_SERVER["DOCUMENT_ROOT"]."php/routes.php";
+            require_once $_SERVER["DOCUMENT_ROOT"]."/php/routes.php";
         }
 
         public function run(){

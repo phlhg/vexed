@@ -34,7 +34,7 @@
          * Loads a new view to the controller.
          * @param String $view Name of the view
          */
-        public function view(String $view){
+        public function view($view){
             $this->view = new \Core\View($view);
         }
     }

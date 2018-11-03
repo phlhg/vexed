@@ -16,7 +16,7 @@
          * @param Int $user Id of the user to load the followers.
          * @return Mixed[] Returns an array with ids on success otherwise an empty array.
          */
-        public function getFollowers(Int $user){
+        public function getFollowers($user){
             $q = \Core\DBM::getMain()->prepare("SELECT user FROM ph_relations WHERE follow = ? AND state = ?");
             if(!$q->execute([$user,\App\Models\Account\Relation::FOLLOWING])){ return []; };
             return $q->fetchAll(\PDO::FETCH_COLUMN);
@@ -27,7 +27,7 @@
          * @param Int $user Id of the user to load the subscriptions.
          * @return Mixed[] Returns an array with ids on success otherwise an empty array.
          */
-        public function getSubscriptions(Int $user){
+        public function getSubscriptions($user){
             $q = \Core\DBM::getMain()->prepare("SELECT follow FROM ph_relations WHERE user = ? AND state = ?");
             if(!$q->execute([$user,\App\Models\Account\Relation::FOLLOWING])){ return []; };
             return $q->fetchAll(\PDO::FETCH_COLUMN);
@@ -38,7 +38,7 @@
          * @param Int $user User to get the relation.
          * @return Int Returns the current relation on success otherwise STRANGER.
          */
-        public function getState(Int $user){
+        public function getState($user){
             $client = \App::$client->id;
             if($client == $user){ return \App\Models\Account\Relation::ME; }
             $q = \Core\DBM::getMain()->prepare("SELECT state FROM ph_relations WHERE user = ? AND follow = ? LIMIT 1");
@@ -52,7 +52,7 @@
          * @param Int $follow The id of the user to follow.
          * @return Boolean Returns True on success otherwise False.
          */
-        public function create(Int $follow){
+        public function create($follow){
             $client = \App::$client->id;
             $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_relations (user, follow, state, date) VALUES (?,?,?,?);");
             if(!$q->execute([$client,$follow,\App\Models\Account\Relation::REQUESTED,time()])){ return false; }
@@ -65,7 +65,7 @@
          * @param Int $follow The id of the followed user.
          * @param Int $state The new state of the realtion.
          */
-        public function setState(Int $follow, Int $state){
+        public function setState($follow,$state){
             $client = \App::$client->id;
             $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? LIMIT 1");
             if(!$q->execute([$state,$client,$follow])){ return false; };

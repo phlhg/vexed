@@ -28,7 +28,7 @@
             $this->view->v->p_postlist .= '</div>';
         }
 
-        public function switch($_URL){
+        public function _switch($_URL){
             $this->client->authenticate();
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
             if(!isset($_URL["site"])){ return \App::$router->redirect("/p/".$_URL["username"]."/"); }
@@ -68,7 +68,7 @@
             $this->view->setTemplate("none");
             $id = $_URL["id"];
             if(!isset($id) && is_int($id)){ $id = 0; }
-            $folder = $_SERVER["DOCUMENT_ROOT"].'php/files/img/profile/pb/';
+            $folder = $_SERVER["DOCUMENT_ROOT"].'/php/files/img/profile/pb/';
             $filetype = false;
             $filetypes = ["jpg","png","gif"];
             foreach($filetypes as $type){
@@ -92,7 +92,7 @@
             $this->view->setTemplate("none");
             $id = $_URL["id"];
             if(!isset($id) && is_int($id)){ $id = 0; }
-            $folder = $_SERVER["DOCUMENT_ROOT"].'php/files/img/profile/bg/';
+            $folder = $_SERVER["DOCUMENT_ROOT"].'/php/files/img/profile/bg/';
             $filetype = false;
             $filetypes = ["jpg","png"];
             foreach($filetypes as $type){

@@ -16,7 +16,7 @@
          * @param Int $id The id of the post.
          * @return Mixed[]|Boolean Returns an Array with information if the post was found otherwise False.
          */
-        public function get(Int $id){
+        public function get($id){
             $q = $this->db->prepare("SELECT id, user, type, description, date FROM ph_posts WHERE id = ? LIMIT 1");
             $q->execute([$id]);
             if($q->rowCount() < 1){ return false; }
@@ -41,7 +41,7 @@
          * @param Int $id The id of the user.
          * @return Int[] Returns an array with ids of posts.
          */
-        public function byUser(Int $id){
+        public function byUser($id){
             $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = ? ORDER BY date DESC");
             if(!$q->execute([$id])){ return []; }
             return $q->fetchAll(\PDO::FETCH_COLUMN);
@@ -60,7 +60,7 @@
          * @param String $text The formatted content of the post.
          * @return Boolean Returns True if the post was created otherwise False.
          */
-        public function createText(String $text){
+        public function createText($text){
             $id = \App::$client->id;
             $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_posts (user, type, description, date) VALUES (?,?,?,?);");
             $q->execute([$id,\App\Models\Post\Type::TEXT,$text,time()]);
