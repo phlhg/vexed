@@ -48,7 +48,8 @@
             $this->text = $text;
             $this->media = $media;
             $this->type = $this->getType();
-            return $this->postservice->createText($text);
+            $this->clean();
+            return $this->makeText();
         }
 
         private function getType(){
@@ -84,8 +85,8 @@
             return $this->error("Diese Funktion befindet sich noch in Entwicklung");
         }
 
-        private function clean($text){
-            return htmlspecialchars($text);
+        private function clean(){
+            $this->text = htmlspecialchars($this->text);
         }
 
         /**
