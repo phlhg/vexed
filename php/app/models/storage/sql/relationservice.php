@@ -111,6 +111,17 @@
             return true;
         }
 
+        /**
+         * Returns ids of users sorted by popularity.
+         */
+        public function getPopular($limit = 4){
+            $client = \App::$client->id;
+            $q = $this->db->prepare("SELECT follow FROM `ph_relations` WHERE follow != ? GROUP BY follow ORDER BY COUNT(*) DESC LIMIT 4");
+            if(!$q->execute([$client])){ return []; }
+            if($q->rowCount() < 1){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
     }
 
 ?>

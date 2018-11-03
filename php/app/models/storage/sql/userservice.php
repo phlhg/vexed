@@ -142,6 +142,15 @@
         }
 
         /**
+         * Returns an array with public users.
+         */
+        public function getPublic(){
+            $q = \Core\DBM::getMain()->prepare("SELECT id FROM ph_users WHERE private = 0");
+            if(!$q->execute()){ return []; };
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
+        /**
          * Gets the id from the username.
          * @param String $name Name of the user
          * @return Int Returns the id of the user on success otherwise returns -1
