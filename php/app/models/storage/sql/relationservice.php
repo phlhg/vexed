@@ -77,7 +77,7 @@
          * @param Int $follower The id of the accepted follower.
          * @return Boolean Returns True on success otherwise False.
          */
-        public function accept(Int $follower){
+        public function accept($follower){
             $client = \App::$client->id;
             $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? AND state = ? LIMIT 1");
             $q->execute([\App\Models\Account\Relation::FOLLOWING,$follower,$client,\App\Models\Account\Relation::REQUESTED]);
@@ -90,7 +90,7 @@
          * @param Int $follower The id of the denied follower.
          * @return Boolean Returns True on success otherwise False.
          */
-        public function deny(Int $follower){
+        public function deny($follower){
             $client = \App::$client->id;
             $q = $this->db->prepare("UPDATE ph_relations SET state = ? WHERE user = ? AND follow = ? AND state = ? LIMIT 1");
             $q->execute([\App\Models\Account\Relation::STRANGER,$follower,$client,\App\Models\Account\Relation::REQUESTED]);
@@ -103,7 +103,7 @@
          * @param Int $follow The id of the user to unfollow.
          * @return Boolean Returns True if the Friendship was deleted otherwise false.
          */
-        public function delete(Int $follow){
+        public function delete($follow){
             $client = \App::$client->id;
             $q = $this->db->prepare("DELETE FROM ph_relations WHERE user = ? AND follow = ? LIMIT 1");
             if(!$q->execute([$client,$follow])){ return false; }

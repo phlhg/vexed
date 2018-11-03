@@ -52,11 +52,11 @@
                     <span class="meta">
                         <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
-                    <div class="voting" style="opacity: 0.25" data-vote="0" data-id="'.$this->id.'">
-                        <div class="actions up">+</div>
-                        <span>0+</span>
-                        <div class="actions down">-</div>
-                    </div>
+                    <div class="voting" style="opacity: 0.25" data-vote="0" data-id="'.$this->id.'"><!--
+                        --><div class="actions down">-</div><!--
+                        --><span>0+</span><!--
+                        --><div class="actions up">+</div><!--
+                    --></div>
                 </div>
             </article>';
             return $html;

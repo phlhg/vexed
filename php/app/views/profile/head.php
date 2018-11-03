@@ -1,4 +1,4 @@
-<section style="overflow: visible;" class="min-halfscreen transparent-menu">
+<section class="transparent-menu">
     <div class="ph_profile_bg"><div style="background-image: url(/img/pbg/<?=$_var->profile->id?>);"></div></div>
     <div class="ph_profile_bg_overlay"></div>
     <div class="ph_profile_bg_easing"></div>
@@ -9,29 +9,28 @@
                 <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
                 <span><strong><?=$_var->profile->posts?></strong>Beiträge</span>
                 <a href="/p/<?=$_var->profile->name?>/followers/"><strong><?=count($_var->profile->followers)?></strong>Abonnenten</a>
-                <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</span></a>
+                <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</a></span>
             <h1><?=$_var->profile->name?></h1>
         </div>
-        <span class="description"><?=$_var->profile->description?>
-        </span>
+        <span class="description"><?=$_var->profile->description?></span>
         <div class="ph_profile_submenu">
             <span>
                 <div class="ph_fs_button" data-rel="<?=$_var->profile->relation?>" data-id="<?=$_var->profile->id?>">
-                    <span class="edit">Bearbeiten <i class="material-icons">create</i></span>
-                    <span class="follow">Folgen <i class="material-icons">add</i></span>
-                    <span class="requested">Angefragt <i class="material-icons">send</i></span>
-                    <span class="following">Abonniert <i class="material-icons">done</i></span>
+                    <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
+                    <span class="follow"><span class="txt">Folgen </span><i class="material-icons">add</i></span>
+                    <span class="requested"><span class="txt">Angefragt </span><i class="material-icons">send</i></span>
+                    <span class="following"><span class="txt">Abonniert </span><i class="material-icons">done</i></span>
                 </div>
             </span>
             <?php if($_var->profile->website != ''){ ?>
                 <span>
                     <?php if(!$_var->p_site){ ?>
                         <a href="http://<?=$_var->profile->website?>" target="_blank" class="ph_button_v2 i">
-                            <span class="icon"><i class="material-icons">public</i></span> <?=$_var->profile->website?>
+                            <span class="icon"><i class="material-icons">public</i></span><span class="txt"><?=$_var->profile->website?></span>
                         </a>
                     <?php } else { ?>
                     <a href="/p/<?=$_var->profile->name?>/" target="_blank" class="ph_button_v2 i">
-                        <span class="icon" style="right: unset; left: 10px"><i class="material-icons">chevron_left</i></span><?=$_var->p_site_title?>
+                        <span class="icon" style="right: unset; left: 10px"><i class="material-icons">chevron_left</i></span><span class="txt"><?=$_var->p_site_title?></span>
                     </a>
                 <?php } ?>
                 </span>
@@ -44,8 +43,8 @@
                 </span>
             <?php } else { ?>
                 <span>
-                    <a href="/chat/" target="_blank" class="ph_button_v2 i">
-                        Nachricht <i class="material-icons">chat_bubble_outline</i>
+                    <a href="/chat/" target="_blank" class="ph_button_v2">
+                        <span class="txt">Nachricht </span><i class="material-icons">chat_bubble_outline</i>
                     </a>
                 </span>
                 <span>

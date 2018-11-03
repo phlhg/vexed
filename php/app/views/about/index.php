@@ -3,8 +3,8 @@
     <div class="ph_profile_bg_overlay"></div>
     <div class="ph_profile_bg_easing"></div>
 </section>
-<section class="min-fullscreen" style="overflow: visible;">
-    <div class="ph_text" style="margin-top: -200px">
+<section class="min-halfscreen ph_afterphead">
+    <div class="ph_text">
         <img class="h1" src="/img/icons/logo.svg"/>
         <p class="justify">
             Seit mich <a target="_blank" href="http://tc.felsenwetter.ch/">ein Freund</a> im 1. Kurzzeit-Gymasium ins Programmieren eingeführt hat, 

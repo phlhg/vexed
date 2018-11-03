@@ -33,12 +33,12 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="<?php echo \Core\Config::get("application_title"); ?>">
         <meta name="application-name" content="<?php echo \Core\Config::get("application_title"); ?>">
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <!--// LINKS //-->
         <!--FAVICON-->
         <link href="/img/icons/favicon.png" type="image/x-icon" rel="shortcut icon">
         <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="/img/icons/favicon.png"rel="apple-touch-icon" />
+        <link href="http://<?php echo \Core\Config::get("application_domain"); ?>/img/icons/dark_favicon.png" rel="apple-touch-icon" />
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Aldrich|Oxygen:300,400,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

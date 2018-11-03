@@ -1,6 +1,6 @@
 <?php $view->get("profile/head"); ?>
-<section class="min-fullscreen" style="overflow: visible;">
-    <div class="ph_text" style="margin-top: -200px">
+<section class="min-halfscreen ph_afterphead">
+    <div class="ph_text">
         <div class="ph_profile_list">
             <?php
                 foreach($_var->profile->subscriptions as $id){

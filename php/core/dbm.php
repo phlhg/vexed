@@ -23,7 +23,7 @@
          * @param String $identifier Identifier to access the connection after creation.
          * @param String[] $credentials Array with the credentials: Needed keys: 'host', 'database', 'username', 'password'
          */
-        public static function add( String $identifier, Array $credentials){
+        public static function add($identifier, $credentials){
             if(count(Self::$repository) < 1){ Self::$main = $identifier; }
             $connection = new \PDO('mysql:host='.$credentials["host"].';dbname='.$credentials["database"],$credentials["username"],$credentials["password"]);
             $connection->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
@@ -38,7 +38,7 @@
          * 
          * @return Boolean Returns true if a connection exists.
          */
-        public static function exists( String $identifier){
+        public static function exists($identifier){
             if(!isset(self::$repository[$identifier])){ return false; }
             return true;
         }
@@ -50,7 +50,7 @@
          * 
          * @return \PDO Returns a PDO connection if sucessfull.
          */
-        public static function get( String $identifier){
+        public static function get($identifier){
             if(!self::exists($identifier)){ die("DBM - There is not DB with the identifier \"".$identifier."\""); }
             return self::$repository[$identifier];
         }
@@ -61,7 +61,7 @@
          * @param String $identifier Identifier of the main database in the manager.
          * 
          */
-        public static function setMain( String $identifier ){
+        public static function setMain($identifier ){
             if(!in_array($identifier,Self::$repository)){ die("The Connection \"".$identifier."\" can't be set as main connection, because it doesn't exists"); }
             Self::$main = $identifier;
         }
@@ -72,7 +72,7 @@
          * @param String $identifier Identifier of the connection to remove.
          * 
          */
-        public static function remove( String $identifier){
+        public static function remove($identifier){
             unset(self::$repository[$identifier]);
         }
 
