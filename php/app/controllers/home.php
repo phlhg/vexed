@@ -7,7 +7,7 @@
         public function index($_URL){
             $this->client->authenticate();
             $this->view("home/index");
-            $this->view->meta->title = "Home";
+            $this->view->meta->title = "Start";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";
 
             $this->view->v->content = "";
