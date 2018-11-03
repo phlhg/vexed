@@ -160,9 +160,9 @@
          */
         public function getIdByEmail($email){
             $q = $this->db->prepare("SELECT id FROM ph_users WHERE email = ? LIMIT 1");
-            $q->execute(array($email));
+            $q->execute([$email]);
             if($q->rowCount() < 1){ return -1; }
-            return intval($q->fetchObject()->email);
+            return intval($q->fetchObject()->id);
         }
 
 

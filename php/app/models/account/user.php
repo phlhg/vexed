@@ -139,6 +139,11 @@
             return new Self($userService->getIdByName($name));
         }
 
+        public static function getByEmail($email){
+            $userService = new \App\Models\Storage\Sql\UserService();
+            return new Self($userService->getIdByEmail($email));
+        }
+
         public static function hasEmail($email){
             $userService = new \App\Models\Storage\Sql\UserService();
             return $userService->existsEmail($email);

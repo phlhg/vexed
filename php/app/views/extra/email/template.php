@@ -10,13 +10,13 @@
 			@import url(https://fonts.googleapis.com/css?family=Oxygen:300,400,700);
 			a { text-decoration: none; }
 			a:visited { color: inherit !important; }
-			.footer a { color: #fff; margin: 0 5px; text-decoration: underline; }
+			.footer a { color: #0a0a0a; margin: 0 5px; text-decoration: none; }
 			.meta a { color: inherit; text-decoration: underline;}
-			h1, h2, h3, h4, h5, h6 { margin: 8px 0; color: #009632; font-weight: bold; text-align: left; font-weight: bold !important; }
+			h1, h2, h3, h4, h5, h6 { margin: 8px 0; color: #ffd200; font-weight: bold; text-align: left; font-weight: bold !important; }
 			h1 { font-size: 50px; line-height: 60px; }
 			h2 { font-size: 40px; line-height: 50px; }
 			hr { border: 0px; background-color: rgba(10,10,20,1); height: 2px; margin: 20px 0px 20px 0px; }
-			.content a { color: #009632; font-weight: bold; text-decoration: underline; }
+			.content a { color: #ffd200; font-weight: bold; text-decoration: none; }
 			p { padding: 10px 0px; }
 			img { position: relative; }
 			<!--[if mso]>
@@ -36,24 +36,17 @@
                     <table bgcolor="#1e1e1e" width="800" style="min-width: 500px; max-width: 1000px; width: 100%;" align="center" cellpadding="0" cellspacing="0" border="0">
 						<tr>
 							<td style="position: relative; display: block;" >
-								<table bgcolor="#009632" style="width: 100%; z-index: 5;" height="60" align="center" cellpadding="0" cellspacing="0" border="0">
+								<table style="width: 100%; z-index: 5;" height="60" align="center" cellpadding="0" cellspacing="0" border="0">
 									<tr>
 										<td style="padding: 10px 40px 0 40px" >
-											<a href="http://<?=\Core\Config::get("application_domain")?>" ><img height="30" src="http://<?=\Core\Config::get("application_domain")?>/img/icons/logo_text.png"/></a>
+											<a href="http://<?=\Core\Config::get("application_domain")?>" ><img height="30" src="http://<?=\Core\Config::get("application_domain")?>/img/icons/logo.svg"/></a>
 										</td>
 										<td style="padding: 0px 40px 0 40px; text-align: right;" >
-											<a href="http://<?=\Core\Config::get("application_domain")?>/p/<?=strtolower($view->v->to_name)?>/" ><span style="font-weight: bold; color: #fff; vertical-align:top;line-height: 30px; margin-right: 10px;"><?=$view->v->to_name?></span><img height="30" style="border-radius: 50%;" src="http://antisocial.vs/php/files/img/profile/1.jpg"></a>
+											<a href="http://<?=\Core\Config::get("application_domain")?>/p/<?=strtolower($view->v->to_user->name)?>/" ><span style="font-weight: normal; color: #fff; vertical-align:top;line-height: 30px; margin-right: 10px;"><?=$view->v->to_user->displayName?></span><img height="30" style="border-radius: 50%;" src="http://<?=\Core\Config::get("application_domain")?>/img/pb/<?=$view->v->to_user->id?>/"></a>
 										</td>
 									</tr>
 								</table>
 							</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg width="100%" height="40" viewbox="0,0 100,100" preserveAspectRatio="none" >
-                                    <polygon points="0,0 100,0 0,100" style="fill: #009632;"/>
-                                </svg>
-                            </td>
                         </tr>
 						<tr height="20"></tr>
 						<tr class="content" >
@@ -62,21 +55,14 @@
 							</td>
 						</tr>
 						<tr height="20"></tr>
-						<tr>
-                            <td>
-                                <svg width="100%" height="40" viewbox="0,0 100,100" preserveAspectRatio="none" >
-                                    <polygon points="0,101 0,100 100,0 100,101" style="fill: #009632;"/>
-                                </svg>
-                            </td>
-                        </tr>
-						<tr height="100" style="background-color: #009632;" >
+						<tr style="background-color: #ffd200;" >
 							<td>
-								<table height="100" style="width: 100%;" align="center" cellpadding="0" cellspacing="0" border="0">
-									<tr style="text-align: left; color: #fff;">
-										<td  class="footer" style="padding: 20px 40px; ">
-											<a title="Games" href="http://<?=\Core\Config::get("application_domain")?>/p/<?=strtolower($view->v->to_name)?>/">Account</a>
-											<a title="Start" href="http://<?=\Core\Config::get("application_domain")?>/about/">Über</a>
-											<a title="Games" href="http://<?=\Core\Config::get("application_domain")?>/conditions/">Nutzungsbedingungen</a>
+								<table height="40" style="width: 100%;" align="center" cellpadding="0" cellspacing="0" border="0">
+									<tr style="text-align: left; color: #0a0a0a;">
+										<td  class="footer" style="font-size: 14px; padding: 10px 40px; ">
+											<a title="VEXED" href="http://<?=\Core\Config::get("application_domain")?>/"><?=\Core\Config::get("application_title")?></a>
+											<a title="Account" href="http://<?=\Core\Config::get("application_domain")?>/p/<?=strtolower($view->v->to_user->name)?>/">Account</a>
+											<a title="Über" href="http://<?=\Core\Config::get("application_domain")?>/about/">Über</a>
 										</td>
 									</tr>
 								</table>

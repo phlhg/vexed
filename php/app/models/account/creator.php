@@ -101,7 +101,7 @@
                 <br/>
                 Um deine Registrierung abzuschliessen, benutze bitte den folgenden Aktivierungslink<br/>
                 <br/>
-                <strong style="font-size: 25px;"><a href="http://antisocial.vs/signup/confirm/'.$this->id.'/'.$this->security.'/">antisocial.vs/signup/confirm/'.$this->id.'/'.$this->security.'/</a></strong><br/>
+                <strong style="font-size: 25px;"><a href="http://'.\Core\Config::get("application_domain").'/signup/confirm/'.$this->id.'/'.$this->security.'/">'.\Core\Config::get("application_domain").'/signup/confirm/'.$this->id.'/'.$this->security.'/</a></strong><br/>
                 <br/>
                 <br/>
                 <h3>Keinen Account erstellt?</h3>

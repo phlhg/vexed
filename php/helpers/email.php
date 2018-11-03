@@ -9,12 +9,14 @@
         private $render = "";
         private $header = "";
         public  $to = "";
+        public  $to_user = null;
         private $from = "";
         private $fromName = "";
         public  $subject = "";
 
         public function __construct($to,$subject){
             $this->to = $to;
+            $this->to_user = \App\Models\Account\User::getByEmail($this->to);
             $this->from = \Core\Config::get("email_noreply");
             $this->fromName = \Core\Config::get("email_noreply_name");
             $this->subject = $subject;
@@ -32,11 +34,12 @@
         }
 
         public function render(){
-            $this->view = new \Core\View("extra/email/template","none");
+            $this->view = new \Core\View("extra/email/template");
+            $this->view->setTemplate("none");
             $this->view->v->subject = $this->subject;
             $this->view->v->content = $this->content;
             $this->view->v->to_email = $this->to;
-            $this->view->v->to_name = "phlhg";
+            $this->view->v->to_user = $this->to_user;
             $this->view->render();
         }
 
