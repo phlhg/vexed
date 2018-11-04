@@ -87,8 +87,17 @@ header .ph_logo_wrapper img, .mobile_header .ph_logo_wrapper img { position: rel
 header.transparent-menu { background-color: transparent; }
 header.transparent-menu:after { display: none; }
 
-.mobile_header { display: none; padding: 5px 20px; border-bottom: 1px solid rgb(35,35,35); z-index: 102; position: fixed; top: 0; left: 0; width: 100%; height: 50px; background-color: rgb(20,20,20); }
-.mobile_header .ph_logo_wrapper { top: 0; padding: 10px 0; position: absolute; left: 50%; transform: translateX(-50%); }
+.mobile_header { text-align: center; line-height: 34px; display: none; padding: 8px 70px 8px 70px; border-bottom: 1px solid rgb(35,35,35); z-index: 102; position: fixed; top: 0; left: 0; width: 100%; height: 50px; background-color: rgb(20,20,20); }
+.mobile_header .logo { width: 60px; height: 46px; right: 10px; padding: 10px 17px; top: 50%; transform: translateY(-50%); position: absolute; }
+.mobile_header .logo img, .mobile_header .logo_login img { position: relative; width: 100%; height: 100%; }
+.mobile_header .logo_login { display: none; position: absolute; height: 100%; top: 10px; padding: 5px 0; left: 50%; transform: translateX(-50%); }
+.mobile_header .title { max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: top; display: inline-block; font-weight: bold; color: rgb(255,210,0); font-size: 20px; line-height: 34px; }
+.mobile_header .profile { line-height: 36px; color: rgb(10,10,10); text-align: center; border-radius: 50%; overflow: hidden; height: 34px; width: 34px; position: absolute; top: 8px; left: 20px; }
+.mobile_header .profile.login { background-color: rgb(255,210,0); }
+.mobile_header .profile img { width: 100%; height: 100%; }
+
+.mobile_header.login-menu .logo, .mobile_header.login-menu .title, .mobile_header.login-menu .profile { display: none;  }
+.mobile_header.login-menu .logo_login { display: block; }
 
 .ph_page_loader { -webkit-backface-visibility: hidden; visibility: hidden; transition-duration: 0; position: fixed; top: 0; right: 0; width: 100%; transform: translateX(100%); height: 100%; z-index: 200; background-color: rgb(20,20,20); background-image: url(/img/icons/logo.svg); background-size: 100px;  background-position: center; background-repeat: no-repeat; }
 .ph_page_loader:after { -webkit-backface-visibility: hidden; content: ''; position: absolute; display: block; width: 0; height: 100%; position: absolute; right: 100%; top: 0; background-color: rgb(255,210,0); }
@@ -324,7 +333,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     header .ph_logo_wrapper { display: none; }
     header .ph_menur { position: relative; flex-direction: row; justify-content: space-between; width: 100%; height: 100%; display: flex; }
     header .ph_menu_point { box-shadow: none; height: 40px; width: 40px; background-color: transparent; color: rgb(100,100,100); border-radius: 0; margin: 0; }
-    header .ph_menu_point.mprofile { border-radius: 50%; }
+    header .ph_menu_point.mprofile { display: none;  }
     header .ph_menu_point:hover { color: rgb(255,210,0); }
     header .ph_menu_point i { font-size: 26px; }
 
