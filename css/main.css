@@ -293,8 +293,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 /* BANNER */
 .ph_post_list { display: block; width: 100%; }
 .ph_post_list > .container { display: block; position: relative; column-count: 3; column-gap: 20px; }
-.ph_post_list a.ph_post_banner { text-align: left; line-height: 30px; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; font-size: 20px; min-height: 66px; max-height: 500px; padding: 20px 40px; color: #fff; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgba(0,0,0,0.25); }
-.ph_post_list a.ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
+.ph_post_list .ph_post_banner { font-weight: bold; text-align: left; line-height: 30px; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; font-size: 20px; min-height: 66px; max-height: 500px; padding: 20px 40px; color: #fff; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgba(0,0,0,0.25); }
+.ph_post_list .ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
 
 /*#######################################
     Media Queries
