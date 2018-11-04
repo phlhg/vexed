@@ -8,7 +8,7 @@
         public function index($_URL){
             $this->client->authenticate();
             $this->view("createpost/index");
-            $this->view->meta->title = "Beitrag erstellen";
+            $this->view->meta->title = "Neuer Beitrag";
             $this->view->meta->description = "Ein bisschen Text hier. Ein Foto da. Und schon hast du deinen eigenen Beitrag";
             $this->view->v->form_info = "";
             $this->view->v->form_error = "";
@@ -30,7 +30,7 @@
                 //$image = $_FILES["image"];
                 $this->view->v->form_description = $description;
                 if(!$creator->post($description)){
-                    $this->view->v->form_error = "Beim erstellen ist ein Fehler aufgetreten";
+                    $this->view->v->form_error = $creator->errorMsg;
                     return false;
                 }
                 \App::$router->redirect("/");

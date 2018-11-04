@@ -48,6 +48,7 @@
             $this->text = $text;
             $this->media = $media;
             $this->type = $this->getType();
+            if(!$this->validate()){ return false; }
             return $this->makeText();
         }
 
@@ -60,9 +61,8 @@
         }
 
         private function validate(){
-            if(strlen($text) > 250){
-                return $this->error("Die maximale Textlänge wurde überschritten");
-            }
+            if(str_replace(" ","",$this->text) == ""){ return $this->error("Leere Post sind nicht möglich"); }
+            if(strlen($this->text) > 250){ return $this->error("Die maximale Textlänge wurde überschritten"); }
         }
 
         private function make(){
