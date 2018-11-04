@@ -8,7 +8,7 @@
             $this->client->authenticate();
             $this->view("profile/index");
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
-        
+            if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
             $this->view->meta->title = $profile->displayName;
             $this->view->meta->description = $profile->description;
             $this->view->v->p_site = false;
@@ -31,6 +31,7 @@
         public function _switch($_URL){
             $this->client->authenticate();
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
+            if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
             if(!isset($_URL["site"])){ return \App::$router->redirect("/p/".$_URL["username"]."/"); }
             switch($_URL["site"]){
                 case "followers":
