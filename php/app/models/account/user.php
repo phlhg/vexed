@@ -127,7 +127,7 @@
             $html = '<a class="ph_profile_banner_small" href="/p/'.$this->name.'/">
                 <div class="pb" style="background-image: url(/img/pb/'.$this->id.'/);"></div>
                 <span class="name">'.$this->displayName.'</span>
-                <span class="description">'.str_replace("<br/>"," ",nl2br($this->description)).'</span>
+                <span class="description">'.preg_replace('/\n/i',' ',$this->description).'</span>
             </a>';
             return $html;
         }
