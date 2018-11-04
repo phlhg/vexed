@@ -29,4 +29,8 @@
         $return = preg_replace('([\dA-Z]{3})','$0 ',$code);
         return $return;
     }
+
+    function __CLIENT(){
+        return \App::$client;
+    }
 ?>
