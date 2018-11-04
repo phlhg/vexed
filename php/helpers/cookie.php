@@ -18,6 +18,10 @@
             setCookie(Self::$prefix.$id,$value,time()+3600*$expire,$path);
         }
 
+        public static function delete($id){
+            setCookie(Self::$prefix.$id,"",time()-3600,"/");
+        }
+
     }
 
 ?>
