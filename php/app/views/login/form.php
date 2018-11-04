@@ -8,5 +8,5 @@
     <span class="ph_form_error"><?=(isset($view->v->login_form_error) ? $view->v->login_form_error : '')?></span>
     <span class="ph_form_info"><?=(isset($view->v->login_form_info) ? $view->v->login_form_info : '')?></span>
     <input type="submit" value="Anmelden"/>
-    <label class="inline" style="float: right;"><input <?php echo ($view->v->login_used_remember ? 'checked="" ' : ''); ?>name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>
+    <label class="check inline" style="float: right;"><input <?php echo ($view->v->login_used_remember ? 'checked="" ' : ''); ?>name="ph_login_preserve" type="checkbox" /> Angemeldet bleiben</label>
 </form>

@@ -2,11 +2,12 @@
     <div class="ph_separator_half">
         <div class="ph_text">
             <div class="ph_progress_dots"><?php for($i = 0; $i < $view->v->signup_step_max; $i++){ ?><span <?=($i == $view->v->signup_step?'class="active" ':'')?>></span><?php } ?></div>
-            <h1>Passwort</h1>
+            <h2 class="ph_mobile_hide">Passwort</h2>
             <p>Wähle ein starkes Passwort um die Sicherheit deines Account zu gewährleisten</p>
             <form action="" method="POST">
                 <input name="ph_signup_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
-                <input autofocus="" name="ph_signup_password" autocomplete="off" required value="" type="password" placeholder="Passwort" title="Wähle ein möglichst starkes Passwort" />
+                <input name="username" type="text" value="<?=$_var->signup_form_username?>" style="display: none;" />
+                <input autofocus="autofocus" name="ph_signup_password" autocomplete="off" required value="" type="password" placeholder="Passwort" title="Wähle ein möglichst starkes Passwort" />
                 <div class="ph_form_input_submit">
                     <input name="ph_signup_password_confirm" autocomplete="off" required value="" type="password" placeholder="Passwort bestätigen" title="Bestätige dein passwort" />
                     <span class="ph_fi_submit"><i class="material-icons">chevron_right</i></span>

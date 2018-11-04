@@ -2,7 +2,7 @@
     <div class="ph_separator_half">
         <div class="ph_text">
             <div class="ph_progress_dots"><?php for($i = 0; $i < $view->v->signup_step_max; $i++){ ?><span <?=($i == $view->v->signup_step?'class="active" ':'')?>></span><?php } ?></div>
-            <h1>Bestätigen</h1>
+            <h2 class="ph_mobile_hide">Bestätigen</h2>
             <p>Bitte bestätige deinen Account mit dem an dich gesendeten Bestätigungs-Link. Klicke danach auf "Starten".</p>
             <form action="/" method="POST">
                 <input name="ph_login_tkn" type="hidden" value="<?=\Helpers\Token::get()?>" />
@@ -15,7 +15,7 @@
     </div>
     <div class="ph_separator_half">
         <div class="ph_text">
-            <i class="material-icons ph_big_icon" style="color: rgb(0,150,50);">check_circle_outline</i>
+            <i class="material-icons ph_big_icon">check_circle_outline</i>
         </div>
     </div>
 </section>
