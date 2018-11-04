@@ -88,6 +88,10 @@ Site.prototype.setEvents = function(){
         new FSButton(el);
     });
 
+    document.querySelectorAll(".ph_pwc").forEach(function(el){
+        new PWCreator(el);
+    });
+
     document.querySelectorAll("form").forEach(function(el){
         new Form(el);
     });
@@ -242,6 +246,57 @@ FSButton.prototype.clicked = function(){
 
 FSButton.prototype = Object.create(FSButton.prototype);
 FSButton.prototype.constructor = FSButton;
+
+/* PASSWORD CREATOR */
+
+function PWCreator(element){
+    this.element = element;
+    this.element.innerHTML += '<span class="indicator"><span class="i"></span></span>';
+    this.indicator = this.element.getElementsByClassName("i")[0];
+    this.input = this.element.getElementsByTagName("input")[0];
+    this.check = (this.input.hasAttribute("data-check") ? document.getElementById(this.input.getAttribute("data-check")) : false);
+    this.error = this.element.closest("form").getElementsByClassName("ph_form_error")[0];
+    this.setEvents();
+    PWCreator.list.push(this);
+}
+
+PWCreator.list = [];
+
+PWCreator.prototype.setEvents = function (){
+    var c = this;
+    this.input.onkeyup = function(c){ c.typed(); }.bind(null,c);
+}
+
+PWCreator.progress = function(pw){
+    var prog = 0;
+    var regex = [
+        /\d/gi,//digits
+        /[a-z]/g, //chars
+        /[^a-z0-9]/gi, //specialchars
+        /[A-Z]/g, //big chars
+        /.{5,}/g //longer than 5
+    ];
+    regex.forEach(function(el){
+        if(el.test(pw)){ prog++; }
+    });
+    return prog/regex.length;
+}
+
+PWCreator.prototype.setIndicator = function(val){
+    this.indicator.style.width = Math.round(val*100)+"%";
+    this.indicator.style.backgroundColor = "rgb("+Math.min(255,Math.max(0,380-val*300))+","+Math.min(255,val*300)+",0)";
+}
+
+PWCreator.prototype.typed = function(){
+    this.setIndicator(PWCreator.progress(this.input.value));
+    if(!this.check || !this.error){ return; }
+    if(this.check.value == "" || this.input.value == ""){ this.error.textContent = ""; return; }
+    if(this.check.value == this.input.value){ this.error.textContent = ""; return; }
+    this.error.textContent = "Passwörter entsprechen sich nicht";
+}
+
+PWCreator.prototype = Object.create(PWCreator.prototype);
+PWCreator.prototype.constructor = PWCreator;
 
 /* RELATION */
 
