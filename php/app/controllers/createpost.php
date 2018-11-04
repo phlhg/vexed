@@ -21,7 +21,7 @@
                 return false;
             }
 
-            if(\Helpers\Post::exists("description") && \Helpers\Post::exists("ph_tkn")){
+            if(\Helpers\Post::exist(["description","ph_tkn"])){
                 if(!\Helpers\Token::check(\Helpers\Post::get("ph_tkn"))){
                     $this->view->v->form_error = "Ungültiger Token - Anfrage abgelehnt";
                     return false;

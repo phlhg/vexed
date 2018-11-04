@@ -63,6 +63,7 @@
         private function validate(){
             if(str_replace(" ","",$this->text) == ""){ return $this->error("Leere Post sind nicht möglich"); }
             if(strlen($this->text) > 250){ return $this->error("Die maximale Textlänge wurde überschritten"); }
+            return true;
         }
 
         private function make(){
