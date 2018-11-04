@@ -175,6 +175,29 @@
         }
 
 
+        /** REWRITE \/ !! */
+
+        public function getSecurity($id){
+            $q = $this->db->prepare("SELECT security FROM ph_users WHERE id = ? LIMIT 1");
+            $q->execute([$id]);
+            if($q->rowCount() < 1){ return false; }
+            return $q->fetchObject()->security;
+        }
+
+        public function setSecurity($id,$sec){
+            $q = $this->db->prepare("UPDATE ph_users SET security = ? WHERE id = ? LIMIT 1");
+            $q->execute([$sec,$id]);
+            if($q->rowCount() < 1){ return false; }
+            return true;
+        }
+
+        public function verifySecurity($id, $sec){
+            $q = $this->db->prepare("SELECT id FROM ph_users WHERE id = ? AND security = ? LIMIT 1");
+            $q->execute([$id,$sec]);
+            if($q->rowCount() > 0){ return true; }
+            return false;
+        }
+
     }
 
 ?>

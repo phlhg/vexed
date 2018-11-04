@@ -33,4 +33,8 @@
     function __CLIENT(){
         return \App::$client;
     }
+
+    function __ROUTER(){
+        return \App::$router;
+    }
 ?>

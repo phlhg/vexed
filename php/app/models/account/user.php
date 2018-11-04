@@ -91,6 +91,30 @@
             }
         }
 
+        /* Auto-Login */
+        public function setAutologCookie(){
+            $security = $this->userservice->getSecurity();
+            if($security == ""){ $security = $this->newAutolog(); }
+            \Helpers\Cookie::set("ph_autolog",$this->id."//".$security);
+        }
+
+        public function newAutolog(){
+            $security = "";
+            $chars = "abcdefghijklmnopqrstuvwxyz1234567890";
+            $l = strlen($chars);
+            for($i = 0; $i < 30; $i++){
+                $security .= $chars[rand(0,($l-1))];
+            }
+            if(!$this->userservice->setSecurity($security)){ return false; };
+            return $security;
+        }
+
+        public function verifyAutologCookie($sec){
+            $hash = $this->userservice->getSecurity();
+            if($hash != "" && hash("sha256",$sec) == $security){ return true; }
+            return false;
+        }
+
         /**
          * Unfollows this user.
          * @return Boolean Returns True if the user was unfollowed.
