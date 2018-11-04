@@ -12,7 +12,12 @@
                 <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</a></span>
             <h1><?=$_var->profile->name?></h1>
         </div>
-        <span class="description"><?=$_var->profile->description?></span>
+        <span class="description">
+            <?=nl2br($_var->profile->description)?>
+            <?php if($_var->profile->website != ""){ ?>
+                <a class="ph_profile_website" href="http://<?=$_var->profile->website?>" target="_blank"><?=$_var->profile->website?></a>
+            <?php } ?>
+        </span>
         <div class="ph_profile_submenu">
             <span>
                 <div class="ph_fs_button" data-rel="<?=$_var->profile->relation?>" data-id="<?=$_var->profile->id?>">
@@ -22,37 +27,51 @@
                     <span class="following"><span class="txt">Abonniert </span><i class="material-icons">done</i></span>
                 </div>
             </span>
-            <?php if($_var->profile->website != ''){ ?>
+            <?php if($_var->p_site){ ?>
                 <span>
-                    <?php if(!$_var->p_site){ ?>
-                        <a href="http://<?=$_var->profile->website?>" target="_blank" class="ph_button_v2 i">
-                            <span class="icon"><i class="material-icons">public</i></span><span class="txt"><?=$_var->profile->website?></span>
-                        </a>
-                    <?php } else { ?>
                     <a href="/p/<?=$_var->profile->name?>/" target="_blank" class="ph_button_v2 i">
                         <span class="icon" style="right: unset; left: 10px"><i class="material-icons">chevron_left</i></span><span class="txt"><?=$_var->p_site_title?></span>
                     </a>
+                </span>
+                <?php if($_var->profile->relation == \App\Models\Account\Relation::ME){ ?>
+                    <span>
+                        <div class="ph_button_v2 multi double">
+                            <a class="sect" href="/chat/"><i class="material-icons">chat_bubble_outline</i></a>
+                            <a class="sect" href="/logout/"><i class="material-icons">power_settings_new</i></a>
+                        </div>
+                    </span>
+                <?php } else { ?>
+                    <span>
+                        <div class="ph_button_v2 multi double">
+                            <a class="sect" href="/chat/"><i class="material-icons">chat_bubble_outline</i></a>
+                            <span class="sect" ><i class="material-icons">more_horiz</i></span>
+                        </div>
+                    </span>
                 <?php } ?>
-                </span>
-                <span>
-                    <div class="ph_button_v2 multi triple">
-                        <a class="sect" href="/chat/"><i class="material-icons">chat_bubble_outline</i></a>
-                        <span class="sect" ><i class="material-icons">block</i></span>
-                        <span class="sect" ><i class="material-icons">outlined_flag</i></span>
-                    </div>
-                </span>
             <?php } else { ?>
-                <span>
-                    <a href="/chat/" target="_blank" class="ph_button_v2">
-                        <span class="txt">Nachricht </span><i class="material-icons">chat_bubble_outline</i>
-                    </a>
-                </span>
-                <span>
-                    <div class="ph_button_v2 multi double">
-                        <span class="sect" ><i class="material-icons">block</i></span>
-                        <span class="sect" ><i class="material-icons">outlined_flag</i></span>
-                    </div>
-                </span>
+                <?php if($_var->profile->relation == \App\Models\Account\Relation::ME){ ?>
+                    <span>
+                        <a href="/chat/" class="ph_button_v2">
+                            <span class="txt">Nachrichten </span><i class="material-icons">chat_bubble_outline</i>
+                        </a>
+                    </span>
+                    <span>
+                        <a href="/logout/" class="ph_button_v2">
+                            <span class="txt">Abmelden </span><i class="material-icons">power_settings_new</i>
+                        </a>
+                    </span>
+                <?php } else { ?>
+                    <span>
+                        <a href="/chat/" target="_blank" class="ph_button_v2">
+                            <span class="txt">Nachricht </span><i class="material-icons">chat_bubble_outline</i>
+                        </a>
+                    </span>
+                    <span>
+                        <a class="ph_button_v2 ">
+                            <span class="txt">Mehr</span><i class="material-icons">more_horiz</i>
+                        </a>
+                    </span>
+                <?php } ?>
             <?php } ?>
         </div>
     </div>
