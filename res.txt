@@ -7,6 +7,8 @@ https://www.w3schools.com/js/js_validation_api.asp 02.11.18
 https://stackoverflow.com/questions/4842590/how-to-run-a-function-when-the-page-is-loaded 02.11.18
 https://stackoverflow.com/questions/7785374/how-to-prevent-column-break-within-an-element 03.11.18
 https://stackoverflow.com/questions/2790899/how-to-check-if-a-string-starts-with-a-specified-string 03.11.18
+https://stackoverflow.com/questions/9504608/request-string-without-get-arguments-in-php/9504722 04.11.18
+https://stackoverflow.com/questions/26087133/htaccess-redirect-to-url-in-encoded-form 04.11.18
 
 TOOLS
 https://vectr.com/

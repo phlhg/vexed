@@ -20,7 +20,8 @@
         }
 
         public function run(){
-            echo Self::$router->run(explode("?",$_SERVER["REQUEST_URI"])[0]);
+            // by https://stackoverflow.com/questions/9504608/request-string-without-get-arguments-in-php/9504722
+            echo Self::$router->run(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
         }
     
     }
