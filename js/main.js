@@ -169,8 +169,8 @@ Form.prototype.reset = function(){
 
 Form.prototype.validate = function(){
     var form = this;
-    this.el_error.textContent = "";
-    this.el_info.textContent = "";
+    this.error("");
+    //this.el_info.textContent = "";
 
     error = "";
     this.valid = true;
@@ -183,11 +183,17 @@ Form.prototype.validate = function(){
     });
 
     if(!this.valid){
-        this.el_error.textContent = "Bitte fülle alle Felder korrekt aus";
+        this.error("Bitte fülle alle Felder korrekt aus");
         return false;
     }
 
     return true;
+}
+
+Form.prototype.error = function(msg){
+    if(this.el_error){
+        this.el_error.textContent = "Bitte fülle alle Felder korrekt aus";
+    }
 }
 
 Form.prototype = Object.create(Form.prototype);
