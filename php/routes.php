@@ -14,8 +14,8 @@
     //PROFILE
     App::$router->set("/p/{username}/","Profile/index")->where(["username" => 'nickname']);
     App::$router->set("/p/{username}/{site}/","Profile/_switch")->where(["username" => 'nickname']);
-    App::$router->set("/img/pb/{id}/","Profile/pb")->where(["id" => "int"]);
-    App::$router->set("/img/pbg/{id}/","Profile/pbg")->where(["id" => "int"]);
+    App::$router->set("/img/pb/{id}/","Profile/pb");
+    App::$router->set("/img/pbg/{id}/","Profile/pbg");
 
     //POST
     App::$router->set("/create/","CreatePost/index");

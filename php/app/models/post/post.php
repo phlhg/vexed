@@ -34,7 +34,7 @@
         public function toHtmlBanner($showUser = false){
             $user = new \App\Models\Account\User($this->user);
             $html = '<a href="/p/'.$user->name.'/" class="ph_post_banner TEXT">
-                '.(strlen($this->text) > 255 ? substr($this->text,0,255).'...' : $this->text).'
+                '.Self::format((strlen($this->text) > 255 ? substr($this->text,0,255).'...' : $this->text)).'
                 <span class="meta">'.($showUser ? '<strong>'.$user->displayName.'</strong> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
                 </a>';
             return $html;
@@ -48,7 +48,7 @@
                     <div class="profile">
                         <a href="/p/'.$user->name.'/" class="pb" style="background-image: url(/img/pb/'.$user->id.'/);"></a>
                     </div>
-                    <p class="description">'.$this->text.'</p>
+                    <p class="description">'.Self::format($this->text).'</p>
                     <span class="meta">
                         <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
@@ -60,6 +60,11 @@
                 </div>
             </article>';
             return $html;
+        }
+
+        public static function format($text){
+            $text = htmlspecialchars($text);
+            return preg_replace('/@([\w\d]+)\b/i','<a href="/p/$1/">@$1</a>',$text);
         }
 
         public static function byUser($id){

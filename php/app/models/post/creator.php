@@ -48,7 +48,6 @@
             $this->text = $text;
             $this->media = $media;
             $this->type = $this->getType();
-            $this->clean();
             return $this->makeText();
         }
 
@@ -83,10 +82,6 @@
 
         private function makeMedia(){
             return $this->error("Diese Funktion befindet sich noch in Entwicklung");
-        }
-
-        private function clean(){
-            $this->text = htmlspecialchars($this->text);
         }
 
         /**
