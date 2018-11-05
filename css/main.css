@@ -342,7 +342,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     header .ph_menur { position: relative; flex-direction: row; justify-content: space-between; width: 100%; height: 100%; display: flex; }
     header .ph_menu_point { box-shadow: none; height: 40px; width: 40px; background-color: transparent; color: rgb(100,100,100); border-radius: 0; margin: 0; }
     header .ph_menu_point.mprofile { display: none;  }
-    header .ph_menu_point:hover { color: rgb(255,210,0); }
+    header .ph_menu_point.active, header .ph_menu_point:hover { color: rgb(255,210,0); }
     header .ph_menu_point i { font-size: 26px; }
 
     section:first-of-type.min-fullscreen { min-height: calc(100% - 50px); top: 50px; }
@@ -398,8 +398,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_fs_button span { top: 5px; }
 
     .ph_post_list > .container { column-count: 1; }
-    .ph_post_list a.ph_post_banner { line-height: 30px; font-size: 18px; min-height: 66px; max-height: 250px; padding: 10px 20px; margin: 0 0 10px 0; }
-    .ph_post_list a.ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
+    .ph_post_list .ph_post_banner { line-height: 30px; font-size: 18px; min-height: 66px; max-height: 250px; padding: 10px 20px; margin: 0 0 10px 0; }
+    .ph_post_list .ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
 
 
 }

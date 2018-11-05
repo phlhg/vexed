@@ -49,6 +49,7 @@ Site.prototype.loaded = function(){
 }
 
 Site.prototype.load = function(href){
+    if(href == location.pathname){ return true; }
     if(!href.startsWith("/") || href.startsWith("//")){ return false; }
     this.obscure(function(){
         window.location.href = href;
@@ -70,6 +71,7 @@ Site.prototype.setEvents = function(){
     var site = this;
 
     document.querySelectorAll("a[href]").forEach(function(el){
+        if(el.getAttribute("href") == location.pathname){ el.classList.add("active"); }
         el.onclick = function(e){
             if(site.load(el.getAttribute("href")))
                 e.preventDefault();
