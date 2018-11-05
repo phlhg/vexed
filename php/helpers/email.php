@@ -23,7 +23,7 @@
         }
 
         private function generateHeader(){
-            $header[] = 'From: '.$this->fromName.' <From: '.$this->from.'>';
+            $header[] = 'From: '.$this->fromName.' < '.$this->from.' >';
             $header[] = 'MIME-Version: 1.0';
             $header[] = 'Content-type: text/html; charset=utf-8';
             $this->header = implode("\n",$header);
