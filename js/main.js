@@ -28,24 +28,33 @@ Client.prototype.load = function(){
     this.id = Config.get("client_id");
 }
 
+Client.prototype.isWebApp = function(){
+    if(window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches === true){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 Client.prototype = Object.create(Client.prototype);
 Client.prototype.constructor = Client;
 
 /* SITE */
 
 function Site(){
-    this.loaded();
-    this.menu = new Menu();
+    this.init();
     this.setEvents();
 }
 
-Site.prototype.loaded = function(){
+Site.prototype.init = function(){
     setTimeout(function(){
         document.getElementsByTagName("body")[0].classList.remove("ph_loading");
         setTimeout(function(){
             document.getElementsByTagName("body")[0].classList.remove("ph_page_init");
         },1000);
     },400);
+
+    setTimeout(function(){ App.site.showWebAppInfo(); },1000*15);
 }
 
 Site.prototype.load = function(href){
@@ -65,6 +74,37 @@ Site.prototype.obscure = function(callback){
             document.getElementsByTagName("body")[0].classList.remove("ph_loading");
         },1000);
     }.bind(null,callback),900);
+}
+
+Site.prototype.showWebAppInfo = function(){
+    var lastinfo = (localStorage.getItem("appinfo") ? parseInt(localStorage.getItem("appinfo")) : 0);
+    var isSafari = (/(iPad|iPhone|iPod)/gi).test(navigator.userAgent) && !(navigator.userAgent.indexOf('FxiOS') > -1) && !(navigator.userAgent.indexOf('CriOS') > -1);
+    var isAndroid = (navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1);
+
+    if(App.client.isWebApp() || (!isSafari && !isAndroid) || lastinfo+1000*60*60*24*7 > Date.now()){ return; }
+
+    text = 'Klicke auf <img src="/img/grafiken/webapp/ios_more.png"> und wähle dann <img src="/img/grafiken/webapp/ios_add.png"> aus<br/>Und schon hast du die App immer mit dabei!';
+    if(isAndroid){
+        text = 'Klicke auf <img src="/img/grafiken/webapp/and_more.png"> und wähle dann <i>"Zum Startbildschirm hinzfügen"</i> aus<br/>Und schon hast du die App immer mit dabei!';
+    }
+
+    el = $('<div class="ph_webapp_info_wrapper hidden"><div class="ph_webapp_info"><span class="close"><i class="material-icons">close</i></span><span class="title">Die VEXED-App</span>'+text+'</div></div>')
+    
+    $(el).find(".close").click(function(el){
+        $(el).addClass("hidden");
+        setTimeout(function(){ $(el).remove(); },400);
+    }.bind(null,el));
+
+    setTimeout(function(el){
+        $(el).addClass("hidden");
+        setTimeout(function(){ $(el).remove(); },400);
+    }.bind(null,el),1000*15);
+
+    $("body").prepend(el);
+    setTimeout(function(el){ 
+        $(el).removeClass("hidden");
+        localStorage.setItem("appinfo",Date.now());
+    }.bind(null,el),300);
 }
 
 Site.prototype.setEvents = function(){
@@ -101,31 +141,6 @@ Site.prototype.setEvents = function(){
 
 Site.prototype = Object.create(Site.prototype);
 Site.prototype.constructor = Site;
-
-/* MENU */
-
-function Menu(){
-    this.body = document.getElementsByTagName("body")[0];
-}
-
-Menu.prototype.open = function(){
-    this.body.classList.add("ph_menu_open");
-}
-
-Menu.prototype.close = function(){
-    this.body.classList.remove("ph_menu_open");
-}
-
-Menu.prototype.toggle = function(){
-    if(this.body.classList.contains("ph_menu_open")){
-        this.close();
-    } else {
-        this.open();
-    }
-}
-
-Menu.prototype = Object.create(Menu.prototype);
-Menu.prototype.constructor = Menu;
 
 /* FORM */
 

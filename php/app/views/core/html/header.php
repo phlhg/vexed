@@ -53,7 +53,8 @@
         <script type="text/javascript" src="/js/jquery.js"></script>
         <?php
             $s_config = array(
-                "client_id" => $view->client->id
+                "client_id" => $view->client->id,
+                "logged_in" => $view->client->isLoggedIn()
             )
         ?>
         <script>

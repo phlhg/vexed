@@ -18,7 +18,7 @@ header nav > a:hover, a, h1,h2,h3,h4,h5,h6 {
 
 /*-- REUSE -- */
 
-header .ph_menu_point, .ph_login_center:after {
+.ph_webapp_info, header .ph_menu_point, .ph_login_center:after {
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
 
@@ -40,12 +40,12 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
-    transition: all 250ms cubic-bezier(.4,0,.6,1);
+.ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+    transition: all 250ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
-header .ph_menur, .ph_page_loader:after, .ph_page_loader, .ph_menu_container:after , .ph_menu_container nav, .ph_menu_container, header .ph_profile, .ph_logo_wrapper, .ph_text, .ph_bg_image, .ph_login_bg, .ph_separator_half, .ph_login_meta, .ph_login_center, section, header nav {
-    transition: all 300ms cubic-bezier(.4,0,.6,1);
+.ph_webapp_info, header .ph_menur, .ph_page_loader:after, .ph_page_loader, .ph_menu_container:after , .ph_menu_container nav, .ph_menu_container, header .ph_profile, .ph_logo_wrapper, .ph_text, .ph_bg_image, .ph_login_bg, .ph_separator_half, .ph_login_meta, .ph_login_center, section, header nav {
+    transition: all 300ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 300ms cubic-bezier(.4,0,.6,1);
 }
 
 /*-- ELEMENT STYLE --*/
@@ -301,6 +301,15 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post_list > .container { display: block; position: relative; column-count: 3; column-gap: 20px; }
 .ph_post_list .ph_post_banner { font-weight: bold; text-align: left; line-height: 30px; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; font-size: 20px; min-height: 66px; max-height: 500px; padding: 20px 40px; color: #fff; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgba(0,0,0,0.25); }
 .ph_post_list .ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
+
+/* WEBAPP INFO */
+.ph_webapp_info_wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; background-color: rgba(0,0,0,0.75); }
+.ph_webapp_info_wrapper.hidden { opacity: 0; visibility: hidden; }
+.ph_webapp_info { width: 90%; max-width: 400px; line-height: 26px; position: fixed; z-index: 210; border-radius: 4px; top: 50%; left: 50%; transform: translate(-50%,-50%); padding: 20px 20px 30px 20px; background-color: rgb(30,30,30); }
+.ph_webapp_info_wrapper.hidden .ph_webapp_info { top: 0%; }
+.ph_webapp_info > .title { color: rgb(255,210,0); display: block; font-weight: bold; margin: 0 0 8px 0; }
+.ph_webapp_info > img { display: inline-block; margin: 0 2px -4px 2px; vertical-align: center; height: 1.4em; }
+.ph_webapp_info > .close { cursor: pointer; position: absolute; display: inline-block; top: 0; right: 0; padding: 5px;}
 
 /*#######################################
     Media Queries
