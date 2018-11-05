@@ -67,7 +67,7 @@
         }
 
         public function deleteAutolog(){
-            \Helpers\Cookie::delete("autolog",$id."//".$security);
+            \Helpers\Cookie::delete("autolog");
         }
 
         private function newAutolog($id){
@@ -97,6 +97,7 @@
             \Helpers\Session::delete("login_id");
             \Helpers\Session::delete("login_pw");
             \Helpers\Session::delete("login_expires");
+            \Helpers\Cookie::delete("autolog");
         }
 
     }
