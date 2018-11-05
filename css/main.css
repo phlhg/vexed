@@ -364,6 +364,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_separator_half:nth-child(2) { display: block; }
     .ph_separator_half > .ph_text { top: 0; max-width: unset; transform: none;}
 
+    img.ph_fun_graphics { position: relative; display: block; margin-bottom: -20px !important; width: 50%; margin: 0 auto; }
+
     .ph_big_icon { font-size: 20vh; }
 
     .ph_progress_dots { padding-left: 0; align-content: stretch; width: 100%; max-width: unset; height: 5px; }
