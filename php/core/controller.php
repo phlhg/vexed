@@ -28,6 +28,7 @@
         */
         public function __construct(){
             $this->client = \App::$client;
+            $this->view("out"); //DEFAULT
         }
 
         /**

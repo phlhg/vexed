@@ -5,7 +5,7 @@
     class Home extends \Core\Controller {
 
         public function index($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("home/index");
             $this->view->meta->title = "Start";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";

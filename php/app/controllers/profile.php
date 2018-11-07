@@ -5,7 +5,7 @@
     class Profile extends \Core\Controller {
 
         public function index($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("profile/index");
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
             if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
@@ -29,7 +29,7 @@
         }
 
         public function _switch($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("out");
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
             if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
@@ -87,7 +87,7 @@
         /* IMAGES */
 
         public function pb($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("out");
             $this->view->setTemplate("none");
             $id = $_URL["id"];
@@ -111,7 +111,7 @@
         }
 
         public function pbg($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("out");
             $this->view->setTemplate("none");
             $id = $_URL["id"];

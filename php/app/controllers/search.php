@@ -5,7 +5,7 @@
     class Search extends \Core\Controller {
 
         public function index($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->handlePost();
             $this->view("search/index");
             $this->view->meta->title = "Entdecken";
@@ -23,7 +23,7 @@
         }
 
         public function query($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->handlePost();
             $string = htmlspecialchars(urldecode(urldecode($_URL["query"])));
             $this->view("search/query");

@@ -6,7 +6,7 @@
     class CreatePost extends \Core\Controller {
 
         public function index($_URL){
-            $this->client->authenticate();
+            if(!$this->client->authenticate()){ return false; }
             $this->view("createpost/index");
             $this->view->meta->title = "Neuer Beitrag";
             $this->view->meta->description = "Ein bisschen Text hier. Ein Foto da. Und schon hast du deinen eigenen Beitrag";
