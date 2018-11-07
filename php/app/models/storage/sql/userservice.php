@@ -92,6 +92,44 @@
             return false;
         }
 
+        /* UPDATE */
+
+        /**
+         * Sets a new username for the client.
+         * @param String The new username.
+         * @return Boolean Returns True if the name was updated else false.
+         */
+        public function updateName($name){
+            $q = \Core\DBM::getMain()->prepare("UPDATE ph_users SET username = ? WHERE id = ? LIMIT 1");
+            if(!$q->execute(array($name,__CLIENT()->id))){ return false; }
+            if($q->rowCount() < 1){ return false; }
+            return True;
+        }
+
+        /**
+         * Sets a new description for the client.
+         * @param String The new description.
+         * @return Boolean Returns True if the description was updated else false.
+         */
+        public function updateDescription($description){
+            $q = \Core\DBM::getMain()->prepare("UPDATE ph_users SET description = ? WHERE id = ? LIMIT 1");
+            if(!$q->execute(array($description,__CLIENT()->id))){ return false; }
+            if($q->rowCount() < 1){ return false; }
+            return True;
+        }
+
+        /**
+         * Sets a new description for the client.
+         * @param String The new description.
+         * @return Boolean Returns True if the description was updated else false.
+         */
+        public function updateWebsite($website){
+            $q = \Core\DBM::getMain()->prepare("UPDATE ph_users SET website = ? WHERE id = ? LIMIT 1");
+            if(!$q->execute(array($website,__CLIENT()->id))){ return false; }
+            if($q->rowCount() < 1){ return false; }
+            return True;
+        }
+
         /**
          * Confirms an account if the code is correct.
          */

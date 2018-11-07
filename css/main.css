@@ -215,11 +215,9 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_progress_dots > span { display: block; height: 10px; width: 10px; border-radius: 50%; background-color: rgb(100,100,100); }
 .ph_progress_dots > span.active { transform: scale(1.5,1.5); }
 
-.ph_button { font-style: italic; font-weight: bold; cursor: pointer; display: inline-block; padding: 4px 0 4px 0; margin: 10px 20px 0 0; position: relative; color: #fff; text-transform: uppercase; }
-.ph_button.main { color: rgb(255,210,0); }
-.ph_button:after { z-index: -1; content: ''; display: block; position: absolute; bottom: 0; left: 0;  width: 0; height: 3px; background-color: rgb(255,210,0); }
-.ph_button:hover:after { width: 100%; }
-.ph_button:hover { color: rgb(255,210,0); }
+.ph_button { font-style: italic; font-weight: bold; cursor: pointer; line-height:26px; display: inline-block; border-radius: 18px; padding: 5px 20px; margin: 10px 10px 0 0; position: relative; background-color: rgba(255,255,255,0.15); color: #fff; text-transform: uppercase; }
+.ph_button.main { background-color: rgb(255,210,0); color: rgb(10,10,10); }
+.ph_button:hover { padding: 5px 30px; background-color: rgb(255,210,0); color: rgb(10,10,10); }
 
 /*-- PROFILE --*/
 .ph_profile_bg { position: absolute; left: 0; top: 0; height: 100%; width: 100%; overflow: hidden; }
@@ -229,14 +227,17 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 .ph_profileh_content { margin: 140px 0 120px 0; z-index: +10; position: relative; left: 50%; display: inline-block; padding: 20px 240px 20px 20px; width: 100%; max-width: 1080px; transform: translate(-50%,0); }
 .ph_profileh_content h1 { color: #fff; font-family: 'Oxygen'; }
-.ph_profileh_content .pb { position: absolute; right: 20px; border-radius: 50%; top: 20px; height: 200px; width: 200px; }
+.ph_profileh_content .ph_pb_wrapper { position: absolute; border-radius: 50%; overflow: hidden; right: 20px; top: 20px; height: 200px; width: 200px; }
+.ph_profileh_content .ph_pb_wrapper .pb { height: 100%; width: 100%; background-position: center; background-size: cover;}
+.ph_profileh_content .ph_pb_wrapper .overlay { cursor: pointer; position: absolute; line-height: 200px; text-align: center; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.25); color: #fff;}
+.ph_profileh_content .ph_pb_wrapper .overlay i { font-size: 50px; line-height: 200px; }
 
 .ph_profileh_content > .main { position: relative; display: block; width: 100%;}
 .ph_profileh_content > .main > h1 { height: auto; overflow-x: hidden; overflow-y: hidden; text-overflow: ''; white-space: nowrap; font-size: 100px; line-height: 125px; margin: 0; }
 .ph_profileh_content > .main > .meta { display: block; }
 .ph_profileh_content > .main > .meta > span, .ph_profileh_content > .main > .meta > a  { color: #fff; font-weight: normal; font-size: 12px; display: inline-block; margin: 0 10px 0 0; }
 .ph_profileh_content > .main > .meta > span > strong, .ph_profileh_content > .main > .meta > a > strong { font-size: 18px; color: rgb(255,210,0); font-weight: bold; display: inline-block; margin: 0 4px 0 0; }
-.ph_profileh_content > .description .ph_profile_website { display: block; padding: 5px 0;}
+.ph_profileh_content > .description .ph_profile_website { margin-top: 15px; text-decoration: underline !important; color: #fff; display: block; padding: 5px 0;}
 
 .ph_profileh_content > .ph_profile_submenu { cursor: pointer; margin-top: 65px; position: relative; display: flex; flex-wrap: nowrap; justify-content: space-between; align-content: stretch; width: calc(100% + 220px); }
 .ph_profileh_content > .ph_profile_submenu > span { top: 0; display: block; width: calc(100% / 3 - (40px / 3)); position: relative;}
@@ -244,9 +245,13 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_afterphead { overflow: visible; }
 .ph_afterphead > .ph_text { margin-top: -200px; }
 
+.ph_profileh_content > .description > input.ph_profile_website, .ph_profileh_content > .description > textarea, .ph_profileh_content > .main > h1 input { letter-spacing: inherit; color: #fff; left: 0; margin: 5px 0; border-radius: 4px; padding: 5px 10px; border: none; line-height: inherit; font-size: inherit; font-weight: inherit; background-color: rgba(255,255,255,0.05); display: block; width: 100%; }
+.ph_profileh_content > .description > textarea { resize: none; display: block; max-width: 100%; min-width: 0; width: 100%; height: 100px; overflow: auto; }
+.ph_profileh_content > .description > input.ph_profile_website { font-weight: bold; }
+
 .ph_button_v2 { color: #fff; overflow: hidden; line-height: 24px; border-radius: 4px; text-align: center; display: block; position: relative; padding: 10px 20px; line-height: 24px; background-color: rgba(255,255,255,0.1); }
 .ph_button_v2:hover { background-color: rgba(255,255,255,0.15); }
-.ph_button_v2 .txt { color: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; }
+.ph_button_v2 .txt { color: inherit; font-weight: bold; font-size: inherit; line-height: inherit; }
 .ph_button_v2 i { line-height: 20px; margin: 0 2px; }
 .ph_button_v2.i { padding-right: 34px; }
 .ph_button_v2.i > .icon { position: absolute; right: 10px; top: 10px; height: 24px; width: 24px; border-radius: 2px; background-size: cover; display: block; }
@@ -382,7 +387,9 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_post > .ph_post_info > .voting > .down { position: absolute; bottom: 0; left: 10px;  }
     .ph_post > .ph_post_info > .voting > span { text-align: center; display: block; }
 
-    .ph_profileh_content .pb { position: absolute; width: 60px; height: 60px; right: 20px; top: 50px; }
+    .ph_profileh_content .ph_pb_wrapper  { position: absolute; width: 60px; height: 60px; right: 20px; top: 50px; }
+    .ph_profileh_content .ph_pb_wrapper .overlay { line-height: 60px;}
+    .ph_profileh_content .ph_pb_wrapper .overlay i { font-size: 20px; line-height: 60px; }
     .ph_profileh_content { margin: 50px 0 0 0; left: 0; padding: 20px 80px 20px 20px; transform: translate(0,0); }
 
     .ph_profileh_content > .main > h1 { margin: 10px 0; font-size: 45px; line-height: 60px; }
@@ -390,6 +397,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_profileh_content > .main > .meta > span > strong, .ph_profileh_content > .main > .meta > a > strong { font-size: 12px; margin: 0 2px 0 0; }
 
     .ph_profileh_content > .description { font-size: 14px; }
+    .ph_profileh_content > .description > textarea { min-height: 60px; }
 
     .ph_profileh_content > .ph_profile_submenu { margin-top: 30px; width: calc(100% + 60px); }
     .ph_profileh_content > .ph_profile_submenu > span { width: calc(100% / 3 - (20px / 3)); }
@@ -403,7 +411,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_button_v2 { padding: 5px 10px; }
     .ph_button_v2.multi > .sect { padding: 5px 10px; }
     .ph_button_v2.i { padding-right: 10px; }
-    .ph_button_v2.i > .icon { position: relative; right: unset; top: unset; height: auto; width: auto; border-radius: auto; }
+    .ph_button_v2.i > .icon { position: relative; left: unset !important; right: unset; top: unset; height: auto; width: auto; border-radius: auto; }
 
     .ph_fs_button { height: 34px; padding: 5px 10px; }
     .ph_fs_button span { top: 5px; }

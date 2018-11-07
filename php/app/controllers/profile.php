@@ -30,6 +30,7 @@
 
         public function _switch($_URL){
             $this->client->authenticate();
+            $this->view("out");
             $profile = \App\Models\Account\User::getByName($_URL["username"]);
             if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
             if(!isset($_URL["site"])){ return \App::$router->redirect("/p/".$_URL["username"]."/"); }
@@ -40,10 +41,13 @@
                 case "subscriptions":
                     $this->subscriptions($profile);
                     break;
+                case "edit":
+                    $this->edit($profile);
+                    break;
                 default:
                     return \App::$router->redirect("/p/".$_URL["username"]."/");
             }
-            $this->view->meta->title = $profile->displayName;
+            $this->view->meta->title = ($this->view->meta->title == "" ? $profile->displayName : $this->view->meta->title);
             $this->view->meta->description = $profile->description;
             $this->view->v->p_site = true;
             $this->view->v->profile = $profile;
@@ -59,6 +63,25 @@
         private function subscriptions($profile){
             $this->view("profile/subscriptions");
             $this->view->v->p_site_title = "Abonniert";
+        }
+
+        private function edit($profile){
+            $this->view("profile/edit");
+            if($profile->relation != \App\Models\Account\Relation::ME){ __ROUTER()->redirect("/p/".$profile->name."/"); }
+            $this->view->addScript("/js/edit_profile.js");
+            $this->view->meta->title = "Bearbeiten";
+            $this->view->v->form_errors = [];
+            if(!\Helpers\Post::exist(["username","description","website"])){ return; }
+                $updator = new \App\Models\Account\Updator();
+                $errors = [];
+                if(!$updator->username(\Helpers\Post::get("username"))){ $errors[] = $updator->errorMsg; }
+                if(!$updator->description(\Helpers\Post::get("description"))){ $errors[] = $updator->errorMsg; }
+                if(!$updator->website(\Helpers\Post::get("website"))){ $errors[] = $updator->errorMsg; }
+                if(\Helpers\File::exists("pb")){  if(!$updator->pb(\Helpers\File::get("pb"))){ $errors[] = $updator->errorMsg; }}
+                if(\Helpers\File::exists("pbg")){ if(!$updator->pbg(\Helpers\File::get("pbg"))){ $errors[] = $updator->errorMsg; }}
+                $profile->load();
+                $this->view->v->form_errors = $errors;
+                if(count($errors) < 1){ return __ROUTER()->redirect("/p/".$profile->name."/"); }
         }
 
         /* IMAGES */

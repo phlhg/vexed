@@ -127,7 +127,7 @@ Site.prototype.setEvents = function(){
     });
 
     document.querySelectorAll(".ph_fs_button[data-rel][data-id]").forEach(function(el){
-        new FSButton(el);
+        if(!el.classList.contains("fake")){ new FSButton(el); }
     });
 
     document.querySelectorAll(".ph_pwc").forEach(function(el){

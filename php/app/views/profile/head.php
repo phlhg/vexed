@@ -3,7 +3,7 @@
     <div class="ph_profile_bg_overlay"></div>
     <div class="ph_profile_bg_easing"></div>
     <div class="ph_profileh_content">
-        <img src="/img/pb/<?=$_var->profile->id?>" class="pb"/>
+        <div class="ph_pb_wrapper"><div style="background-image: url(/img/pb/<?=$_var->profile->id?>)" class="pb"></div></div>
         <div class="main">
             <span class="meta">
                 <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
@@ -15,17 +15,23 @@
         <span class="description">
             <?=nl2br($_var->profile->description)?>
             <?php if($_var->profile->website != ""){ ?>
-                <a class="ph_profile_website" href="http://<?=$_var->profile->website?>" target="_blank"><?=$_var->profile->website?></a>
+                <a class="ph_profile_website" href="http://<?=preg_replace('/https?:\/\//i','',$_var->profile->website)?>" target="_blank"><?=$_var->profile->website?></a>
             <?php } ?>
         </span>
         <div class="ph_profile_submenu">
             <span>
-                <div class="ph_fs_button" data-rel="<?=$_var->profile->relation?>" data-id="<?=$_var->profile->id?>">
-                    <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
-                    <span class="follow"><span class="txt">Folgen </span><i class="material-icons">add</i></span>
-                    <span class="requested"><span class="txt">Angefragt </span><i class="material-icons">send</i></span>
-                    <span class="following"><span class="txt">Abonniert </span><i class="material-icons">done</i></span>
-                </div>
+                <?php if($_var->profile->relation == \App\Models\Account\Relation::ME){ ?>
+                    <a href="/p/<?=$_var->profile->name?>/edit/" class="ph_fs_button fake" data-rel="9">
+                        <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
+                    </a>
+                <?php } else { ?>
+                    <div class="ph_fs_button" data-rel="<?=$_var->profile->relation?>" data-id="<?=$_var->profile->id?>">
+                        <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
+                        <span class="follow"><span class="txt">Folgen </span><i class="material-icons">add</i></span>
+                        <span class="requested"><span class="txt">Angefragt </span><i class="material-icons">send</i></span>
+                        <span class="following"><span class="txt">Abonniert </span><i class="material-icons">done</i></span>
+                    </div>
+                <?php } ?>
             </span>
             <?php if($_var->p_site){ ?>
                 <span>
