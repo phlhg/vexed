@@ -78,6 +78,7 @@
             if($pb["error"] == 1){ return $this->error("Das Profilbild ist zu gross - Bitte verwende ein kleineres"); }
             if($pb["error"] != 0){ return $this->error("Das Profilbild konnte nicht hochgeladen werden"); }
             $extension = strtolower(pathinfo($pb['name'])["extension"]);
+            if($extension == "jpeg"){ $extension = "jpg"; }
             if(!in_array($extension,["jpg","png"])){ return $this->error("Nur .jpg & .png können als Profilbild hochgeladen werden"); }
             foreach(["jpg","png"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
             if(!move_uploaded_file($pb['tmp_name'], $dir.$id.".".$extension)){ 
@@ -97,6 +98,7 @@
             if($pbg["error"] == 1){ return $this->error("Das Hintergrundbild ist zu gross - Bitte verwende ein kleineres"); }
             if($pbg["error"] != 0){ return $this->error("Das Hintergrundbild konnte nicht hochgeladen werden"); }
             $extension = strtolower(pathinfo($pbg['name'])["extension"]);
+            if($extension == "jpeg"){ $extension = "jpg"; }
             if(!in_array($extension,["jpg","png"])){ return $this->error("Nur .jpg & .png können als Hintergrundbild hochgeladen werden"); }
             foreach(["jpg","png"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
             if(!move_uploaded_file($pbg['tmp_name'], $dir.$id.".".$extension)){
