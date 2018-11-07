@@ -41,17 +41,20 @@
          * @var String $errorMsg */
         public $errorMsg = "";
 
-        /** The userservice for the current class */
-        private $userService = null;
+        /** The userservice for the current class 
+         * @var UserService $us */
+        private $us;
+
+        /** The validator for new account properties 
+         * @var Validator $validator*/
+        private $validator;
         
         /**
          * Handles the process of creating a new account.
-         * @param String $name The nickname for the new account.
-         * @param String $password The unhashed password to login with.
-         * @param String $email The email to get in touch with the user.
          */
         public function __construct(){
             $this->userService = new \App\Models\Storage\Sql\UserService();
+            $this->validator = new \App\Models\Account\Validator();
         }
 
         /**
@@ -70,11 +73,11 @@
          * @return Boolean Returns False if an error occurs.
          */
         private function checkInput(){
-            if(!\Helpers\Check::username($this->name)){ return $this->error("Nutzername enthält ungültige Zeichen"); }
-            if(!\Helpers\Check::email($this->email)){ return $this->error("Ungültige E-Mail-Adresse [1]"); }
-            if(!\Helpers\Check::emailProvider($this->email)){ return $this->error("Ungültige E-Mail-Adresse [2]"); }
-            if($this->existsName($this->name)){ return $this->error("Dieser Name ist leider vergeben"); }
-            if($this->existsEmail($this->email)){ return $this->error("Diese E-Mail-Adresse ist bereits mit einem Konto verknüpft"); }
+            if(!$this->validator->isUsername($this->name)){ return $this->error("Nutzername enthält ungültige Zeichen"); }
+            if(!$this->validator->isEmail($this->email)){ return $this->error("Ungültige E-Mail-Adresse [1]"); }
+            if(!$this->validator->existsEmailProvider($this->email)){ return $this->error("Ungültige E-Mail-Adresse [2]"); }
+            if($this->validator->usedUsername($this->name)){ return $this->error("Dieser Name ist leider vergeben"); }
+            if($this->validator->usedEmail($this->email)){ return $this->error("Diese E-Mail-Adresse ist bereits mit einem Konto verknüpft"); }
             return $this->addToDb();
         }
 
@@ -112,14 +115,6 @@
                 return $this->error("Leider ist ein Problem mit dem Mail-Service aufgetreten - Versuche es erneut.");
             };
             return true;
-        }
-
-        public function existsName($name){
-            return $this->userService->existsName($name);
-        }
-
-        public function existsEmail($email){
-            return $this->userService->existsEmail($email);
         }
 
         /**
