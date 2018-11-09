@@ -217,7 +217,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 .ph_button { font-style: italic; font-weight: bold; cursor: pointer; line-height:26px; display: inline-block; border-radius: 18px; padding: 5px 20px; margin: 10px 10px 0 0; position: relative; background-color: rgba(255,255,255,0.15); color: #fff; text-transform: uppercase; }
 .ph_button.main { background-color: rgb(255,210,0); color: rgb(10,10,10); }
-.ph_button:hover { padding: 5px 30px; background-color: rgb(255,210,0); color: rgb(10,10,10); }
+.ph_button:hover { background-color: rgb(255,210,0); color: rgb(10,10,10); }
 
 /*-- PROFILE --*/
 .ph_profile_bg { position: absolute; left: 0; top: 0; height: 100%; width: 100%; overflow: hidden; }

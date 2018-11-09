@@ -22,7 +22,7 @@
          */
         public function getDetails(){
             $trace = $this->getTrace();
-            $code = str_replace("\\","_",$trace[0]["class"])."_".$trace[0]["function"]."_[".implode("_",$trace[0]["args"])."]";
+            $code = str_replace("\\","_",$trace[0]["class"])."_".$trace[0]["function"];
             $code = strtoupper($code);
             return array(
                 "code" => $code,
