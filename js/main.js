@@ -82,6 +82,7 @@ Site.prototype.showWebAppInfo = function(){
     var isAndroid = (navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1);
 
     if(App.client.isWebApp() || (!isSafari && !isAndroid) || lastinfo+1000*60*60*24*7 > Date.now()){ return; }
+    if(Config.get("logged_in") == false){ return; }
 
     text = 'Klicke auf <img src="/img/grafiken/webapp/ios_more.png"> und wähle dann <img src="/img/grafiken/webapp/ios_add.png"> aus<br/>Und schon hast du die App immer mit dabei!';
     if(isAndroid){
