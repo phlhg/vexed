@@ -64,7 +64,10 @@
 
         public static function format($text){
             $text = htmlspecialchars($text);
-            return preg_replace('/@([\w\d]+)\b/i','<a href="/p/$1/">@$1</a>',$text);
+            $text = preg_replace('/@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
+            $text = preg_replace('/https?:\/\/(?>www\.)?([\w\d.]+\.[\w]{2,8})/im','<a target="_blank" href="http://$1">$0</a>',$text);
+            $text = nl2br($text);
+            return $text;
         }
 
         public static function byUser($id){
