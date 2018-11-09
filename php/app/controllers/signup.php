@@ -37,6 +37,7 @@
 
         public function advanced($_URL){
             $this->creator = new \App\Models\Account\Creator();
+            $this->validator = new \App\Models\Account\Validator();
             $this->actcode = $_URL["actcode"];
             $this->step = intval($_URL["step"]);
 
@@ -77,7 +78,7 @@
             $this->view->meta->title = "Nutzername wählen";
             if(!\Helpers\Post::exists("ph_signup_username")){ return; }
             $username = \Helpers\Post::get("ph_signup_username");
-            if($this->creator->existsName($username)){ return $this->error("Nutzername ist vergeben"); }
+            if($this->validator->usedUsername($username)){ return $this->error("Nutzername ist vergeben"); }
             $this->sud["username"] = $username;
             \App::$router->redirect("/signup/".$this->actcode."/2/");
         }
@@ -101,8 +102,9 @@
             $this->view->meta->title = "E-Mail";
             if(!\Helpers\Post::exists("ph_signup_email")){ return; }
             $email = \Helpers\Post::get("ph_signup_email");
-            if(!\Helpers\Check::email($email)){ return $this->error("Bitte gib eine gültige E-Mail ein"); }
-            if($this->creator->existsEmail($email)){ return $this->error("Diese E-Mail-Adresse wird bereits verwendet"); }
+            if(!$this->validator->isEmail($email)){ return $this->error("Bitte gib eine gültige E-Mail ein"); }
+            if(!$this->validator->existsEmailProvider($email)){ return $this->error("Bitte gib eine gültige E-Mail ein <i>[dns]</i>"); }
+            if($this->validator->usedEmail($email)){ return $this->error("Diese E-Mail-Adresse wird bereits verwendet"); }
             $this->sud["email"] = \Helpers\Post::get("ph_signup_email");
             \App::$router->redirect("/signup/".$this->actcode."/4/");
         }
