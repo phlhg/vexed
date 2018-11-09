@@ -21,7 +21,7 @@
         }
 
         public function _empty($_URL){
-            $this->view("Home/_empty");
+            $this->view("Home/empty");
             $this->view->meta->title = "Start";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";
         }
