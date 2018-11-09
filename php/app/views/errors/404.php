@@ -5,7 +5,7 @@
         <p>Möglicherweise ist sie in einem schwarzen Loch verschwunden oder hat das Multiversum gewechselt.</p>
         <a href="/" class="ph_button main">Home</a>
         <?php if($view->client->isloggedIn()){ ?>
-            <a href="/p/<?=$view->client->name?>" class="ph_button">Profil</a>
+            <a href="/p/<?=$view->client->name?>/" class="ph_button">Profil</a>
         <?php } else { ?>
             <a href="/" class="ph_button">Anmelden</a>
             <a href="/signup/" class="ph_button">Registrieren</a>

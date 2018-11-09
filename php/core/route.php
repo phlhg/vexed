@@ -191,7 +191,7 @@
                     $regex = '[\w\s_]+';
                     break;
                 case 'nickname':
-                    $regex = '[\w\d_\-$]+';
+                    $regex = '[A-Za-z0-9\._\-$]+';
                     break;
             }
             return $regex;
