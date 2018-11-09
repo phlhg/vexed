@@ -37,3 +37,6 @@
     //POST
     $_CONFIG["post_disabled"] = false;
     $_CONFIG["post_disabled_msg"] = "";
+
+    //BLACKLISTS
+    $_CONFIG["blacklist_websites"] = ["pornhub.com","xvideos.com","xnxx.com"];

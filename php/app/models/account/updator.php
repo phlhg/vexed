@@ -63,6 +63,7 @@
          */
         public function website($website){
             if(__CLIENT()->website == $website){ return true; }
+            foreach(\Core\Config::get("blacklist_websites") as $key){ if(strpos(strtolower($website),$key) > -1){ return $this->error("Diese Website kann nicht verlinkt werden"); }}
             if(!$this->us->updateWebsite($website)){ return $this->error("Die Website konnte nicht aktualisiert werden"); }
             return true;
         }
