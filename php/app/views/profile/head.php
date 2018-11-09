@@ -7,7 +7,7 @@
         <div class="main">
             <span class="meta">
                 <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
-                <span><strong><?=$_var->profile->posts?></strong>Beiträge</span>
+                <span><strong><?=count(\App\Models\Post\Post::byUser($_var->profile->id))?></strong>Beiträge</span>
                 <a href="/p/<?=$_var->profile->name?>/followers/"><strong><?=count($_var->profile->followers)?></strong>Abonnenten</a>
                 <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</a></span>
             <h1><?=$_var->profile->name?></h1>
