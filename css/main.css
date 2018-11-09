@@ -94,7 +94,7 @@ header.transparent-menu:after { display: none; }
 .mobile_header .title { white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: top; display: inline-block; font-weight: bold; color: rgb(255,210,0); font-size: 20px; line-height: 34px; }
 .mobile_header .profile { line-height: 36px; color: rgb(10,10,10); text-align: center; border-radius: 50%; overflow: hidden; height: 34px; width: 34px; position: absolute; top: 8px; left: 20px; }
 .mobile_header .profile.login { background-color: rgb(255,210,0); }
-.mobile_header .profile img { width: 100%; height: 100%; }
+.mobile_header .profile img { object-fit: cover; width: 100%; height: 100%; }
 
 .mobile_header.login-menu .logo, .mobile_header.login-menu .title, .mobile_header.login-menu .profile { display: none;  }
 .mobile_header.login-menu .logo_login { display: block; }
