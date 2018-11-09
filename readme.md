@@ -2,12 +2,12 @@
 Coding a small social network as my graduation work in school.
 
 ## (Planned) Features
-- [ ] Feed
-- [ ] Post
+- [x] Feed
+- [x] Post
 - [ ] Tags
-- [ ] Profile
+- [x] Profile
 - [ ] Settings (for Profile)
-- [ ] Search (for posts, users, tags)
+- [ ] Search (for posts, [x] users, tags)
 - [x] Register
 - [x] Login
 
