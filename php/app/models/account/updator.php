@@ -76,15 +76,19 @@
         public function pb($pb){
             $id = strval(__CLIENT()->id);
             $dir = $_SERVER["DOCUMENT_ROOT"]."/php/files/img/profile/pb/";
-            if($pb["error"] == 1){ return $this->error("Das Profilbild ist zu gross - Bitte verwende ein kleineres"); }
-            if($pb["error"] != 0){ return $this->error("Das Profilbild konnte nicht hochgeladen werden"); }
-            $extension = strtolower(pathinfo($pb['name'])["extension"]);
-            if($extension == "jpeg"){ $extension = "jpg"; }
-            if(!in_array($extension,["jpg","png"])){ return $this->error("Nur .jpg & .png können als Profilbild hochgeladen werden"); }
-            foreach(["jpg","png"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
-            if(!move_uploaded_file($pb['tmp_name'], $dir.$id.".".$extension)){ 
-                return $this->error("Das Profilbild konnte nicht aktualisiert werden"); 
-            }
+            //UPLOAD
+            $uploader = new \App\Models\Media\Uploader();
+            $uploader->accept(["png","jpg","jpeg","gif"]);
+            if(!$uploader->fetch($pb,"Das Profilbild")){ return $this->error($uploader->errorMsg); }
+            foreach(["jpg","png","gif"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
+            $uploader->save("/img/profile/pb/",$id);
+            //SAVE
+            $image = new \App\Models\Media\Image();
+            if(!$image->load($uploader->getPath("/img/profile/pb/",$id))){ return $this->error($image->errorMsg); }
+            $image->editor->maxDim(500);
+            $image->editor->cropCenter(500,500);
+            $image->save();
+            if($image->error){ return $this->error("Fehler beim komprimieren"); };
             return true;
         }
 
@@ -96,15 +100,19 @@
         public function pbg($pbg){
             $id = strval(__CLIENT()->id);
             $dir = $_SERVER["DOCUMENT_ROOT"]."/php/files/img/profile/bg/";
-            if($pbg["error"] == 1){ return $this->error("Das Hintergrundbild ist zu gross - Bitte verwende ein kleineres"); }
-            if($pbg["error"] != 0){ return $this->error("Das Hintergrundbild konnte nicht hochgeladen werden"); }
-            $extension = strtolower(pathinfo($pbg['name'])["extension"]);
-            if($extension == "jpeg"){ $extension = "jpg"; }
-            if(!in_array($extension,["jpg","png"])){ return $this->error("Nur .jpg & .png können als Hintergrundbild hochgeladen werden"); }
+            //UPLOAD
+            $uploader = new \App\Models\Media\Uploader();
+            $uploader->accept(["png","jpg","jpeg"]);
+            if(!$uploader->fetch($pbg,"Der Hintergrund")){ return $this->error($uploader->errorMsg); }
             foreach(["jpg","png"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
-            if(!move_uploaded_file($pbg['tmp_name'], $dir.$id.".".$extension)){
-                return $this->error("Das Hintergrundbild konnte nicht aktualisiert werden"); 
-            }
+            $uploader->save("/img/profile/bg/",$id);
+            //SAVE
+            $image = new \App\Models\Media\Image();
+            if(!$image->load($uploader->getPath("/img/profile/bg/",$id))){ return $this->error($image->errorMsg); }
+            $image->editor->maxDim(500);
+            $image->editor->cropCenter(500,500);
+            $image->save();
+            if($image->error){ return $this->error("Fehler beim komprimieren"); };
             return true;
         }
 

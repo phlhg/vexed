@@ -41,7 +41,7 @@
             </div>
         </div>
         <input type="submit" value="Fertig" />
-        <input style="display: none;" name="pb" id="p_pb" type="file" accept=".jpg, .png"/>
+        <input style="display: none;" name="pb" id="p_pb" type="file" accept=".jpg, .png, .gif"/>
         <input style="display: none;" name="pbg" id="p_pbg" type="file" accept=".jpg, .png"/>
     </section>
 </form>
