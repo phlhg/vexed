@@ -37,7 +37,9 @@
          */
         public function __construct($path){
             $this->path = $path;
-            [$this->width, $this->height] = getimagesize($path);
+            $data = getimagesize($path);
+            $this->width = $data[0];
+            $this->height = $data[1];
         }
 
         /**
@@ -46,7 +48,8 @@
          * @return Boolean Returns true if the image was resized
          */
         public function maxDim($max){
-            if($this->width < $this->height){ return $this->resize($max,null); }
+            if($this->width <= $max || $this->height <= $max){ return true; }
+            if($this->width > $this->height){ return $this->resize($max,null); }
             return $this->resize(null,$max);
         }
 
