@@ -109,8 +109,7 @@
             //SAVE
             $image = new \App\Models\Media\Image();
             if(!$image->load($uploader->getPath("/img/profile/bg/",$id))){ return $this->error($image->errorMsg); }
-            $image->editor->maxDim(500);
-            $image->editor->cropCenter(500,500);
+            $image->editor->maxDim(1080);
             $image->save();
             if($image->error){ return $this->error("Fehler beim komprimieren"); };
             return true;
