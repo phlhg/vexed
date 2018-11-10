@@ -2,7 +2,7 @@
     <div class="ph_login_meta">
         <a href="/about/">Über</a>
         <a href="/forgot/">Passwort vergessen</a>
-        <a href="http://phlhg.vs/report/?s=antisocial.vs" target="_blank">Problem melden</a>
+        <a href="http://phlhg.ch/report/?s=vexed" target="_blank">Problem / Feedback</a>
         <a href="https://instagram.com/phlhg/" target="_blank" ><i class="fab fa-instagram"></i> phlhg</a>
         <a href="https://twitter.com/phlhg2000" target="_blank" ><i class="fab fa-twitter"></i> phlhg2000</a>
         <a href="https://github.com/phlhg/matura" target="_blank" ><i class="fab fa-github"></i> phlhg/matura</a>
