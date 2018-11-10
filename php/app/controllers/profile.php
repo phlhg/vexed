@@ -11,6 +11,7 @@
             if(!$profile->exists){ return \App::$router->setRoute("Error/E404"); }
             $this->view->meta->title = $profile->displayName;
             $this->view->meta->description = $profile->description;
+            $this->view->meta->image = "/img/pb/".$profile->id."/";
             $this->view->v->p_site = false;
             $this->view->v->profile = $profile;
             $this->view->v->p_postlist = '<div class="container">';
@@ -49,6 +50,7 @@
             }
             $this->view->meta->title = ($this->view->meta->title == "" ? $profile->displayName : $this->view->meta->title);
             $this->view->meta->description = $profile->description;
+            $this->view->meta->image = "/img/pb/".$profile->id."/";
             $this->view->v->p_site = true;
             $this->view->v->profile = $profile;
         }
