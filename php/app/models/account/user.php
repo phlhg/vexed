@@ -40,15 +40,15 @@
             $info = $this->userservice->get($this->id);
             if($info == false){ return false; }
             $this->exists = true;
-            $this->name = $info["username"];
-            $this->displayName = $this->name;
+            $this->name = htmlspecialchars($info["username"]);
+            $this->displayName = htmlspecialchars($this->name);
             $this->email = $info["email"];
             $this->admin = ($info["admin"] == "1" ? true : false);
             $this->verified = ($info["verified"] == "1" ? true : false);
             $this->private = ($info["private"] == "1" ? true : false);
             $this->banned = intval($info["banned"]);
-            $this->description = $info["description"];
-            $this->website = $info["website"];
+            $this->description = htmlspecialchars($info["description"]);
+            $this->website = htmlspecialchars($info["website"]);
             $this->created = intval($info["created"]);
             $this->conditions = intval($info["conditions"]);
 
