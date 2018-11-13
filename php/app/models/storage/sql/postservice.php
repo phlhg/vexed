@@ -62,11 +62,36 @@
          */
         public function createText($text){
             $id = \App::$client->id;
-            $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_posts (user, type, description, date) VALUES (?,?,?,?);");
-            $q->execute([$id,\App\Models\Post\Type::TEXT,$text,time()]);
+            $q = $this->db->prepare("INSERT INTO ph_posts (user, type, description, date) VALUES (?,?,?,?);");
+            if(!$q->execute([$id,\App\Models\Post\Type::TEXT,$text,time()])){ return false; }
             if($q->rowCount() < 1){ return false; }
             return true;
         }
+
+        /**
+         * Creats a media-post.
+         * @param String $text The formatted content of the post.
+         * @return Boolean Returns True if the post was created otherwise False.
+         */
+        public function createMedia($text){
+            $id = \App::$client->id;
+            $q = $this->db->prepare("INSERT INTO ph_posts (user, type, description, date) VALUES (?,?,?,?);");
+            $q->execute([$id,\App\Models\Post\Type::MEDIA,$text,time()]);
+            if($q->rowCount() < 1){ return false; }
+            $q2 = $this->db->prepare("SELECT id FROM ph_posts ORDER BY id DESC LIMIT 1");
+            if(!$q2->execute([])){ return false; }
+            return $q2->fetch()["id"];
+        }
+
+
+        public function delete($id){
+            $q = $this->db->prepare("DELETE FROM ph_posts WHERE id = ? LIMIT 1");
+            if(!$q->execute([$id])){ return false; }
+            if($q->rowCount() < 1){ return false; }
+            return true;
+        }
+
+
 
     }
 

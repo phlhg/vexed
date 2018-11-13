@@ -40,7 +40,7 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+.ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
     transition: all 250ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
@@ -285,7 +285,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 /*-- POSTS --*/
 .ph_post { min-height: 70px; margin: 0 0 32px 0; position: relative; display: block; }
-.ph_post > .ph_post_media { position: relative; display: block; overflow: hidden;}
+.ph_post > .ph_post_media { position: relative; width: 100%; display: block; overflow: hidden;}
+.ph_post > .ph_post_media > img { margin-bottom: -4px; border-radius: 4px; }
 .ph_post > .ph_post_info { position: relative; display: block; padding: 10px 120px 10px 70px; }
 .ph_post > .ph_post_info > .profile { position: absolute; display: block; left: 10px; top: 0; width: 60px; padding: 10px 10px 0 0; }
 .ph_post > .ph_post_info > .profile > .pb { position: relative; display: block; width: 50px; height: 50px; background-position: center; background-size: cover; border-radius: 50%; }
@@ -299,7 +300,22 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .voting[data-vote='-1'] > .down { background-color: rgb(255,210,0); }
 .ph_post > .ph_post_info > .voting > span { min-width: 42px; text-align: center; font-weight: 700; font-size: 18px; color: #fff; line-height: 15px; display: inline-block; position: relative;padding: 0 5px; }
 
-.ph_post > .ph_post_info > textarea.description { resize: vertical; border: none; max-height: 400px; min-height: 200px; background-color: transparent; color: #fff; width: 100%; display: inline-block;  }
+.ph_post.input > .ph_post_info > textarea { padding: 5px 50px 5px 10px; max-width: unset; min-width: unset; margin: 0; resize: none; border: none; height: 210px; background-color: rgba(15,15,15); color: #fff; width: 100%; display: block;  }
+.ph_post.input > .ph_post_info > .meta { width: 100%; padding: 4px 10px; }
+.ph_post.input > .ph_post_info { padding: 10px 0 10px 70px; }
+.ph_post.input > .ph_post_info > .ph_fi_submit { right: 20px; top: 20px; transform: translateY(0); }
+.ph_post.input > .ph_post_media { max-height: 100%; border-radius: 4px; overflow: hidden; background-color: rgb(15,15,15); }
+.ph_post.input > .ph_post_media > .actions { white-space: nowrap; padding: 10px; position: absolute; top: 0; right: 0; transform: translate(0,0);}
+.ph_post.input > .ph_post_media > .actions > span { display: inline-block;  color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.25); cursor: pointer; }
+.ph_post.input > .ph_post_media > .actions > span i { color: inherit; font-size: 30px; }
+.ph_post.input > .ph_post_media.empty { height: 100px; max-height: 100px; }
+.ph_post.input > .ph_post_media.empty > .actions { right: unset; left: 50%; top: 50%; transform: translate(-50%,-50%);}
+.ph_post.input > .ph_post_media.empty > .actions #post_img_open { display: inline-block; }
+.ph_post.input > .ph_post_media.empty > .actions #post_img_delete { display: none; }
+.ph_post.input > .ph_post_media > img { max-height: 1000%; visibility: visible; }
+.ph_post.input > .ph_post_media.empty > img { max-height: 0; visibility: hidden; }
+.ph_post.input > .ph_post_media.epmty > .actions > span { text-shadow: none; }
+.ph_post.input > .ph_post_media > .actions #post_img_delete { display: inline-block; }
 
 /* BANNER */
 .ph_post_list { display: block; width: 100%; }

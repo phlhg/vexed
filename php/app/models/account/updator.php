@@ -78,17 +78,17 @@
             $dir = $_SERVER["DOCUMENT_ROOT"]."/php/files/img/profile/pb/";
             //UPLOAD
             $uploader = new \App\Models\Media\Uploader();
-            $uploader->accept(["png","jpg","jpeg","gif"]);
+            $uploader->accept(\Core\Config::get("user_pb_types"));
             if(!$uploader->fetch($pb,"Das Profilbild")){ return $this->error($uploader->errorMsg); }
-            foreach(["jpg","png","gif"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
-            $uploader->save("/img/profile/pb/",$id);
-            //SAVE
-            $image = new \App\Models\Media\Image();
-            if(!$image->load($uploader->getPath("/img/profile/pb/",$id))){ return $this->error($image->errorMsg); }
-            $image->editor->maxDim(500);
+            //IMAGE
+            $image = \App\Models\Media\Image::loadUpload($uploader->get());
+            $image->editor->minDim(500);
             $image->editor->cropCenter(500,500);
-            $image->save();
             if($image->error){ return $this->error("Fehler beim komprimieren"); };
+            //DELETE
+            foreach(\Core\Config::get("user_pb_types") as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
+            //SAVE
+            if(!$image->save("/img/profile/pb/".$id)){ return $this->error("Fehler beim speichern"); };
             return true;
         }
 
@@ -102,16 +102,16 @@
             $dir = $_SERVER["DOCUMENT_ROOT"]."/php/files/img/profile/bg/";
             //UPLOAD
             $uploader = new \App\Models\Media\Uploader();
-            $uploader->accept(["png","jpg","jpeg"]);
+            $uploader->accept(\Core\Config::get("user_bg_types"));
             if(!$uploader->fetch($pbg,"Der Hintergrund")){ return $this->error($uploader->errorMsg); }
-            foreach(["jpg","png"] as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
-            $uploader->save("/img/profile/bg/",$id);
-            //SAVE
-            $image = new \App\Models\Media\Image();
-            if(!$image->load($uploader->getPath("/img/profile/bg/",$id))){ return $this->error($image->errorMsg); }
+            //IMAGE
+            $image = \App\Models\Media\Image::loadUpload($uploader->get());
             $image->editor->maxDim(1080);
-            $image->save();
             if($image->error){ return $this->error("Fehler beim komprimieren"); };
+            //DELETE
+            foreach(\Core\Config::get("user_bg_types") as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
+            //SAVE
+            if(!$image->save("/img/profile/bg/".$id)){ return $this->error("Fehler beim speichern"); };
             return true;
         }
 

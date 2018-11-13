@@ -4,27 +4,31 @@
 
     class Post {
 
-        private $postservice; 
+        private $ps; 
+        private $ms;
 
         public $id = -1;
         public $exists = false;
         public $user = -1;
         public $type = Type::UNDEFINED;
+        public $media = [];
         public $text = "";
         public $date = 0;
 
         public function __construct($id){
-            $this->postservice = new \App\Models\Storage\Sql\PostService();
+            $this->ps = new \App\Models\Storage\Sql\PostService();
+            $this->ms = new \App\Models\Storage\Sql\MediaService();
             $this->id = $id;
             $this->load();
         }
 
         public function load(){
-            $data = $this->postservice->get($this->id);
+            $data = $this->ps->get($this->id);
             if(!$data){ return false; }
             $this->exists = true;
             $this->user = intval($data["user"]);
             $this->type = intval($data["type"]);
+            $this->media = ($this->type == Type::MEDIA ? $this->ms->ofPost($this->id) : []);
             $this->text = Self::format($data["description"]);
             $this->date = intval($data["date"]);
         }
@@ -43,7 +47,7 @@
         public function toHtmlFeed(){
             $user = new \App\Models\Account\User($this->user);
             $html = '<article class="ph_post">
-                <div class="ph_post_media"></div>
+                <div class="ph_post_media">'.(isset($this->media[0]) ? '<img src="/img/media/'.$this->media[0].'/"/>' : '').'</div>
                 <div class="ph_post_info">
                     <div class="profile">
                         <a href="/p/'.$user->name.'/" class="pb" style="background-image: url(/img/pb/'.$user->id.'/);"></a>
@@ -71,8 +75,8 @@
         }
 
         public static function byUser($id){
-            $postservice = new \App\Models\Storage\Sql\PostService();
-            return $postservice->byUser($id);
+            $ps = new \App\Models\Storage\Sql\PostService();
+            return $ps->byUser($id);
         }
 
     }

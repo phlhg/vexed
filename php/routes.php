@@ -30,4 +30,7 @@
     App::$router->set("/search/","Search/index");
     App::$router->set("/search/{query}/","Search/query");
 
+    //MEDIA
+    App::$router->set("/img/media/{id}/","Media/index")
+
 ?>

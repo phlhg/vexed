@@ -4,16 +4,12 @@
      * @copyright Philippe Hugo
      */
 
-    namespace App\Models\Media\Image;
+    namespace App\Models\Media;
 
     /**
      * Edits an image resource
      */
     class Editor {
-
-        /** Path to the image file
-         * @var String $path */
-        public $path = "";
 
         /** Image rescource 
          * @var Resource $image */
@@ -35,11 +31,10 @@
          * Edits an image resource
          * @param String $path The path to the image file
          */
-        public function __construct($path){
-            $this->path = $path;
-            $data = getimagesize($path);
-            $this->width = $data[0];
-            $this->height = $data[1];
+        public function __construct($image){
+            $this->image = $image;
+            $this->width = imagesx($this->image);
+            $this->height = imagesy($this->image);
         }
 
         /**
@@ -48,9 +43,20 @@
          * @return Boolean Returns true if the image was resized
          */
         public function maxDim($max){
-            if($this->width <= $max || $this->height <= $max){ return true; }
+            if($this->width <= $max && $this->height <= $max){ return true; }
             if($this->width > $this->height){ return $this->resize($max,null); }
             return $this->resize(null,$max);
+        }
+
+        /**
+         * Resizes the smaller site to $min.
+         * @param Int $min Minimal dimension in pixels
+         * @return Boolean Returns true if the image was resized
+         */
+        public function minDim($min){
+            if($this->width <= $min && $this->height <= $min){ return true; }
+            if($this->width < $this->height){ return $this->resize($min,null); }
+            return $this->resize(null,$min);
         }
 
         /** Crops the image with the orgin at the center of the image. 

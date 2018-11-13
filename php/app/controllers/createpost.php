@@ -14,6 +14,8 @@
             $this->view->v->form_error = "";
             $this->view->v->form_description = "";
 
+            $this->view->addScript("/js/createpost.js");
+
             $creator = new \App\Models\Post\Creator();
 
             if(\Core\Config::get("post_disabled")){
@@ -27,9 +29,9 @@
                     return false;
                 }
                 $description = \Helpers\Post::get("description");
-                //$image = $_FILES["image"];
+                $image = (\Helpers\File::exists("image") ? [\Helpers\File::get("image")] : []);
                 $this->view->v->form_description = $description;
-                if(!$creator->post($description)){
+                if(!$creator->post($description,$image)){
                     $this->view->v->form_error = $creator->errorMsg;
                     return false;
                 }

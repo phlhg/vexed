@@ -82,23 +82,20 @@
         }
 
         /**
-         * Generates a path out of a folder and a name.
-         * @param String $folder The path to the folder.
-         * @param String $name The name of the file.
-         * @return String Returns the absolute path to the file.
-         */
-        public function getPath($folder,$name){
-            return $folder.$name.".".$this->extension;
-        }
-
-        /**
          * Saves the file.
-         * @param String $folder The path to the folder.
+         * @param String $folder The path without the extension.
          * @param String $name The name of the file.
          * @return Boolean Returns true if the file was saved.
          */
-        public function save($folder,$name){
-            return $this->fs->saveUpload($this->file->tmp_name,$this->getPath($folder,$name));
+        public function save($path){
+            return $this->fs->saveUpload($this->file->tmp_name,$path.".".$this->extension);
+        }
+
+        /**
+         * Returns the file.
+         */
+        public function get(){
+            return $this->file;
         }
 
         /**

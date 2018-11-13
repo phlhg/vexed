@@ -33,11 +33,11 @@
 
         /** Type of the image 
          * @var Int $type*/
-        public $type = Image::UNKNOWN;
+        public $type = Self::UNKNOWN;
 
-        /** Path to the original image
-         * @var String $path */
-        public $path = "";
+        /** Initial data of the image 
+         * @var Resource $image */
+        public $data = null;
 
         /** Editor for the current filetype
          * @var Array $file */
@@ -55,62 +55,67 @@
          * Simple class to edit images
          * @param Mixed[] $file File date from $_FILES
          */
-        public function __construct(){
+        public function __construct($data,$type = Self::UNKNOWN){
             $this->fs = new \App\Models\Storage\File\FileService();
+            $this->data = $data;
+            $this->type = $type;
+            $this->editor = new \App\Models\Media\Editor(imagecreatefromstring($this->data));
         }
 
         /**
-         * An image from a path.
-         * @param String $path Path to the image
-         * @return Boolean Returns true if the image was succesfully loaded.
+         * Saves the image.
+         * @param String $path* A location to save the image.
+         * @return Boolean Returns true if the image was saved.
          */
-        public function load($path){
-            $this->path = $_SERVER["DOCUMENT_ROOT"]."/php/files".$path;
-            if(!$this->setType()){ return false; }
-            if(!$this->initEditor()){ return false; }
-            return true;
+        public function save($path){
+            $path = \Core\Config::get("storage_root").$path;
+            switch($this->type){
+                case Self::JPG:
+                    return imagejpeg($this->editor->image, $path.".jpg", 90);
+                    break;
+                case Self::PNG:
+                    return imagepng($this->editor->image, $path.".png", 6);
+                    break;
+                case Self::GIF:
+                    //Workaround for animated gifs.
+                    return file_put_contents($path.".gif",$this->data);
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        /**
+         * Loads an image from a given relative path.
+         * @param String $path A relative path to the image.
+         * @return Self|Boolean Returns an instance of itself on success else false.
+         */
+        public static function load($path){
+            $type = Self::getType($path);
+            if($type == Self::UNKNOWN){ return false; }
+            return new Self(file_get_contents(\Core\Config::get("storage_root").$path),$type);
+        }
+
+        /**
+         * Loads an image from an uploaded file.
+         * @param Mixed[] $file Resource of $_FILES* 
+         * @return Self|Boolean Returns an instance of itself on success else false.
+         */
+        public static function loadUpload($file){
+            $file = (object) $file;
+            $type = Self::getType($file->name);
+            if($type == Self::UNKNOWN){ return false; }
+            return new Self(file_get_contents($file->tmp_name),$type);
         }
 
         /**
          * Gets the image type for the editor.
          * @return Boolean Returns true if the type is supported.
          */
-        private function setType(){
-            $this->type = Self::UNKNOWN;
-            $ext = strtolower(pathinfo($this->path,PATHINFO_EXTENSION));
-            if(!in_array($ext,array_keys(Self::$supported))){ return $this->error($this->path."Nicht unterstütztes Bildformat"); }
-            $this->type = Self::$supported[$ext];
-            return true;
-        }
-
-        /**
-         * Loads the suitable editor 
-         * @return Boolean Returns true if a suitable editor was found.
-        */
-        private function initEditor(){
-            switch($this->type){
-                case Self::JPG:
-                    $this->editor = new \App\Models\Media\Image\JPG($this->path);
-                    break;
-                case Self::PNG:
-                    $this->editor = new \App\Models\Media\Image\PNG($this->path);
-                    break;
-                case Self::GIF:
-                    $this->editor = new \App\Models\Media\Image\GIF($this->path);
-                    break;
-                default:
-                    return $this->error("Nicht unterstütztes Bildformat");
-            }
-            return true;
-        }
-
-        /**
-         * Saves the image.
-         * @param String $path* A location to save the image. If empty the inital path is taken.
-         * @return Boolean Returns true if the image was saved.
-         */
-        public function save($path=null){
-            return $this->editor->save($path);
+        private static function getType($path){
+            $ext = strtolower(pathinfo($path,PATHINFO_EXTENSION));
+            if(!in_array($ext,array_keys(Self::$supported))){ return Self::UNKNOWN; }
+            return Self::$supported[$ext];
         }
 
         /**

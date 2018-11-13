@@ -34,9 +34,15 @@
     //USER / CLIENT
     $_CONFIG["user_guest_allow"] = false;
 
+    $_CONFIG["user_pb_types"] = ["jpg","jpeg","png","gif"];
+    $_CONFIG["user_bg_types"] = ["jpg","jpeg","png"];
+
     //POST
     $_CONFIG["post_disabled"] = false;
     $_CONFIG["post_disabled_msg"] = "";
 
     //BLACKLISTS
     $_CONFIG["blacklist_websites"] = ["pornhub.com","xvideos.com","xnxx.com"];
+
+    //STORAGE
+    $_CONFIG["storage_root"] = $_SERVER["DOCUMENT_ROOT"]."/php/files";

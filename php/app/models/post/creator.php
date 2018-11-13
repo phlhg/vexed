@@ -49,7 +49,7 @@
             $this->media = $media;
             $this->type = $this->getType();
             if(!$this->validate()){ return false; }
-            return $this->makeText();
+            return $this->make();
         }
 
         private function getType(){
@@ -82,7 +82,18 @@
         }
 
         private function makeMedia(){
-            return $this->error("Diese Funktion befindet sich noch in Entwicklung");
+            $creator = new \App\Models\Media\Creator();
+            $uploader = new \App\Models\Media\Uploader();
+            //UPLOAD
+            $uploader->accept(["jpg","jpeg","png","gif"]);
+            if(!$uploader->fetch($this->media[0],"Das Bild")){ return $this->error($uploader->errorMsg); }
+            //POST
+            $post_id = $this->postservice->createMedia($this->text);
+            if($post_id == false){ return $this->error("Beitrag konnte nicht erstellt werden"); }
+            //MEDIA
+            $image = \App\Models\Media\Image::loadUpload($uploader->get());
+            if(!$creator->create($post_id,$image)){ $this->postservice->delete($post_id); return $this->error($creator->errorMsg); }
+            return true;
         }
 
         /**
