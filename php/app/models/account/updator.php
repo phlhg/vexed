@@ -82,13 +82,17 @@
             if(!$uploader->fetch($pb,"Das Profilbild")){ return $this->error($uploader->errorMsg); }
             //IMAGE
             $image = \App\Models\Media\Image::loadUpload($uploader->get());
-            $image->editor->minDim(500);
-            $image->editor->cropCenter(500,500);
+            $image->editor->minDim(300);
+            $image->editor->cropCenter(300,300);
             if($image->error){ return $this->error("Fehler beim komprimieren"); };
             //DELETE
             foreach(\Core\Config::get("user_pb_types") as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}
             //SAVE
             if(!$image->save("/img/profile/pb/".$id)){ return $this->error("Fehler beim speichern"); };
+            $image->editor->maxDim(20);
+            if($image->error){ return $this->error("Fehler beim komprimieren"); };
+            foreach(\Core\Config::get("user_pb_types") as $ex){ if(file_exists($dir.$id."_tiny.".$ex)){ unlink($dir.$id."_tiny.".$ex); }}
+            if(!$image->save("/img/profile/pb/".$id."_tiny",true)){ return $this->error("Fehler beim speichern"); };
             return true;
         }
 
@@ -106,7 +110,7 @@
             if(!$uploader->fetch($pbg,"Der Hintergrund")){ return $this->error($uploader->errorMsg); }
             //IMAGE
             $image = \App\Models\Media\Image::loadUpload($uploader->get());
-            $image->editor->maxDim(1080);
+            $image->editor->maxDim(720);
             if($image->error){ return $this->error("Fehler beim komprimieren"); };
             //DELETE
             foreach(\Core\Config::get("user_bg_types") as $ex){ if(file_exists($dir.$id.".".$ex)){ unlink($dir.$id.".".$ex); }}

@@ -64,10 +64,11 @@
 
         /**
          * Saves the image.
-         * @param String $path* A location to save the image.
-         * @return Boolean Returns true if the image was saved.
+         * @param String $path The location to save the image.
+         * @param Bool $force Save gifs and destroy animation.
+         * @return Bool Returns true if the image was saved.
          */
-        public function save($path){
+        public function save($path,$force=false){
             $path = \Core\Config::get("storage_root").$path;
             switch($this->type){
                 case Self::JPG:
@@ -78,7 +79,8 @@
                     break;
                 case Self::GIF:
                     //Workaround for animated gifs.
-                    return file_put_contents($path.".gif",$this->data);
+                    //if($force){ return file_put_contents($path.".gif",$this->data); }
+                    return imagegif($this->editor->image, $path.".gif");
                     break;
                 default:
                     return false;

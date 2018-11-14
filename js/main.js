@@ -111,6 +111,35 @@ Site.prototype.showWebAppInfo = function(){
 Site.prototype.setEvents = function(){
     var site = this;
 
+    images = document.querySelectorAll("img[data-lazyload]");
+
+    window.onscroll = function(images){
+        var viewTop = $(window).scrollTop(); 
+        var viewHeight = $(window).height();
+        var viewBottom = viewTop + viewHeight;
+
+        var offset = 0;
+
+        images.forEach(function(el){
+            var src = el.getAttribute("data-lazyload")
+            if(!el.hasAttribute("data-lazyloadinit")){
+                var elTop = $(el).offset().top;
+                var elBottom = elTop + $(el).height();
+        
+                if(!(elTop > viewBottom-offset || elBottom < viewTop+offset)){
+                    document.querySelectorAll("img[data-lazyload='"+src+"']").forEach(function(el){
+                        el.setAttribute("data-lazyloadinit","true")
+                        el.onload = function(e){ this.setAttribute("data-lazyload",""); }
+                        el.setAttribute("src",src);
+                    });
+                }
+            }
+        });
+    
+    }.bind(null,images);
+    
+    window.onscroll();
+
     document.querySelectorAll("a[href]").forEach(function(el){
         if(el.getAttribute("href") == location.pathname){ el.classList.add("active"); }
         el.onclick = function(e){

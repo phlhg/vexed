@@ -47,10 +47,10 @@
         public function toHtmlFeed(){
             $user = new \App\Models\Account\User($this->user);
             $html = '<article class="ph_post">
-                <div class="ph_post_media">'.(isset($this->media[0]) ? '<img src="/img/media/'.$this->media[0].'/"/>' : '').'</div>
+                <div class="ph_post_media">'.(isset($this->media[0]) ? '<img src="/img/media/'.$this->media[0].'/?tiny" data-lazyload="/img/media/'.$this->media[0].'/"/>' : '').'</div>
                 <div class="ph_post_info">
                     <div class="profile">
-                        <a href="/p/'.$user->name.'/" class="pb" style="background-image: url(/img/pb/'.$user->id.'/);"></a>
+                        <a href="/p/'.$user->name.'/" class="pb" ><img src="/img/pb/'.$user->id.'/?tiny" data-lazyload="/img/pb/'.$user->id.'/" /></a>
                     </div>
                     <p class="description">'.$this->text.'</p>
                     <span class="meta">

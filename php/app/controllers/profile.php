@@ -97,6 +97,8 @@
             $folder = $_SERVER["DOCUMENT_ROOT"].'/php/files/img/profile/pb/';
             $filetype = false;
             $filetypes = ["jpg","png","gif"];
+            $tiny = "";
+            if(\Helpers\Get::exists("tiny")){ $tiny = "_tiny"; }
             foreach($filetypes as $type){
                 if(is_readable($folder.$id.'.'.$type)){
                     $filetype = $type;
@@ -105,10 +107,10 @@
 
             if($filetype !== false){
                 $this->view->setFormat("image/".$filetype);
-                $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
+                $this->view->v->content = file_get_contents($folder.$id.$tiny.'.'.$filetype);
             } else {
                 $this->view->setFormat("image/jpg");
-                $this->view->v->content = file_get_contents($folder."0.jpg");
+                $this->view->v->content = file_get_contents($folder."0".$tiny.".jpg");
             }
         }
 
