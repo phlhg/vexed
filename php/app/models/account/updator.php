@@ -37,7 +37,7 @@
          * @return Boolean Returns true if the name was changed else false.
          */
         public function username($name){
-            if(__CLIENT()->name == $name){ return true; }
+            if(htmlspecialchars_decode(__CLIENT()->name) == $name){ return true; }
             if(!$this->validator->isUsername($name)){ return $this->error("Der Nutzername enthält ungültige Zeichen"); }
             if($this->validator->usedUsername($name)){ return $this->error("Der Nutzername wird bereits verwendert"); }
             if(!$this->us->updateName($name)){ return $this->error("Der Nutzername konnte nicht aktualisiert werden"); }
@@ -50,7 +50,7 @@
          * @return Boolean Returns true if the description was changed else false.
          */
         public function description($description){
-            if(__CLIENT()->description == $description){ return true; }
+            if(htmlspecialchars_decode(__CLIENT()->description) == $description){ return true; }
             if(strlen($description) > 255){ return $this->error("Die Beschreibung darf nur 255 Zeichen lang sein"); }
             if(!$this->us->updateDescription($description)){ return $this->error("Die Beschreibung konnte nicht aktualisiert werden"); }
             return true;
@@ -62,7 +62,7 @@
          * @return Boolean Returns true if the website was changed else false.
          */
         public function website($website){
-            if(__CLIENT()->website == $website){ return true; }
+            if(htmlspecialchars_decode(__CLIENT()->website) == $website){ return true; }
             foreach(\Core\Config::get("blacklist_websites") as $key){ if(strpos(strtolower($website),$key) > -1){ return $this->error("Diese Website kann nicht verlinkt werden"); }}
             if(!$this->us->updateWebsite($website)){ return $this->error("Die Website konnte nicht aktualisiert werden"); }
             return true;
