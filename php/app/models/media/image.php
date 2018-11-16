@@ -79,7 +79,7 @@
                     break;
                 case Self::GIF:
                     //Workaround for animated gifs.
-                    //if($force){ return file_put_contents($path.".gif",$this->data); }
+                    if(!$force){ return file_put_contents($path.".gif",$this->data); }
                     return imagegif($this->editor->image, $path.".gif");
                     break;
                 default:
