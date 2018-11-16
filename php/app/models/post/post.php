@@ -37,11 +37,34 @@
         /* HTML */
 
         public function toHtmlBanner($showUser = false){
+            if($this->type == Type::MEDIA && isset($this->media[0])){ return $this->htmlMediaBanner($showUser); }
+            return $this->htmlTextBanner($showUser);
+        }
+
+        private function htmlTextBanner($showUser){
             $user = new \App\Models\Account\User($this->user);
             $html = '<div href="/p/'.$user->name.'/" class="ph_post_banner TEXT">
-                '.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'
-                <span class="meta">'.($showUser ? '<a href="/p/'.$user->name.'/">'.$user->displayName.'</a> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
+                <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'</span>
+                <span class="meta">
+                    '.($showUser ? '<a href="/p/'.$user->name.'/">
+                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
+                    </a> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
                 </div>';
+            return $html;
+        }
+
+        private function htmlMediaBanner($showUser){
+            $user = new \App\Models\Account\User($this->user);
+            $media = (object) $this->ms->get($this->media[0]);
+            $html = '<div href="/p/'.$user->name.'/" class="ph_post_banner MEDIA"><!--
+                --><img width="'.$media->width.'" height="'.$media->height.'" src="/img/media/'.$media->id.'/?tiny" data-lazyload="/img/media/'.$media->id.'/"/><!--
+                --><span class="meta">
+                    <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'</span>'.
+                    ($showUser ? '<a href="/p/'.$user->name.'/">
+                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
+                    </a> | ' : '')
+                    .'2+ | '.\Helpers\Date::beautify($this->date).'</span><!--
+                --></div>';
             return $html;
         }
 
