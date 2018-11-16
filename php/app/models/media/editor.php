@@ -33,6 +33,13 @@
          */
         public function __construct($image){
             $this->image = $image;
+            $this->read();
+        }
+
+        /**
+         * Gets image data like width and height.
+         */
+        public function read(){
             $this->width = imagesx($this->image);
             $this->height = imagesy($this->image);
         }
@@ -86,8 +93,7 @@
             $image = imagescale($this->image,$width,$height);
             if(!$image){ return $this->error(); }
             $this->image = $image;
-            $this->width = $width;
-            $this->height = $height;
+            $this->read();
         }
 
         /**
@@ -102,8 +108,7 @@
             $image = imagecrop($this->image, ['x' => $left, 'y' => $top, 'width' => $width, 'height' => $height]);
             if(!$image){ return $this->error(); }
             $this->image = $image;
-            $this->width = $width;
-            $this->height = $height;
+            $this->read();
         }
 
         /**

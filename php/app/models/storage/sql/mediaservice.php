@@ -17,7 +17,7 @@
          * @return Mixed[]|Boolean Returns an Array with information if the media was found otherwise False.
          */
         public function get($id){
-            $q = $this->db->prepare("SELECT id, post, type, size FROM ph_media WHERE id = ? LIMIT 1");
+            $q = $this->db->prepare("SELECT id, post, type, size, width, height, user, time FROM ph_media WHERE id = ? LIMIT 1");
             $q->execute([$id]);
             if($q->rowCount() < 1){ return false; }
             return $q->fetch();
@@ -29,11 +29,11 @@
             if($q->rowCount() < 1){ return []; }
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
-
-        public function create($post,$type,$size){
+        
+        public function create($post,$type,$width,$height,$size){
             $id = __CLIENT()->id;
-            $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_media (post, type, size, user, time) VALUES (?,?,?,?,?);");
-            if(!$q->execute([$post,$type,$size,$id,time()])){ return false; }
+            $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_media (post, type, size, width, height, user, time) VALUES (?,?,?,?,?,?,?);");
+            if(!$q->execute([$post,$type,$size,$width, $height, $id,time()])){ return false; }
             if($q->rowCount() < 1){ return false; }
             $q2 = $this->db->prepare("SELECT id FROM ph_media ORDER BY id DESC LIMIT 1");
             if(!$q2->execute()){ return false; }
