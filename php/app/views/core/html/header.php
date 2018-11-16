@@ -66,4 +66,3 @@
     <?php } ?>
     </head>
     <body>
-    <div class="ph_page_loader"></div>
