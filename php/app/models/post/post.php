@@ -29,6 +29,7 @@
             $this->user = intval($data["user"]);
             $this->type = intval($data["type"]);
             $this->media = ($this->type == Type::MEDIA ? $this->ms->ofPost($this->id) : []);
+            $this->text_nf = $data["description"];
             $this->text = Self::format($data["description"]);
             $this->date = intval($data["date"]);
         }
@@ -38,7 +39,7 @@
         public function toHtmlBanner($showUser = false){
             $user = new \App\Models\Account\User($this->user);
             $html = '<div href="/p/'.$user->name.'/" class="ph_post_banner TEXT">
-                '.(strlen($this->text) > 255 ? substr($this->text,0,255).'...' : $this->text).'
+                '.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'
                 <span class="meta">'.($showUser ? '<a href="/p/'.$user->name.'/">'.$user->displayName.'</a> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
                 </div>';
             return $html;
@@ -69,7 +70,7 @@
         public static function format($text){
             $text = htmlspecialchars($text);
             $text = preg_replace('/@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
-            $text = preg_replace('/https?:\/\/(?>www\.)?([\w\d.]+\.[\w]{2,8})/im','<a target="_blank" href="http://$1">$0</a>',$text);
+            $text = preg_replace('/https?:\/\/(?:www\.)?([\w\d.]+\.[\w]{2,8}(?:\/[\w\d]+)*\??(?:&?[\w\d]+\=?(?:[\w\d]+)?)*)\b/im','<a target="_blank" href="http://$1">$0</a>',$text);
             $text = nl2br($text);
             return $text;
         }
