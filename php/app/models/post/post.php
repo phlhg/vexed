@@ -78,7 +78,7 @@
             $user = new \App\Models\Account\User($this->user);
             if(isset($this->media[0])){ $media = (object) $this->ms->get($this->media[0]); } 
             $html = '<article class="ph_post">
-                <div class="ph_post_media">'.(isset($this->media[0]) ? '<img width="'.$media->width.'" height="'.$media->height.'" src="/img/media/'.$this->media[0].'/?tiny" data-lazyload="/img/media/'.$this->media[0].'/"/>' : '').'</div>
+                <div class="ph_post_media" '.(isset($this->media[0]) ? 'style="padding-bottom: '.(($media->height/$media->width)*100).'%;"' : '').'>'.(isset($this->media[0]) ? '<img src="/img/media/'.$this->media[0].'/?tiny" data-lazyload="/img/media/'.$this->media[0].'/"/>' : '').'</div>
                 <div class="ph_post_info">
                     <div class="profile">
                         <a href="/p/'.$user->name.'/" class="pb" ><img src="/img/pb/'.$user->id.'/?tiny" data-lazyload="/img/pb/'.$user->id.'/" /></a>

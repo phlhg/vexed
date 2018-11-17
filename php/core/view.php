@@ -23,6 +23,10 @@
          * @var String $format */
         private $format = "text/html";
 
+        /** Holds the headers of the view 
+         * @var String[] $headers */
+        private $headers = [];
+
         /** List of additional scripts to load 
          * @var String[] $scripts */
         private $scripts = [];
@@ -96,6 +100,10 @@
 
         //INTERN
 
+        public function header($string){
+            $this->headers[] = $string;
+        }
+
         /**
          * Sets the template of the view.
          * @param String $template Name of the template
@@ -141,6 +149,7 @@
          * @return String Returns the rendered page.
          */
         public function getRender(){
+            foreach($this->headers as $head){ header($head); }
             header("Content-Type: ".$this->format);
             return $this->cache;
         }

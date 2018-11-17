@@ -105,13 +105,9 @@
                 }
             }
 
-            if($filetype !== false){
-                $this->view->setFormat("image/".$filetype);
-                $this->view->v->content = file_get_contents($folder.$id.$tiny.'.'.$filetype);
-            } else {
-                $this->view->setFormat("image/jpg");
-                $this->view->v->content = file_get_contents($folder."0".$tiny.".jpg");
-            }
+            if($filetype == false){ $filetype = "jpg"; $id = 0; }
+            $this->view->setFormat("image/".$filetype);
+            $this->view->v->content = file_get_contents($folder.$id.$tiny.'.'.$filetype);
         }
 
         public function pbg($_URL){
@@ -129,13 +125,9 @@
                 }
             }
 
-            if($filetype !== false){
-                $this->view->setFormat("image/".$filetype);
-                $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
-            } else {
-                $this->view->setFormat("image/jpg");
-                $this->view->v->content = file_get_contents($folder."0.jpg");
-            }
+            if($filetype == false){ $filetype = "jpg"; $id = 0; }
+            $this->view->setFormat("image/".$filetype);
+            $this->view->v->content = file_get_contents($folder.$id.$tiny.'.'.$filetype);
         }
     }
 
