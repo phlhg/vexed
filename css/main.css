@@ -339,6 +339,9 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_webapp_info > img { display: inline-block; margin: 0 2px -4px 2px; vertical-align: center; height: 1.4em; }
 .ph_webapp_info > .close { cursor: pointer; position: absolute; display: inline-block; top: 0; right: 0; padding: 5px;}
 
+.ph_notice { padding: 20px 40px; margin-bottom: 20px; border-radius: 4px; background-color: rgb(255,210,0); color: rgb(20,20,20); }
+.ph_notice > a { color: inherit; font-weight: normal; text-decoration: underline; }
+
 /*#######################################
     Media Queries
 ########################################*/
@@ -445,6 +448,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_post_list .ph_post_banner .meta { position: relative; display: block; line-height: 12px; font-size: 11px; color: rgb(180,180,180); }
     .ph_post_list .ph_post_banner.MEDIA .meta { padding: 10px 20px; }
 
+    .ph_notice { padding: 10px 20px; margin-bottom: 10px; }
 
 }
 

@@ -10,6 +10,10 @@
             <span class="ph_form_info"></span>
             <input type="submit" value="Suchen"/>
         </form>
+        <div class="ph_notice">
+            Falls du Wünsche oder Ideen für VEXED hast oder einfach nur ein Problem melden möchtest:
+            <a href="http://phlhg.ch/report?s=vexed" target="_blank" >Feedback</a>
+        </div>
         <?php if(count($_var->profile_suggestions)){ ?>
             <h3><?=$_var->profile_suggestions_title?></h3>
             <div class="ph_profile_list duo"><?php
