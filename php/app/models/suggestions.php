@@ -45,11 +45,8 @@
         }
 
         public static function popularPosts($max = 4){
-            $ps = new \App\Models\Storage\Sql\PostService();
-            $us = new \App\Models\Storage\Sql\UserService();
-
-            $public = $us->getPublic();
-            return \array_slice($ps->getByUsers($public),0,$max);
+            $vs = new \App\Models\Storage\Sql\VoteService();
+            return $vs->getPopular($max);
         }
 
     }

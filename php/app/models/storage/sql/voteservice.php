@@ -55,6 +55,13 @@
             return true;
         }
 
+        public function getPopular($max){
+            $max = intval($max);
+            $q = $this->db->prepare("SELECT post FROM ph_votes GROUP BY post ORDER BY ABS(SUM(vote)) DESC, id DESC LIMIT ".$max);
+            if(!$q->execute([$max])){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
     }
 
 ?>

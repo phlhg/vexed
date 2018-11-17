@@ -14,6 +14,7 @@
         public $type = Type::UNDEFINED;
         public $media = [];
         public $text = "";
+        public $text_nf = "";
         public $votes = 0;
         public $clientVote = 0;
         public $date = 0;
