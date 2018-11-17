@@ -43,6 +43,12 @@
                 case "rel_unfollow":
                     $this->unfollow();
                     break;
+                case "vote_up":
+                    $this->vote_up();
+                    break;
+                case "vote_down":
+                    $this->vote_down();
+                    break;
                 default:
                     $this->error("");
                     break;
@@ -86,6 +92,26 @@
             $this->ajax->value["state"] = $user->relation;
             return true;
         }
+
+        private function vote_up(){
+            if(!\Helpers\Get::exist(["post"])){ return $this->error("Fehlende Parameter - Parameter [post]"); }
+            $post = new \App\Models\Post\Post(\Helpers\Get::get("post"));
+            if(!$post->exists){ return $this->warning("Der Post wurde nicht gefunden"); }
+            if(!$post->upVote()){ return $this->warning("Der Post konnte nicht upgevotet werden."); }
+            $this->ajax->value["vote"] = $post->clientVote;
+            $this->ajax->value["votes"] = $post->votes;
+            return true;
+        }  
+        
+        private function vote_down(){
+            if(!\Helpers\Get::exist(["post"])){ return $this->error("Fehlende Parameter - Parameter [post]"); }
+            $post = new \App\Models\Post\Post(\Helpers\Get::get("post"));
+            if(!$post->exists){ return $this->warning("Der Post wurde nicht gefunden"); }
+            if(!$post->downVote()){ return $this->warning("Der Post konnte nicht downgevotet werden."); }
+            $this->ajax->value["vote"] = $post->clientVote;
+            $this->ajax->value["votes"] = $post->votes;
+            return true;
+        }   
         
     }
 

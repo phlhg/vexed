@@ -6,6 +6,7 @@
 
         private $ps; 
         private $ms;
+        private $vs;
 
         public $id = -1;
         public $exists = false;
@@ -13,11 +14,14 @@
         public $type = Type::UNDEFINED;
         public $media = [];
         public $text = "";
+        public $votes = 0;
+        public $clientVote = 0;
         public $date = 0;
 
         public function __construct($id){
             $this->ps = new \App\Models\Storage\Sql\PostService();
             $this->ms = new \App\Models\Storage\Sql\MediaService();
+            $this->vs = new \App\Models\Storage\Sql\VoteService();
             $this->id = $id;
             $this->load();
         }
@@ -31,6 +35,8 @@
             $this->media = ($this->type == Type::MEDIA ? $this->ms->ofPost($this->id) : []);
             $this->text_nf = $data["description"];
             $this->text = Self::format($data["description"]);
+            $this->votes = $this->vs->getVotes($this->id);
+            $this->clientVote = $this->vs->getClient($this->id);
             $this->date = intval($data["date"]);
         }
 
@@ -48,7 +54,7 @@
                 <span class="meta">
                     '.($showUser ? '<a href="/p/'.$user->name.'/">
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
-                    </a> | ' : '').'2+ | '.\Helpers\Date::beautify($this->date).'</span>
+                    </a> | ' : '').\App\Models\Post\Vote::format($this->votes).' | '.\Helpers\Date::beautify($this->date).'</span>
                 </div>';
             return $html;
         }
@@ -63,7 +69,7 @@
                     ($showUser ? '<a href="/p/'.$user->name.'/">
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
                     </a> | ' : '')
-                    .'2+ | '.\Helpers\Date::beautify($this->date).'</span><!--
+                    .\App\Models\Post\Vote::format($this->votes).' | '.\Helpers\Date::beautify($this->date).'</span><!--
                 --></div>';
             return $html;
         }
@@ -81,14 +87,30 @@
                     <span class="meta">
                         <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
-                    <div class="voting" style="opacity: 0.25" data-vote="0" data-id="'.$this->id.'"><!--
+                    <div class="voting ph_voter" data-vote="'.$this->clientVote.'" data-id="'.$this->id.'"><!--
                         --><div class="actions down">-</div><!--
-                        --><span>0+</span><!--
+                        --><span>'.\App\Models\Post\Vote::format($this->votes).'</span><!--
                         --><div class="actions up">+</div><!--
                     --></div>
                 </div>
             </article>';
             return $html;
+        }
+
+        /* VOTING */
+
+        public function upVote(){
+            if(!$this->vs->set($this->id,\App\Models\Post\Vote::UP)){ return false; }
+            $this->clientVote = \App\Models\Post\Vote::UP;
+            $this->votes = $this->vs->getVotes($this->id);
+            return true;
+        }
+
+        public function downVote(){
+            if(!$this->vs->set($this->id,\App\Models\Post\Vote::DOWN)){ return false; }
+            $this->clientVote = \App\Models\Post\Vote::DOWN;
+            $this->votes = $this->vs->getVotes($this->id);
+            return true;
         }
 
         public static function format($text){

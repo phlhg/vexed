@@ -160,6 +160,10 @@ Site.prototype.setEvents = function(){
         if(!el.classList.contains("fake")){ new FSButton(el); }
     });
 
+    document.querySelectorAll(".ph_voter[data-vote][data-id]").forEach(function(el){
+        new Voter(el);
+    });
+
     document.querySelectorAll(".ph_pwc").forEach(function(el){
         new PWCreator(el);
     });
@@ -203,10 +207,10 @@ Form.prototype.setEvents = function(){
 
 Form.prototype.send = function(){
     if(this.validate()){
+        this.reset();
         App.site.obscure(function(){
             this.form.submit();
         }.bind(this));
-        this.reset();
     }
 }
 
@@ -299,6 +303,70 @@ FSButton.prototype.clicked = function(){
 FSButton.prototype = Object.create(FSButton.prototype);
 FSButton.prototype.constructor = FSButton;
 
+/* VOTER */
+
+Vote = {
+    NEUTRAL: 0,
+    UP: 1,
+    DOWN: -1
+}
+
+function Voter(element){
+    this.element = element;
+    this.up = element.getElementsByClassName("up")[0];
+    this.down = element.getElementsByClassName("down")[0];
+    this.counter = element.getElementsByTagName("span")[0];
+    this.vote = parseInt(element.getAttribute("data-vote") || 0);
+    this.id = parseInt(element.getAttribute("data-id") || -1);
+    this.setEvents();
+    Voter.list.push(this);
+}
+
+Voter.list = [];
+
+Voter.set = function(id,vote,votes){
+    Voter.find(id).forEach(function(el){
+        el.set(vote,votes);
+    });
+}
+
+Voter.find = function(id){
+    return Voter.list.filter(function(el){
+        return (el.id == id);
+    });
+}
+
+Voter.prototype.setEvents = function(){
+    this.up.onclick = function(e){
+        e.preventDefault();
+        this.upVote();
+    }.bind(this);
+
+    this.down.onclick = function(e){
+        e.preventDefault();
+        this.downVote();
+    }.bind(this);
+}
+
+Voter.prototype.set = function(vote,votes){
+    this.vote = vote;
+    this.element.setAttribute("data-vote",this.vote);
+    this.counter.innerHTML = (votes >= 0 ? votes+"+" : "-"+Math.abs(votes));
+}
+
+Voter.prototype.upVote = function(){
+    if(this.vote == Vote.up || this.id < 0){ return false; }
+    Vote.up(this.id);
+}
+
+Voter.prototype.downVote = function(){
+    if(this.vote == Vote.down || this.id < 0){ return false; }
+    Vote.down(this.id);
+}
+
+Voter.prototype = Object.create(Voter.prototype);
+Voter.prototype.constructor = Voter;
+
 /* PASSWORD CREATOR */
 
 function PWCreator(element){
@@ -349,6 +417,30 @@ PWCreator.prototype.typed = function(){
 
 PWCreator.prototype = Object.create(PWCreator.prototype);
 PWCreator.prototype.constructor = PWCreator;
+
+/* VOTE */
+
+var Vote = {}
+
+Vote.up = function(id,callback){
+    var callback = callback || function(){};
+    $.get("/ajax/f/vote_up/?post="+id,function(data){
+        if(data.rspn == 0){
+            Voter.set(id,data.value.vote,data.value.votes);
+            callback(data);
+        }
+    });
+}
+
+Vote.down = function(id,callback){
+    var callback = callback || function(){};
+    $.get("/ajax/f/vote_down/?post="+id,function(data){
+        if(data.rspn == 0){
+            Voter.set(id,data.value.vote,data.value.votes);
+            callback(data);
+        }
+    });
+}
 
 /* RELATION */
 
