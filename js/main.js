@@ -58,7 +58,7 @@ Site.prototype.init = function(){
 }
 
 Site.prototype.load = function(href){
-    if(href == location.pathname){ return true; }
+    if(href == location.pathname){ $("html, body").animate({scrollTop: 0},500); return true; }
     if(!href.startsWith("/") || href.startsWith("//")){ return false; }
     this.obscure(function(){
         window.location.href = href;
