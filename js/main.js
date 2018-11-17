@@ -129,7 +129,7 @@ Site.prototype.setEvents = function(){
                 if(!(elTop > viewBottom-offset || elBottom < viewTop+offset)){
                     document.querySelectorAll("img[data-lazyload='"+src+"']").forEach(function(el){
                         el.setAttribute("data-lazyloadinit","true")
-                        el.onload = function(e){ this.setAttribute("data-lazyload",""); }
+                        el.onload = function(e){ setTimeout(function(){ this.setAttribute("data-lazyload",""); }.bind(this),200); }
                         el.setAttribute("src",src);
                     });
                 }
@@ -217,7 +217,6 @@ Form.prototype.reset = function(){
 Form.prototype.validate = function(){
     var form = this;
     this.error("");
-    //this.el_info.textContent = "";
 
     error = "";
     this.valid = true;
@@ -239,7 +238,7 @@ Form.prototype.validate = function(){
 
 Form.prototype.error = function(msg){
     if(this.el_error){
-        this.el_error.textContent = "Bitte fülle alle Felder korrekt aus";
+        this.el_error.textContent = msg;
     }
 }
 
