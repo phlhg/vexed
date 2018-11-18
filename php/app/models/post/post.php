@@ -53,7 +53,7 @@
         private function htmlTextBanner($showUser){
             $user = new \App\Models\Account\User($this->user);
             $html = '<a href="/post/'.$this->id.'/" class="ph_post_banner TEXT">
-                <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'</span>
+                <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf,false).'</span>
                 <span class="meta">
                     '.($showUser ? '<strong>
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
@@ -68,7 +68,7 @@
             $html = '<a href="/post/'.$this->id.'/" class="ph_post_banner MEDIA"><!--
                 --><img width="'.$media->width.'" height="'.$media->height.'" src="/img/media/'.$media->id.'/?tiny" data-lazyload="/img/media/'.$media->id.'/"/><!--
                 --><span class="meta">
-                    <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf).'</span>'.
+                    <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf,false).'</span>'.
                     ($showUser ? '<strong>
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
                     </strong> | ' : '')
@@ -117,10 +117,26 @@
             return true;
         }
 
-        public static function format($text){
+        public function delete(){
+            if(!(__CLIENT()->id == $this->user || __CLIENT()->admin == true)){ return false; }
+            //DELETE Votes
+            $this->vs->deleteFromPost($this->id);
+            //DELETE Media
+            if(isset($this->media[0])){ 
+                $media = new \App\Models\Media\Media($this->media[0]);
+                $media->delete();
+            }
+            //DELETE Post
+            $this->ps->delete($this->id);
+            return true;
+        }
+
+        public static function format($text,$link=true){
             $text = htmlspecialchars($text);
-            $text = preg_replace('/https?:\/\/(?:www\.)?([\w\d.]+\.[\w]{2,8}(?:\/[\w\d]+)*\??(?:&?[\w\d]+\=?(?:[\w\d]+)?)*)\b/im','<a target="_blank" href="http://$1">$0</a>',$text);
-            $text = preg_replace('/\@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
+            if($link){
+                $text = preg_replace('/https?:\/\/(?:www\.)?([\w\d.]+\.[\w]{2,8}(?:\/[\w\d]+)*\??(?:&?[\w\d]+\=?(?:[\w\d]+)?)*)\b/im','<a target="_blank" href="http://$1">$0</a>',$text);
+                $text = preg_replace('/\@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
+            }
             $text = nl2br($text);
             return $text;
         }

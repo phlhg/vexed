@@ -18,7 +18,7 @@
          */
         public function get($id){
             $q = $this->db->prepare("SELECT id, post, type, size, width, height, user, time FROM ph_media WHERE id = ? LIMIT 1");
-            $q->execute([$id]);
+            if(!$q->execute([$id])){ return false; }
             if($q->rowCount() < 1){ return false; }
             return $q->fetch();
         }

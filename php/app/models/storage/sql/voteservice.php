@@ -68,6 +68,12 @@
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
+        public function deleteFromPost($post){
+            $q = $this->db->prepare("DELETE FROM ph_votes WHERE post = ?");
+            if(!$q->execute([$post])){ return false; }
+            return true;
+        }
+
     }
 
 ?>
