@@ -19,6 +19,7 @@
 
     //POST
     App::$router->set("/create/","CreatePost/index");
+    App::$router->set("/post/{id}/","Post/index")->where(["id" => "int"]);
 
     //AJAX
     App::$router->set("/ajax/f/{function}/","Ajax/_switch");

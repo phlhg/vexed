@@ -18,6 +18,12 @@
             return intval($q->fetch()["votes"]);
         }
 
+        public function getUpVotes($post){
+            $q = $this->db->prepare("SELECT user FROM ph_votes WHERE post = ? AND vote > 0");
+            if(!$q->execute([$post])){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
         public function getClient($post){
             $client = __CLIENT()->id;
             $q = $this->db->prepare("SELECT vote  FROM ph_votes WHERE post = ? AND user = ? LIMIT 1");

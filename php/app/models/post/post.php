@@ -16,6 +16,7 @@
         public $text = "";
         public $text_nf = "";
         public $votes = 0;
+        public $upvotes = [];
         public $clientVote = 0;
         public $date = 0;
 
@@ -37,6 +38,7 @@
             $this->text_nf = $data["description"];
             $this->text = Self::format($data["description"]);
             $this->votes = $this->vs->getVotes($this->id);
+            $this->upvotes = $this->vs->getUpVotes($this->id);
             $this->clientVote = $this->vs->getClient($this->id);
             $this->date = intval($data["date"]);
         }
@@ -79,6 +81,7 @@
             $user = new \App\Models\Account\User($this->user);
             if(isset($this->media[0])){ $media = (object) $this->ms->get($this->media[0]); } 
             $html = '<article class="ph_post">
+                <a class="ph_post_link" href="/post/'.$this->id.'/"></a>
                 <div class="ph_post_media" '.(isset($this->media[0]) ? 'style="padding-bottom: '.(($media->height/$media->width)*100).'%;"' : '').'>'.(isset($this->media[0]) ? '<img src="/img/media/'.$this->media[0].'/?tiny" data-lazyload="/img/media/'.$this->media[0].'/"/>' : '').'</div>
                 <div class="ph_post_info">
                     <div class="profile">
@@ -116,8 +119,8 @@
 
         public static function format($text){
             $text = htmlspecialchars($text);
-            $text = preg_replace('/@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
             $text = preg_replace('/https?:\/\/(?:www\.)?([\w\d.]+\.[\w]{2,8}(?:\/[\w\d]+)*\??(?:&?[\w\d]+\=?(?:[\w\d]+)?)*)\b/im','<a target="_blank" href="http://$1">$0</a>',$text);
+            $text = preg_replace('/\@([\w\d]+)\b/im','<a href="/p/$1/">@$1</a>',$text);
             $text = nl2br($text);
             return $text;
         }

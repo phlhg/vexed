@@ -65,7 +65,7 @@
             $this->view->v->signup_step = $this->step-1;
             $this->view->v->signup_step_max = 5;
             $this->view->v->form_error = ($this->error != "" ? $this->error : "");
-            $this->view->meta->description = "Erstelle dir einen eigenen Account auf VEXED";
+            $this->view->meta->description = "[✔] Erstelle dir einen eigenen Account auf VEXED";
 
             //Signup session
             \Helpers\Session::set("signup_data",$this->sud);

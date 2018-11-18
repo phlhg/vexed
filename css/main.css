@@ -280,6 +280,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 /*-- POSTS --*/
 .ph_post { min-height: 70px; margin: 0 0 32px 0; position: relative; display: block; }
+.ph_post > .ph_post_link { position: absolute; display: block; z-index: 2;  left: 0; top: 0; height: 100%; width: 100%; }
 .ph_post > .ph_post_media { border-radius: 4px; background-color: rgb(10,10,10); position: relative; width: 100%; display: block; overflow: hidden;}
 .ph_post > .ph_post_media > img { position: absolute; display: block;  top: 0; left: 0; transform: scale(1.1,1.1); filter: blur(20px); width: 100%; height: 100%; margin-bottom: 0;  }
 .ph_post > .ph_post_media > img[data-lazyload=''] { transition-delay: 200ms; filter: blur(0); transform: scale(1,1);  }
@@ -289,9 +290,10 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .profile > .pb > img { filter: blur(10px); position: relative; border-radius: 50%; width: 100%; height: 100%; object-fit: cover;}
 .ph_post > .ph_post_info > .profile > .pb > img[data-lazyload=''] { filter: blur(0); }
 .ph_post > .ph_post_info > .description { text-align: left; font-weight: bold; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; letter-spacing: 1px; font-size: 20px; color: #fff; position: relative; display: block; }
+.ph_post > .ph_post_info > .description a { position: relative; z-index: 4; }
 .ph_post > .ph_post_info > .meta { color: rgb(180,180,180); font-size: 14px; display: block; margin: 2px 0 0 0;}
-.ph_post > .ph_post_info > .meta a { color: inherit; font-size: inherit; font-weight: normal; }
-.ph_post > .ph_post_info > .voting { top: 50%; right: 10px; transform: translateY(-50%); position: absolute; display: inline-block;   }
+.ph_post > .ph_post_info > .meta a { position: relative; z-index: 4; color: inherit; font-size: inherit; font-weight: normal; }
+.ph_post > .ph_post_info > .voting { z-index: 4; top: 50%; right: 10px; transform: translateY(-50%); position: absolute; display: inline-block;   }
 .ph_post > .ph_post_info > .voting > .actions { cursor: pointer; font-weight: 700; font-size: 24px; color: rgb(10,10,10); line-height: 20px; text-align: center; display: inline-block; position: relative; background-color: rgb(60,60,60); border-radius: 50%; height: 26px; width: 26px; }
 .ph_post > .ph_post_info > .voting > .actions:hover { background-color: rgb(200,200,200); }
 .ph_post > .ph_post_info > .voting[data-vote='1'] > .up { background-color: rgb(255,210,0); }

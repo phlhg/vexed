@@ -2,30 +2,20 @@
 
     namespace App\Controllers;
 
-    class Profile extends \Core\Controller {
+    class Post extends \Core\Controller {
 
-        public function pb($_URL){
+        public function index($_URL){
             if(!$this->client->authenticate()){ return false; }
-            $this->view("out");
-            $this->view->setTemplate("none");
-            $id = $_URL["id"];
-            if(!isset($id) && is_int($id)){ $id = 0; }
-            $folder = $_SERVER["DOCUMENT_ROOT"].'/php/files/img/profile/pb/';
-            $filetype = false;
-            $filetypes = ["jpg","png","gif"];
-            foreach($filetypes as $type){
-                if(is_readable($folder.$id.'.'.$type)){
-                    $filetype = $type;
-                }
-            }
+            $this->view("post/index");
+            $post = new \App\Models\Post\Post($_URL["id"]);
+            if(!$post->exists){ return __ROUTER()->redirect("/"); }
+            $poster = new \App\Models\Account\User($post->user);
+            $this->view->meta->title = $poster->displayName;
+            $this->view->meta->description = $post->text_nf;
+            $this->view->meta->image = (isset($post->media[0]) ? "/img/media/".$post->media[0]."/" : null);
 
-            if($filetype !== false){
-                $this->view->setFormat("image/".$filetype);
-                $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
-            } else {
-                $this->view->setFormat("image/jpg");
-                $this->view->v->content = file_get_contents($folder."0.jpg");
-            }
+            $this->view->v->post = $post;
+            $this->view->v->poster = $poster;
         }
         
     }
