@@ -40,7 +40,7 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+.ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
     transition: all 250ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
@@ -217,6 +217,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_loading .ph_profile_bg { opacity: 0; }
 .ph_loading .ph_profile_bg > div { filter: blur(40px); }
 .ph_profile_bg_overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; opacity: 0.5;}
+.ph_loading .ph_profile_bg_overlay { opacity: 0; }
 .ph_profile_bg_easing { position: absolute; bottom: 0; left: 0; width: 100%; height: 140px; background: linear-gradient(0deg,rgba(20,20,20,1),rgba(20,20,20,0.8),rgba(20,20,20,0.4),rgba(20,20,20,0)); }
 
 .ph_profileh_content { margin: 140px 0 120px 0; z-index: +10; position: relative; left: 50%; display: inline-block; padding: 20px 240px 20px 20px; width: 100%; max-width: 1080px; transform: translate(-50%,0); }

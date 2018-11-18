@@ -19,7 +19,7 @@
                 $this->view->v->profile_suggestions = \App\Models\Suggestions::knownUsers(4);
             }
 
-            $this->view->v->post_suggestions = \App\Models\Suggestions::popularPosts(6);
+            $this->view->v->post_suggestions = \App\Models\Suggestions::popularPosts(12);
         }
 
         public function query($_URL){

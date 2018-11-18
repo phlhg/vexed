@@ -20,7 +20,6 @@
     <?php } else { ?>
         <a title="Profil" href="/" class="profile login"><i class="material-icons">person_outline</i></a>
     <?php } ?>
-    <a class="back"><i class="material-icons">arrow_back_ios</i></a>
     <span class="title"><?=$view->meta->title?></span>
     <a class="logo" href="/"><img src="/img/icons/favicon.png" /></a>
     <a class="logo_login" href="/"><img src="/img/icons/logo.svg" /></a>
