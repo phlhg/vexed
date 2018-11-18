@@ -36,6 +36,8 @@
                 $suggested[] = $id;
             }
 
+            $suggested = array_reverse($suggested);
+
             return array_slice($suggested,0,$max);
         }
 
