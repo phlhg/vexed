@@ -111,9 +111,13 @@
                 Wenn du diesen Account nicht erstellt hast, kannst du dieses Mail ignorieren. Unbestätigte Accounts werden in der Regel nach 7 Tagen gelöscht.
             </p>');
             if(!$mail->send()){ 
-                $this->userService->delete($this->id);
+                $this->userService->delete($this->id); 
                 return $this->error("Leider ist ein Problem mit dem Mail-Service aufgetreten - Versuche es erneut.");
             };
+            $info = new \Helpers\Email("info@phlhg.ch",$this->name." ist VEXED beigetreten");
+            $info->add('<h2>'.$this->name.'</h2>');
+            $info->add('<p>ist am '.date("d.m.Y (H:i)").' beigetreten</p>');
+            $info->send();
             return true;
         }
 
