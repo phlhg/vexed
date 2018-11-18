@@ -30,8 +30,7 @@
             //by https://stackoverflow.com/questions/1971721/how-to-use-http-cache-headers-with-php
             @session_cache_limiter('private_no_expire');
             $this->view->header('Pragma: private');
-            if(!isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){ return; }
-            if(strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) < filemtime($folder.$id.$tiny.'.'.$filetype)){ $this->view->header('HTTP/1.1 304 Not Modified'); return; }
+            if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) < filemtime($folder.$id.$tiny.'.'.$filetype)){ $this->view->header('HTTP/1.1 304 Not Modified'); return; }
             $this->view->header('Cache-control: private, max-age='.(60*60*24*30));
             $this->view->header('Expires: '.gmdate(DATE_RFC1123,time()+60*60*24*30));
             $this->view->header('Last-Modified: '.gmdate(DATE_RFC1123,filemtime($folder.$id.$tiny.'.'.$filetype)));
