@@ -24,8 +24,9 @@
     //AJAX
     App::$router->set("/ajax/f/{function}/","Ajax/_switch");
 
-    //ABOUT
+    //ETC
     App::$router->set("/about/","etc/about");
+    App::$router->set("/conditions/","etc/conditions");
 
     //SEARCH
     App::$router->set("/search/","Search/index");
