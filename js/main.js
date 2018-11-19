@@ -54,7 +54,7 @@ Site.prototype.init = function(){
         },1000);
     },400);
 
-    setTimeout(function(){ App.site.showWebAppInfo(); },1000*15);
+    setTimeout(function(){ App.site.showAppInfo(); },1000*10);
 }
 
 Site.prototype.load = function(href){
@@ -76,7 +76,7 @@ Site.prototype.obscure = function(callback){
     }.bind(null,callback),900);
 }
 
-Site.prototype.showWebAppInfo = function(){
+Site.prototype.showAppInfo = function(){
     var lastinfo = (localStorage.getItem("appinfo") ? parseInt(localStorage.getItem("appinfo")) : 0);
     var isSafari = (/(iPad|iPhone|iPod)/gi).test(navigator.userAgent) && !(navigator.userAgent.indexOf('FxiOS') > -1) && !(navigator.userAgent.indexOf('CriOS') > -1);
     var isAndroid = (navigator.userAgent.indexOf('Mozilla/5.0') > -1 && navigator.userAgent.indexOf('Android ') > -1 && navigator.userAgent.indexOf('AppleWebKit') > -1);
@@ -84,28 +84,14 @@ Site.prototype.showWebAppInfo = function(){
     if(App.client.isWebApp() || (!isSafari && !isAndroid) || lastinfo+1000*60*60*24*7 > Date.now()){ return; }
     if(Config.get("logged_in") == false){ return; }
 
-    text = 'Klicke auf <img src="/img/grafiken/webapp/ios_more.png"> und wähle dann <img src="/img/grafiken/webapp/ios_add.png"> aus<br/>Und schon hast du die App immer mit dabei!';
-    if(isAndroid){
-        text = 'Klicke auf <img src="/img/grafiken/webapp/and_more.png"> und wähle dann <i>"Zum Startbildschirm hinzfügen"</i> aus<br/>Und schon hast du die App immer mit dabei!';
-    }
+    text = 'Klicke auf <img src="/img/grafiken/webapp/ios_more.png"> und wähle dann <img src="/img/grafiken/webapp/ios_add.png"> aus.<br/>Und schon hast du die App immer mit dabei!';
+    if(isAndroid){ text = 'Klicke auf <img src="/img/grafiken/webapp/and_more.png"> und wähle dann <i>"Zum Startbildschirm hinzfügen"</i> aus.<br/>Und schon hast du die App immer mit dabei!'; }
 
-    el = $('<div class="ph_webapp_info_wrapper hidden"><div class="ph_webapp_info"><span class="close"><i class="material-icons">close</i></span><span class="title">Die VEXED-App</span>'+text+'</div></div>')
-    
-    $(el).find(".close").click(function(el){
-        $(el).addClass("hidden");
-        setTimeout(function(){ $(el).remove(); },400);
-    }.bind(null,el));
-
-    setTimeout(function(el){
-        $(el).addClass("hidden");
-        setTimeout(function(){ $(el).remove(); },400);
-    }.bind(null,el),1000*15);
-
-    $("body").prepend(el);
-    setTimeout(function(el){ 
-        $(el).removeClass("hidden");
-        localStorage.setItem("appinfo",Date.now());
-    }.bind(null,el),300);
+    msg = new PHNotification("VEXED als App",text);
+    msg.callback = function(){ localStorage.setItem("appinfo",Date.now()); };
+    msg.image = "/img/icons/dark_favicon.png";
+    msg.time = 20;
+    msg.show();
 }
 
 Site.prototype.setEvents = function(){
@@ -139,8 +125,6 @@ Site.prototype.setEvents = function(){
     }.bind(null,images);
     
     window.onscroll();
-
-    console.log(document.querySelectorAll("link[data-href]"));
 
     document.querySelectorAll("link[data-href]").forEach(function(el){
         el.setAttribute("href",el.getAttribute("data-href"));
@@ -486,6 +470,63 @@ Relation.unfollow = function(id,callback){
     });
     return true;
 }
+
+/* Notifications */
+
+function PHNotification(title,content,callback){
+    this.element = null;
+    this.timeout = null;
+    this.title = title || "";
+    this.content = content || "";
+    this.image = "";
+    this.time = 8;
+    this.onclick = function(){}
+    this.callback = callback || function(){}
+}
+
+PHNotification.list = [];
+
+PHNotification.next = function(){
+    if(PHNotification.list.length > 0){
+        PHNotification.list[0]._show();
+    }
+}
+
+PHNotification.prototype.makeElement = function(){
+    var html = '<div class="ph_notifi hidden'+(this.image != "" ? ' img' : '')+'">';
+    html += '<span class="title">'+this.title+'</span>';
+    html += '<p>'+this.content+'</p>';
+    if(this.image != "") html += '<img src="'+this.image+'"/>';
+    html += '</div>'
+    var element = $(html);
+    $(element).click(function(){ this.onclick(); }.bind(this));
+    return element;
+}
+
+PHNotification.prototype.show = function(){
+    this.element = this.makeElement();
+    if(PHNotification.list.length < 1){ this._show(); }
+    PHNotification.list.push(this);
+}
+
+PHNotification.prototype._show = function(){
+    $(".ph_notifi_wrapper").append(this.element);
+    setTimeout(function(element){ $(element).removeClass("hidden"); }.bind(null,this.element),200);
+    setTimeout(function(){ this.hide(); }.bind(this),this.time*1000);
+}
+
+PHNotification.prototype.hide = function(){
+    $(this.element).addClass("hidden");
+    setTimeout(function(){ 
+        $(this.element).remove(); 
+        this.callback();
+        PHNotification.list.shift();
+        PHNotification.next();
+    }.bind(this),400);
+}
+
+PHNotification.prototype = Object.create(PHNotification.prototype);
+PHNotification.prototype.constructor = PHNotification;
 
 function structureCode(e,el,length,amount){
     amount = parseInt(amount);

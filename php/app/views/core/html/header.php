@@ -66,3 +66,4 @@
     <?php } ?>
     </head>
     <body>
+        <div class="ph_notifi_wrapper"></div>
