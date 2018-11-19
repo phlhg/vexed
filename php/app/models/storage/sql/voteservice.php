@@ -55,9 +55,16 @@
 
         public function create($post){
             $client = __CLIENT()->id;
-            $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_votes (user, post, vote) VALUES (?,?,?);");
-            if(!$q->execute([$client,$post,\App\Models\Post\Vote::NEUTRAL])){ return false; }
+            $q = \Core\DBM::getMain()->prepare("INSERT INTO ph_votes (user, post, vote, time) VALUES (?,?,?,?);");
+            if(!$q->execute([$client,$post,\App\Models\Post\Vote::NEUTRAL,time()])){ return false; }
             if($q->rowCount() < 1){ return false; }
+            return true;
+        }
+
+        public function delete($post){
+            $client = __CLIENT()->id;
+            $q = \Core\DBM::getMain()->prepare("DELETE FROM ph_votes WHERE user = ? AND post = ? LIMIT 1");
+            if(!$q->execute([$client,$post])){ return false; }
             return true;
         }
 

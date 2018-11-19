@@ -40,12 +40,12 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
-    transition: all 250ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1);
+.ph_post_list .ph_post_banner.MEDIA > img, .ph_post, .ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+    -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1); transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
 .ph_profileh_content, .ph_loading .ph_profile_bg > div, .ph_loading .ph_profile_bg, .mobile_header .title, .ph_webapp_info, header .ph_menur, .ph_menu_container:after , .ph_menu_container nav, .ph_menu_container, header .ph_profile, .ph_logo_wrapper, .ph_text, .ph_bg_image, .ph_login_bg, .ph_separator_half, .ph_login_meta, .ph_login_center, section, header nav {
-    transition: all 300ms cubic-bezier(.4,0,.6,1); -webkit-transition: all 300ms cubic-bezier(.4,0,.6,1);
+    -webkit-transition: all 300ms cubic-bezier(.4,0,.6,1); transition: all 300ms cubic-bezier(.4,0,.6,1);
 }
 
 /*-- ELEMENT STYLE --*/
@@ -280,14 +280,15 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_profile_banner_small > .description { display: block; font-size: 14px; line-height: 26px; color: #fff; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
 
 /*-- POSTS --*/
-.ph_post { min-height: 70px; margin: 0 0 32px 0; position: relative; display: block; }
+.ph_post { border-radius: 4px; background-color: rgba(0,0,0,0); min-height: 70px; margin: 0 0 32px 0; position: relative; display: block; }
+.ph_post:hover { background-color: rgba(0,0,0,0.1); }
 .ph_post > .ph_post_link { position: absolute; display: block; z-index: 2;  left: 0; top: 0; height: 100%; width: 100%; }
 .ph_post > .ph_post_media { border-radius: 4px; background-color: rgb(10,10,10); position: relative; width: 100%; display: block; overflow: hidden;}
 .ph_post > .ph_post_media > img { position: absolute; display: block;  top: 0; left: 0; transform: scale(1.1,1.1); filter: blur(20px); width: 100%; height: 100%; margin-bottom: 0;  }
 .ph_post > .ph_post_media > img[data-lazyload=''] { transition-delay: 200ms; filter: blur(0); transform: scale(1,1);  }
-.ph_post > .ph_post_info { position: relative; display: block; padding: 10px 120px 10px 70px; }
+.ph_post > .ph_post_info { min-height: 70px; position: relative; display: block; padding: 10px 120px 10px 70px; }
 .ph_post > .ph_post_info > .profile { position: absolute; display: block; left: 10px; top: 0; width: 60px; padding: 10px 10px 0 0; }
-.ph_post > .ph_post_info > .profile > .pb { position: relative; display: block; overflow: hidden; width: 50px; height: 50px; background-position: center; background-size: cover; border-radius: 50%; }
+.ph_post > .ph_post_info > .profile > .pb { z-index: 4; position: relative; display: block; overflow: hidden; width: 50px; height: 50px; background-position: center; background-size: cover; border-radius: 50%; }
 .ph_post > .ph_post_info > .profile > .pb > img { filter: blur(10px); position: relative; border-radius: 50%; width: 100%; height: 100%; object-fit: cover;}
 .ph_post > .ph_post_info > .profile > .pb > img[data-lazyload=''] { filter: blur(0); }
 .ph_post > .ph_post_info > .description { text-align: left; font-weight: bold; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; letter-spacing: 1px; font-size: 20px; color: #fff; position: relative; display: block; }
@@ -301,6 +302,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .voting[data-vote='-1'] > .down { background-color: rgb(255,210,0); }
 .ph_post > .ph_post_info > .voting > span { min-width: 42px; text-align: center; font-weight: 700; font-size: 18px; color: #fff; line-height: 15px; display: inline-block; position: relative;padding: 0 5px; }
 
+.ph_post.input:hover { background: unset; }
 .ph_post.input > .ph_post_info > textarea { padding: 5px 50px 5px 10px; max-width: unset; min-width: unset; margin: 0; resize: none; border: none; height: 210px; background-color: rgba(15,15,15); color: #fff; width: 100%; display: block;  }
 .ph_post.input > .ph_post_info > .meta { width: 100%; padding: 4px 10px; }
 .ph_post.input > .ph_post_info { padding: 10px 0 10px 70px; }
@@ -416,6 +418,8 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
     .ph_post > .ph_post_info > .voting > .up { position: absolute; top: 0; left: 10px;  }
     .ph_post > .ph_post_info > .voting > .down { position: absolute; bottom: 0; left: 10px;  }
     .ph_post > .ph_post_info > .voting > span { text-align: center; display: block; }
+
+    .ph_profile_bg > div {  filter: blur(4px); width: calc(100% + 8px); height: calc(100% + 8px); }
 
     .ph_profileh_content .ph_pb_wrapper  { position: absolute; width: 60px; height: 60px; right: 20px; top: 50px; }
     .ph_profileh_content .ph_pb_wrapper .overlay { line-height: 60px;}

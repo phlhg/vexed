@@ -40,9 +40,9 @@
         <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="http://<?php echo \Core\Config::get("application_domain"); ?>/img/icons/dark_favicon.png" rel="apple-touch-icon" />
         <!-- FONTS -->
-        <link href="https://fonts.googleapis.com/css?family=Aldrich|Oxygen:300,400,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link data-href="https://fonts.googleapis.com/css?family=Aldrich|Oxygen:300,400,700" rel="stylesheet" />
+        <link data-href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link data-href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <!-- STYLESHEETS -->
         <link href="/css/main.css" rel="stylesheet" />
         <!--<link href="/css/dark.css" rel="stylesheet" />-->

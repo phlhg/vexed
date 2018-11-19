@@ -72,7 +72,7 @@ Site.prototype.obscure = function(callback){
         callback();
         setTimeout(function(){    
             document.getElementsByTagName("body")[0].classList.remove("ph_loading");
-        },1000);
+        },3000);
     }.bind(null,callback),900);
 }
 
@@ -139,6 +139,13 @@ Site.prototype.setEvents = function(){
     }.bind(null,images);
     
     window.onscroll();
+
+    console.log(document.querySelectorAll("link[data-href]"));
+
+    document.querySelectorAll("link[data-href]").forEach(function(el){
+        el.setAttribute("href",el.getAttribute("data-href"));
+        el.removeAttribute("data-href");
+    });
 
     document.querySelectorAll("a[href]").forEach(function(el){
         if(el.getAttribute("href") == location.pathname){ el.classList.add("active"); }
@@ -305,7 +312,7 @@ FSButton.prototype.constructor = FSButton;
 
 /* VOTER */
 
-Vote = {
+VoteState = {
     NEUTRAL: 0,
     UP: 1,
     DOWN: -1
@@ -355,13 +362,15 @@ Voter.prototype.set = function(vote,votes){
 }
 
 Voter.prototype.upVote = function(){
-    if(this.vote == Vote.up || this.id < 0){ return false; }
-    Vote.up(this.id);
+    if(this.id < 0){ return false; }
+    if(this.vote == VoteState.UP){ return Vote.neutral(this.id); }
+    return Vote.up(this.id);
 }
 
 Voter.prototype.downVote = function(){
-    if(this.vote == Vote.down || this.id < 0){ return false; }
-    Vote.down(this.id);
+    if(this.id < 0){ return false; }
+    if(this.vote == VoteState.DOWN){ return Vote.neutral(this.id); }
+    return Vote.down(this.id);
 }
 
 Voter.prototype = Object.create(Voter.prototype);
@@ -435,6 +444,16 @@ Vote.up = function(id,callback){
 Vote.down = function(id,callback){
     var callback = callback || function(){};
     $.get("/ajax/f/vote_down/?post="+id,function(data){
+        if(data.rspn == 0){
+            Voter.set(id,data.value.vote,data.value.votes);
+            callback(data);
+        }
+    });
+}
+
+Vote.neutral = function(id,callback){
+    var callback = callback || function(){};
+    $.get("/ajax/f/vote_neutral/?post="+id,function(data){
         if(data.rspn == 0){
             Voter.set(id,data.value.vote,data.value.votes);
             callback(data);

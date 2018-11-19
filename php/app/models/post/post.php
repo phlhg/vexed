@@ -117,6 +117,13 @@
             return true;
         }
 
+        public function unVote(){
+            if(!$this->vs->delete($this->id,\App\Models\Post\Vote::NEUTRAL)){ return false; }
+            $this->clientVote = \App\Models\Post\Vote::NEUTRAL;
+            $this->votes = $this->vs->getVotes($this->id);
+            return true;
+        }
+
         public function delete(){
             if(!(__CLIENT()->id == $this->user || __CLIENT()->admin == true)){ return false; }
             //DELETE Votes
