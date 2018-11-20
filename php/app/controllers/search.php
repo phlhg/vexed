@@ -11,15 +11,15 @@
             $this->view->meta->title = "Entdecken";
             $this->view->meta->description = "Entdecke neue Beiträge und finde deine Freunde.";
 
-            if(count(\App::$client->subscriptions) < 1){
-                $this->view->v->profile_suggestions_title = "Beliebte Nutzer";
-                $this->view->v->profile_suggestions = \App\Models\Suggestions::popularUsers(4);
-            } else {
+            $this->view->v->profile_suggestions_title = "";
+            $this->view->v->profile_suggestions = [];
+
+            if(count(\App::$client->subscriptions) > 0){
                 $this->view->v->profile_suggestions_title = "Nutzer die du kennen könntest";
                 $this->view->v->profile_suggestions = \App\Models\Suggestions::knownUsers(4);
             }
 
-            $this->view->v->post_suggestions = \App\Models\Suggestions::popularPosts(12);
+            $this->view->v->post_suggestions = \App\Models\Suggestions::popularPosts(16);
         }
 
         public function query($_URL){
