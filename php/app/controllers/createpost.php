@@ -14,13 +14,20 @@
             $this->view->v->form_error = "";
             $this->view->v->form_description = "";
 
+            $this->view->v->notice = "";
+
             $this->view->addScript("/js/createpost.js");
+
 
             $creator = new \App\Models\Post\Creator();
 
             if(\Core\Config::get("post_disabled")){
                 $this->view->v->form_info = \Core\Config::get("post_disabled_msg");
                 return false;
+            } else {
+                if(count(\App\Models\Post\Post::byUser(__CLIENT()->id)) < 1){
+                    $this->view->v->notice = 'Erstelle deinen ersten Post und teile deine lustigsten Momente mit deinen Freunden 🎉';
+                }
             }
 
             if(\Helpers\Post::exist(["description","ph_tkn"])){

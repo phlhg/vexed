@@ -1,5 +1,8 @@
 <section class="min-fullscreen">
     <div class="ph_text ph_text_feed" style="padding-left: 0; padding-right: 0; max-width: 800px;" >
+        <?php if($_var->notice != ""){ ?>
+            <div class="ph_notice"><?=$_var->notice?></div>
+        <?php } ?>
         <form class="ph_post input" method="POST" action="" enctype="multipart/form-data">
             <input name="ph_tkn" type="hidden" value="<?php echo \Helpers\Token::get(); ?>" />
             <div class="ph_post_media empty"><!--

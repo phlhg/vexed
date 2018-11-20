@@ -7,7 +7,7 @@
     <div class="ph_separator_half">
         <div class="ph_text">
             <h2>Gespenstisch</h2>
-            <p>leer ist es in deiner Startseite.<br/>Zeit, dass du ein paar andere Nutzern findest!</p>
+            <p>leer ist es auf deiner Startseite.<br/>Zeit, dass du ein paar andere Nutzern findest!</p>
             <a href="/search/" class="ph_button main">Entdecken</a>
         </div>
     </div>

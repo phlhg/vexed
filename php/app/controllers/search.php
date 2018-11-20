@@ -13,10 +13,13 @@
 
             $this->view->v->profile_suggestions_title = "";
             $this->view->v->profile_suggestions = [];
+            $this->view->v->notice = "";
 
             if(count(\App::$client->subscriptions) > 0){
                 $this->view->v->profile_suggestions_title = "Nutzer die du kennen könntest";
                 $this->view->v->profile_suggestions = \App\Models\Suggestions::knownUsers(4);
+            } else {
+                $this->view->v->notice = "Finde andere Nutzer oder schau dir beliebte Beiträge an 🔍";
             }
 
             $this->view->v->post_suggestions = \App\Models\Suggestions::popularPosts(16);
