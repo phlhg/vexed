@@ -36,6 +36,10 @@ Client.prototype.isWebApp = function(){
     }
 }
 
+Client.prototype.logout = function(){
+    window.location = "/logout/?re="+window.location.pathname;
+}
+
 Client.prototype = Object.create(Client.prototype);
 Client.prototype.constructor = Client;
 
@@ -43,7 +47,7 @@ Client.prototype.constructor = Client;
 
 function Site(){
     this.init();
-    this.setEvents();
+    this.setGlobalEvents();
 }
 
 Site.prototype.init = function(){
@@ -94,73 +98,48 @@ Site.prototype.showAppInfo = function(){
     msg.show();
 }
 
-Site.prototype.setEvents = function(){
-    var site = this;
-
-    images = document.querySelectorAll("img[data-lazyload]");
-
-    window.onscroll = function(images){
-        var viewTop = $(window).scrollTop(); 
-        var viewHeight = $(window).height();
-        var viewBottom = viewTop + viewHeight;
-
-        var offset = 0;
-
-        images.forEach(function(el){
-            var src = el.getAttribute("data-lazyload")
-            if(!el.hasAttribute("data-lazyloadinit")){
-                var elTop = $(el).offset().top;
-                var elBottom = elTop + $(el).height();
-        
-                if(!(elTop > viewBottom-offset || elBottom < viewTop+offset)){
-                    document.querySelectorAll("img[data-lazyload='"+src+"']").forEach(function(el){
-                        el.setAttribute("data-lazyloadinit","true")
-                        el.onload = function(e){ setTimeout(function(){ this.setAttribute("data-lazyload",""); }.bind(this),200); }
-                        el.setAttribute("src",src);
-                    });
-                }
-            }
-        });
-    
-    }.bind(null,images);
-    
-    window.onscroll();
-
-    document.querySelectorAll("link[data-href]").forEach(function(el){
-        el.setAttribute("href",el.getAttribute("data-href"));
-        el.removeAttribute("data-href");
+Site.prototype.setGlobalEvents = function(){
+    document.querySelectorAll("link[data-href]").forEach(function(i){
+        i.setAttribute("href",i.getAttribute("data-href"));
+        i.removeAttribute("data-href");
     });
 
-    document.querySelectorAll("a[href]").forEach(function(el){
-        if(el.getAttribute("href") == location.pathname){ el.classList.add("active"); }
-        el.onclick = function(e){
-            if(site.load(el.getAttribute("href")))
-                e.preventDefault();
+    window.onscroll = function(){ LazyLoader.onscroll(); }
+
+    this.setEvents(document);
+}
+
+Site.prototype.setEvents = function(element){
+    var site = this;
+
+    element.querySelectorAll("img[data-lazyload]").forEach(function(i){ new LazyLoader(i); });
+    window.onscroll();
+
+    element.querySelectorAll("a[href]").forEach(function(i){
+        if(i.getAttribute("href") == location.pathname){ i.classList.add("active"); }
+        if(i.getAttribute("target") != "_blank"){
+            i.onclick = function(e){
+                if(site.load(i.getAttribute("href")))
+                    e.preventDefault();
+            }
         }
     });
 
-    document.querySelectorAll(".ph_mham").forEach(function(el){
-        el.onclick = function(){ App.site.menu.toggle(); }
+    element.querySelectorAll(".ph_fs_button[data-rel][data-id]").forEach(function(i){
+        if(i.classList.contains("fake")){ return; }
+        new FSButton(i);
     });
 
-    document.querySelectorAll(".ph_menu_container .ph_menu_bg").forEach(function(el){
-        el.onclick = function(){ App.site.menu.close(); }
+    element.querySelectorAll(".ph_voter[data-vote][data-id]").forEach(function(i){
+        new Voter(i);
     });
 
-    document.querySelectorAll(".ph_fs_button[data-rel][data-id]").forEach(function(el){
-        if(!el.classList.contains("fake")){ new FSButton(el); }
+    element.querySelectorAll(".ph_pwc").forEach(function(i){
+        new PWCreator(i);
     });
 
-    document.querySelectorAll(".ph_voter[data-vote][data-id]").forEach(function(el){
-        new Voter(el);
-    });
-
-    document.querySelectorAll(".ph_pwc").forEach(function(el){
-        new PWCreator(el);
-    });
-
-    document.querySelectorAll("form").forEach(function(el){
-        new Form(el);
+    element.querySelectorAll("form").forEach(function(i){
+        new Form(i);
     });
 }  
 
@@ -239,6 +218,66 @@ Form.prototype.error = function(msg){
 
 Form.prototype = Object.create(Form.prototype);
 Form.prototype.constructor = Form;
+
+/* Lazy-Loader */
+
+function LazyLoader(element){
+    this.element = element;
+    this.source = $(this.element).attr("data-lazyload");
+    this.loaded = false;
+    this.setEvents();
+    LazyLoader.list.push(this);
+}
+
+LazyLoader.list = []
+
+LazyLoader.prototype.setEvents = function(){
+    $(this.element).on("load",function(){
+        $(this.element).attr("data-lazyload","");
+    }.bind(this));
+}
+
+LazyLoader.prototype.check = function(){
+    if(this.isVisible && !this.loaded){ 
+        this.load();
+    }
+}
+
+LazyLoader.prototype.load = function(){
+    if(this.loaded){ return; }
+    $(this.element).attr("src",this.source);
+    this.loaded = true;
+}
+
+LazyLoader.prototype.isVisible = function(){
+    if(this.loaded){ return false; }
+    var viewTop = $(window).scrollTop(); 
+    var viewHeight = $(window).height();
+    var viewBottom = viewTop + viewHeight;
+
+    var elTop = $(this.element).offset().top;
+    var elBottom = elTop + $(this.element).height();
+
+    if(!(elTop > viewBottom || elBottom < viewTop)){ return true; }
+    return false;
+}
+
+LazyLoader.onscroll = function(){
+    LazyLoader.list.forEach(function(el){
+        el.check();
+    });
+}
+
+LazyLoader.load = function(src){
+    LazyLoader.list.filter(function(el){
+        return el.source == src;
+    }).forEach(function(el){
+        el.load();
+    });
+}
+
+LazyLoader.prototype = Object.create(LazyLoader.prototype);
+LazyLoader.prototype.constructor = LazyLoader;
 
 /* FS-BUTTON */
 
@@ -411,66 +450,6 @@ PWCreator.prototype.typed = function(){
 PWCreator.prototype = Object.create(PWCreator.prototype);
 PWCreator.prototype.constructor = PWCreator;
 
-/* VOTE */
-
-var Vote = {}
-
-Vote.up = function(id,callback){
-    var callback = callback || function(){};
-    $.get("/ajax/f/vote_up/?post="+id,function(data){
-        if(data.rspn == 0){
-            Voter.set(id,data.value.vote,data.value.votes);
-            callback(data);
-        }
-    });
-}
-
-Vote.down = function(id,callback){
-    var callback = callback || function(){};
-    $.get("/ajax/f/vote_down/?post="+id,function(data){
-        if(data.rspn == 0){
-            Voter.set(id,data.value.vote,data.value.votes);
-            callback(data);
-        }
-    });
-}
-
-Vote.neutral = function(id,callback){
-    var callback = callback || function(){};
-    $.get("/ajax/f/vote_neutral/?post="+id,function(data){
-        if(data.rspn == 0){
-            Voter.set(id,data.value.vote,data.value.votes);
-            callback(data);
-        }
-    });
-}
-
-/* RELATION */
-
-var Relation = {}
-
-Relation.follow = function(id,callback){
-    var callback = callback || function(){};
-    $.get("/ajax/f/rel_follow/?user="+id,function(data){
-        if(data.rspn == 0){
-            FSButton.set(id,data.value.state);
-            callback(data);
-        }
-    });
-    return true;
-}
-
-Relation.unfollow = function(id,callback){
-    var callback = callback || function(){};
-    $.get("/ajax/f/rel_unfollow/?user="+id,function(data){
-        if(data.rspn == 0){
-            FSButton.set(id,data.value.state);
-            callback(data);
-        }
-    });
-    return true;
-}
-
 /* Notifications */
 
 function PHNotification(title,content,callback){
@@ -479,7 +458,7 @@ function PHNotification(title,content,callback){
     this.title = title || "";
     this.content = content || "";
     this.image = "";
-    this.time = 8;
+    this.time = 2;
     this.onclick = function(){}
     this.callback = callback || function(){}
 }
@@ -493,9 +472,10 @@ PHNotification.next = function(){
 }
 
 PHNotification.prototype.makeElement = function(){
-    var html = '<div class="ph_notifi hidden'+(this.image != "" ? ' img' : '')+'">';
+    var html = '';
+    html += '<div class="ph_notifi hidden'+(this.image != "" ? ' img' : '')+'">';
     html += '<span class="title">'+this.title+'</span>';
-    html += '<p>'+this.content+'</p>';
+    if(this.title != "") html += '<p>'+this.content+'</p>';
     if(this.image != "") html += '<img src="'+this.image+'"/>';
     html += '</div>'
     var element = $(html);
@@ -525,8 +505,122 @@ PHNotification.prototype.hide = function(){
     }.bind(this),400);
 }
 
+PHNotification.create = function(title,content,time,image,callback){
+    image = image || "";
+    time = time || null;
+    callback = callback || null;
+    var msg = new PHNotification(title,content,callback);
+    msg.image = image;
+    if(time) msg.time = time;
+    msg.show();
+}
+
 PHNotification.prototype = Object.create(PHNotification.prototype);
 PHNotification.prototype.constructor = PHNotification;
+
+/* AJAX */
+
+PHAjaxRspn = {
+    OK: 0,
+    DENIED: 1,
+    WARNING: 2,
+    ERROR: 3
+}
+
+PHAjax = {}
+
+PHAjax.GET = function(url,callback){
+    callback = callback || function(){};
+    var xhr = $.get(url,function(data){
+        PHAjax.processResponse(data,callback); 
+    })
+    xhr.fail(function(){ 
+        PHAjax.failed();
+    });
+}
+
+PHAjax.POST = function(url,data,callback){
+    callback = callback || function(){};
+    data = data || {};
+    var xhr = $.post(url,data,function(data){
+        PHAjax.processResponse(data,callback); 
+    })
+    xhr.fail(function(){ 
+        PHAjax.failed();
+    });
+}
+
+PHAjax.failed = function(){
+    PHNotification.create("","Fehler bei der Kommunikation mit dem Server");
+}
+
+PHAjax.error = function(data){
+    PHNotification.create("Whoops",(data.info != "" ? data.info : "Etwas ist schief gegangen"));
+}
+
+PHAjax.warning = function (data){
+    PHNotification.create("",data.info);
+}
+
+PHAjax.processResponse = function (data,callback){
+    if(data.rspn === undefined){ return PHAjax.failed(); }
+    if(data.rspn == PHAjaxRspn.OK){ return callback(data); }
+    if(data.rspn == PHAjaxRspn.DENIED){ return; } //NOTLOGGEDIN
+    if(data.rspn == PHAjaxRspn.WARNING){ return PHAjax.warning(data); }
+    if(data.rspn == PHAjaxRspn.ERROR){ return PHAjax.error(data); }
+    PHAjax.failed();
+}
+
+/* VOTE */
+
+var Vote = {}
+
+Vote.up = function(id,callback){
+    var callback = callback || function(){};
+    PHAjax.GET("/ajax/f/vote_up/?post="+id,function(data){
+        Voter.set(id,data.value.vote,data.value.votes);
+        callback(data);
+    });
+}
+
+Vote.down = function(id,callback){
+    var callback = callback || function(){};
+    PHAjax.GET("/ajax/f/vote_down/?post="+id,function(data){
+        Voter.set(id,data.value.vote,data.value.votes);
+        callback(data);
+    })
+}
+
+Vote.neutral = function(id,callback){
+    var callback = callback || function(){};
+    PHAjax.GET("/ajax/f/vote_neutral/?post="+id,function(data){
+        Voter.set(id,data.value.vote,data.value.votes);
+        callback(data);
+    })
+}
+
+/* RELATION */
+
+var Relation = {}
+
+Relation.follow = function(id,callback){
+    var callback = callback || function(){};
+    PHAjax.GET("/ajax/f/rel_follow/?user="+id,function(data){
+        FSButton.set(id,data.value.state);
+        callback(data);
+    })
+    return true;
+}
+
+Relation.unfollow = function(id,callback){
+    var callback = callback || function(){};
+    PHAjax.GET("/ajax/f/rel_unfollow/?user="+id,function(data){
+        FSButton.set(id,data.value.state);
+        callback(data);
+    })
+    return true;
+}
+
 
 function structureCode(e,el,length,amount){
     amount = parseInt(amount);
