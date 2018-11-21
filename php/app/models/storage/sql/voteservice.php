@@ -70,7 +70,7 @@
 
         public function getPopular($max){
             $max = intval($max);
-            $q = $this->db->prepare("SELECT ph_posts.id FROM ph_posts ORDER BY 3600*24*2*(SELECT ABS(SUM(ph_votes.vote)) FROM ph_votes WHERE ph_votes.post = ph_posts.id)/(?-ph_posts.date) DESC LIMIT ".$max);
+            $q = $this->db->prepare("SELECT ph_posts.id FROM ph_posts ORDER BY 3600*24*2*(SELECT ABS(SUM(ph_votes.vote))+1 FROM ph_votes WHERE ph_votes.post = ph_posts.id)/(?-ph_posts.date) DESC LIMIT ".$max);
             if(!$q->execute([time()])){ return []; }
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
