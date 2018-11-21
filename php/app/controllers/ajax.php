@@ -55,6 +55,9 @@
                 case "post_delete":
                     $this->post_delete();
                     break;
+                case "search":
+                    $this->search();
+                    break;
                 default:
                     $this->error("");
                     break;
@@ -135,7 +138,19 @@
             if(!$post->exists){ return $this->warning("Der Post wurde nicht gefunden"); }
             if(!$post->delete()){ return $this->warning("Der Post konnte nicht gelöscht werden."); }
             return true;
-        }   
+        }
+        
+        private function search(){
+            if(!\Helpers\Get::exist(["string"])){ return $this->error("Fehlende Parameter - Parameter [post]"); }
+            $query = new \App\Models\Search\Query(urldecode(urldecode(\Helpers\Get::get("string"))));
+            if(!$query->search()){ return $this->warning($query->errorMsg); }
+            $this->ajax->value["results"] = [];
+            foreach(array_slice($query->results,0,10) as $id){
+                $user = new \App\Models\Account\User($id);
+                $this->ajax->value["results"][] = $user->toHtml();
+            }
+            return true;
+        }
         
     }
 

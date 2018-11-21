@@ -32,7 +32,7 @@
 
         public static function bake($query){
             //abcd -> %a%b%c%d%
-            return "%".implode("%",str_split($query))."%";
+            return "%".implode("%",str_split(str_replace(" ","",$query)))."%";
         }
 
         private function error($msg){

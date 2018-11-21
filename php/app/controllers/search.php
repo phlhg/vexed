@@ -10,10 +10,16 @@
             $this->view("search/index");
             $this->view->meta->title = "Entdecken";
             $this->view->meta->description = "Entdecke neue Beiträge und finde deine Freunde.";
+            $this->view->addScript("/js/search.js");
 
             $this->view->v->profile_suggestions_title = "";
             $this->view->v->profile_suggestions = [];
+
             $this->view->v->notice = "";
+
+            $this->view->v->query = "";
+            $this->view->v->q_error = "";
+            $this->view->v->q_results = [];
 
             if(count(\App::$client->subscriptions) > 0){
                 $this->view->v->profile_suggestions_title = "Nutzer die du kennen könntest";
@@ -32,6 +38,7 @@
             $this->view("search/query");
             $this->view->meta->title = 'Entdecken';
             $this->view->meta->description = "Entdecke neue Beiträge und finde deine Freunde.";
+            $this->view->addScript("/js/search.js");
 
             $this->view->v->query = $string;
             $this->view->v->q_error = "";
