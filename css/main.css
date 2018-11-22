@@ -263,7 +263,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_button_v2.multi.triple > .sect { width: calc(100% / 3 - (20px / 3)); }
 .ph_button_v2.multi.double > .sect { width: calc(50% - 5px); }
 
-.ph_fs_button { border-radius: 4px; width: 100%; background-color: rgb(255,210,0); height: 44px; font-weight: bold; color: #0a0a0a;display: block; position: relative; padding: 10px 20px;}
+.ph_fs_button { cursor: pointer; border-radius: 4px; width: 100%; background-color: rgb(255,210,0); height: 44px; font-weight: bold; color: #0a0a0a;display: block; position: relative; padding: 10px 20px;}
 .ph_fs_button > span { text-align: center; line-height: 24px; font-weight: bold; opacity: 0; transform: scale(0,0); display: block; width: calc(100% - 40px); position: absolute; left: 20px; top: 10px; }
 .ph_fs_button > span i { line-height: 20px;}
 .ph_fs_button .txt { color: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; }
@@ -277,10 +277,15 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_profile_list { position: relative; display: block; margin: 0 0 10px 0; }
 .ph_profile_list.duo { column-count: 2; }
 /* by https://stackoverflow.com/questions/7785374/how-to-prevent-column-break-within-an-element*/
-.ph_profile_banner_small { overflow: hidden; break-inside: avoid-column; -webkit-column-break-inside: avoid; position: relative; display: block; height: 70px; margin: 0 0 10px 0; padding: 10px 10px 10px 90px; border-radius: 4px; background-color: rgba(0,0,0,0.25); }
-.ph_profile_banner_small > .pb { position: absolute; left: 20px; top: 10px; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center;}
-.ph_profile_banner_small > .name { display: block; font-size: 20px; line-height: 24px; font-weight: bold; }
-.ph_profile_banner_small > .description { display: block; font-size: 14px; line-height: 26px; color: #fff; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
+.ph_profile_banner_small { overflow: hidden; break-inside: avoid-column; -webkit-column-break-inside: avoid; position: relative; display: block; height: 70px; margin: 0 0 10px 0; padding: 10px 70px 10px 90px; border-radius: 4px; background-color: rgba(0,0,0,0.25); }
+.ph_profile_banner_small > .link { position: absolute; display: block; z-index: +2;  left: 0; top: 0; width: 100%; height: 100%; }
+.ph_profile_banner_small > .pb { z-index: +0; position: absolute; left: 20px; top: 10px; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center;}
+.ph_profile_banner_small > .name { color: #fff; display: block; font-size: 20px; line-height: 24px; font-weight: bold; }
+.ph_profile_banner_small > .description { display: block; font-size: 14px; line-height: 26px; color: rgb(200,200,200); font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
+.ph_profile_banner_small .ph_fs_button { z-index: +4; position: absolute; border-radius: 15px; padding: 0; right: 20px; top: 20px; height: 30px; width: 30px; }
+.ph_profile_banner_small .ph_fs_button[data-rel='9'] { display: none; }
+.ph_profile_banner_small .ph_fs_button > span { left: 0; top: 0; line-height: 30px; width: 30px; }
+.ph_profile_banner_small .ph_fs_button > span > .txt { display: none; }
 
 /*-- POSTS --*/
 .ph_post { border-radius: 4px; background-color: rgba(0,0,0,0); min-height: 70px; margin: 0 0 32px 0; position: relative; display: block; }
@@ -298,6 +303,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .description a { position: relative; z-index: 4; }
 .ph_post > .ph_post_info > .meta { color: rgb(180,180,180); font-size: 14px; display: block; margin: 2px 0 0 0;}
 .ph_post > .ph_post_info > .meta a { position: relative; z-index: 4; color: inherit; font-size: inherit; font-weight: normal; }
+.ph_post > .ph_post_info > .meta i { font-size: 15px; line-height: inherit; }
 .ph_post > .ph_post_info > .voting { z-index: 4; top: 50%; right: 10px; transform: translateY(-50%); position: absolute; display: inline-block;   }
 .ph_post > .ph_post_info > .voting > .actions { cursor: pointer; font-weight: 700; font-size: 24px; color: rgb(10,10,10); line-height: 20px; text-align: center; display: inline-block; position: relative; background-color: rgb(60,60,60); border-radius: 50%; height: 26px; width: 26px; }
 .ph_post > .ph_post_info > .voting > .actions:hover { background-color: rgb(200,200,200); }
@@ -330,6 +336,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post_list .ph_post_banner { overflow: hidden; width: 100%; word-wrap: break-word; font-size: 20px; min-height: 66px; max-height: 500px; padding: 20px 40px; color: #fff; vertical-align: top; overflow: hidden; cursor: pointer; border-radius: 4px; position: relative; display: inline-block; margin: 0 0 20px 0; width: 100%; background-color: rgba(0,0,0,0.25); }
 .ph_post_list .ph_post_banner .text { font-weight: bold; text-align: left; line-height: 30px; overflow-wrap: break-word;  }
 .ph_post_list .ph_post_banner .meta { position: relative; display: block; line-height: 12px; margin-top: 2px; font-size: 11px; color: rgb(180,180,180); }
+.ph_post_list .ph_post_banner .meta i { font-size: 12px; line-height: inherit; }
 .ph_post_list .ph_post_banner.MEDIA { max-height: 400px; padding: 0; }
 .ph_post_list .ph_post_banner.MEDIA > img { filter: blur(10px); margin: 0 0 -7px 0; } 
 .ph_post_list .ph_post_banner.MEDIA > img[data-lazyload=''] { filter: blur(0); }

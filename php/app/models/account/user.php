@@ -147,12 +147,19 @@
 
         /* HTML */
 
-        public function toHtml(){
-            $html = '<a class="ph_profile_banner_small" href="/p/'.$this->name.'/">
+        public function toHtml($showrelation=true){
+            $html = '<div class="ph_profile_banner_small">
+                <a class="link" href="/p/'.$this->name.'/"></a>
                 <div class="pb" style="background-image: url(/img/pb/'.$this->id.'/);"></div>
                 <span class="name">'.$this->displayName.'</span>
                 <span class="description">'.preg_replace('/\n/i',' ',$this->description).'</span>
-            </a>';
+                <div class="ph_fs_button" data-rel="'.$this->relation.'" data-id="'.$this->id.'">
+                    <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
+                    <span class="follow"><span class="txt">Folgen </span><i class="material-icons">add</i></span>
+                    <span class="requested"><span class="txt">Angefragt </span><i class="material-icons">send</i></span>
+                    <span class="following"><span class="txt">Abonniert </span><i class="material-icons">done</i></span>
+                </div>
+            </div>';
             return $html;
         }
 
