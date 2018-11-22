@@ -40,7 +40,7 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_notifi, .ph_post_list .ph_post_banner.MEDIA > img, .ph_post, .ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+.ph_comment, .ph_notifi, .ph_post_list .ph_post_banner.MEDIA > img, .ph_post, .ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
     -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1); transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
@@ -303,7 +303,7 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post > .ph_post_info > .description a { position: relative; z-index: 4; }
 .ph_post > .ph_post_info > .meta { color: rgb(180,180,180); font-size: 14px; display: block; margin: 2px 0 0 0;}
 .ph_post > .ph_post_info > .meta a { position: relative; z-index: 4; color: inherit; font-size: inherit; font-weight: normal; }
-.ph_post > .ph_post_info > .meta i { font-size: 15px; line-height: inherit; }
+.ph_post > .ph_post_info > .meta i { margin-bottom: -2px; font-size: 15px; line-height: inherit; }
 .ph_post > .ph_post_info > .voting { z-index: 4; top: 50%; right: 10px; transform: translateY(-50%); position: absolute; display: inline-block;   }
 .ph_post > .ph_post_info > .voting > .actions { cursor: pointer; font-weight: 700; font-size: 24px; color: rgb(10,10,10); line-height: 20px; text-align: center; display: inline-block; position: relative; background-color: rgb(60,60,60); border-radius: 50%; height: 26px; width: 26px; }
 .ph_post > .ph_post_info > .voting > .actions:hover { background-color: rgb(200,200,200); }
@@ -329,6 +329,17 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_post.input > .ph_post_media.empty > img { max-height: 0; visibility: hidden; }
 .ph_post.input > .ph_post_media.epmty > .actions > span { text-shadow: none; }
 .ph_post.input > .ph_post_media > .actions #post_img_delete { display: inline-block; }
+
+.ph_comment { padding: 10px 120px 10px 70px; border-radius: 4px; background-color: rgba(0,0,0,0); min-height: 60px; margin: 0 0 10px 0; position: relative; display: block; }
+.ph_comment:hover { background-color: rgba(0,0,0,0.1); }
+.ph_comment > .profile { position: absolute; display: block; left: 10px; top: 0; width: 60px; padding: 10px 0 0 5px; }
+.ph_comment > .profile > .pb { z-index: 4; position: relative; display: block; overflow: hidden; width: 40px; height: 40px; background-position: center; background-size: cover; border-radius: 50%; }
+.ph_comment > .profile > .pb > img { filter: blur(10px); position: relative; border-radius: 50%; width: 100%; height: 100%; object-fit: cover;}
+.ph_comment > .profile > .pb > img[data-lazyload=''] { filter: blur(0); }
+.ph_comment > .description { text-align: left; font-weight: bold; overflow-wrap: break-word; overflow: hidden; width: 100%; word-wrap: break-word; letter-spacing: 1px; font-size: 18px; color: #fff; position: relative; display: block; }
+.ph_comment > .description a { position: relative; z-index: 4; }
+.ph_comment > .meta { color: rgb(180,180,180); font-size: 12px; display: block; margin: 2px 0 0 0;}
+.ph_comment > .meta a { position: relative; z-index: 4; color: inherit; font-size: inherit; font-weight: normal; }
 
 /* BANNER */
 .ph_post_list { display: block; width: 100%; }

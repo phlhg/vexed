@@ -7,6 +7,7 @@
         private $ps; 
         private $ms;
         private $vs;
+        private $cs;
 
         public $id = -1;
         public $exists = false;
@@ -18,12 +19,14 @@
         public $votes = 0;
         public $upvotes = [];
         public $clientVote = 0;
+        public $comments = [];
         public $date = 0;
 
         public function __construct($id){
             $this->ps = new \App\Models\Storage\Sql\PostService();
             $this->ms = new \App\Models\Storage\Sql\MediaService();
             $this->vs = new \App\Models\Storage\Sql\VoteService();
+            $this->cs = new \App\Models\Storage\Sql\CommentService();
             $this->id = $id;
             $this->load();
         }
@@ -40,6 +43,7 @@
             $this->votes = $this->vs->getVotes($this->id);
             $this->upvotes = $this->vs->getUpVotes($this->id);
             $this->clientVote = $this->vs->getClient($this->id);
+            $this->comments = $this->cs->byPost($this->id);
             $this->date = intval($data["date"]);
         }
 
@@ -57,7 +61,7 @@
                 <span class="meta">
                     '.($showUser ? '<strong>
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
-                    </strong> | ' : '').\App\Models\Post\Vote::format($this->votes).' | '.\Helpers\Date::beautify($this->date).'</span>
+                    </strong> | ' : '').\App\Models\Post\Vote::format($this->votes).' | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).'</span>
                 </a>';
             return $html;
         }
@@ -72,7 +76,7 @@
                     ($showUser ? '<strong>
                         <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
                     </strong> | ' : '')
-                    .\App\Models\Post\Vote::format($this->votes).' | '.\Helpers\Date::beautify($this->date).'</span><!--
+                    .\App\Models\Post\Vote::format($this->votes).' | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).'</span><!--
                 --></a>';
             return $html;
         }
@@ -89,7 +93,7 @@
                     </div>
                     <p class="description">'.$this->text.'</p>
                     <span class="meta">
-                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.\Helpers\Date::beautify($this->date).' 
+                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
                     <div class="voting ph_voter" data-vote="'.$this->clientVote.'" data-id="'.$this->id.'"><!--
                         --><div class="actions down">-</div><!--
