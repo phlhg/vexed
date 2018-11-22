@@ -225,7 +225,6 @@ function LazyLoader(element){
     this.element = element;
     this.source = $(this.element).attr("data-lazyload");
     this.loaded = false;
-    this.setEvents();
     LazyLoader.list.push(this);
 }
 
@@ -238,19 +237,19 @@ LazyLoader.prototype.setEvents = function(){
 }
 
 LazyLoader.prototype.check = function(){
-    if(this.isVisible && !this.loaded){ 
-        this.load();
+    if(this.isVisible() && !this.loaded){ 
+        LazyLoader.load(this.source);
     }
 }
 
 LazyLoader.prototype.load = function(){
     if(this.loaded){ return; }
+    this.setEvents();
     $(this.element).attr("src",this.source);
     this.loaded = true;
 }
 
 LazyLoader.prototype.isVisible = function(){
-    if(this.loaded){ return false; }
     var viewTop = $(window).scrollTop(); 
     var viewHeight = $(window).height();
     var viewBottom = viewTop + viewHeight;
@@ -269,6 +268,7 @@ LazyLoader.onscroll = function(){
 }
 
 LazyLoader.load = function(src){
+    console.log("LOAD: "+src);
     LazyLoader.list.filter(function(el){
         return el.source == src;
     }).forEach(function(el){
