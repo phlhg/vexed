@@ -9,16 +9,10 @@
             $this->view("home/index");
             $this->view->meta->title = "Start";
             $this->view->meta->description = "Das soziale Netzwerk. Erstelle ein Profil und trete der Community bei";
+            $this->view->addScript("/js/feed.js");
 
             $this->view->v->content = "";
             $this->view->v->notice = "";
-
-            $feed = new \App\Models\Post\Feed();
-            if(count($feed->postlist) < 1){ return __ROUTER()->setRoute("Home/_empty"); }
-            foreach($feed->postlist as $id){
-                $post = new \App\Models\Post\Post($id);
-                $this->view->v->content .= $post->toHtmlFeed();
-            }
 
             if(__CLIENT()->description == ""){
                 $this->view->v->notice = 'Füge deinem <a href="/p/'.__CLIENT()->name.'/">Profil</a> eine Beschreibung hinzu, damit die anderen Nutzer mehr über dich erfahren können 😉';

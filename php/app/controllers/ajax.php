@@ -55,6 +55,18 @@
                 case "post_delete":
                     $this->post_delete();
                     break;
+                case "feed_init":
+                    $this->feed_init();
+                    break;
+                case "feed_latest":
+                    $this->feed_latest();
+                    break;
+                case "feed_previous":
+                    $this->feed_previous();
+                    break;
+                case "feed_check":
+                    $this->feed_check();
+                    break;
                 case "search":
                     $this->search();
                     break;
@@ -137,6 +149,49 @@
             $post = new \App\Models\Post\Post(\Helpers\Get::get("post"));
             if(!$post->exists){ return $this->warning("Der Post wurde nicht gefunden"); }
             if(!$post->delete()){ return $this->warning("Der Post konnte nicht gelöscht werden."); }
+            return true;
+        }
+
+        private function feed_init(){
+            $feed = new \App\Models\Post\Feed();
+            $feed->loadInit();
+            $this->ajax->value["feed"] = [];
+            foreach($feed->postlist as $id){
+                $post = new \App\Models\Post\Post($id);
+                $this->ajax->value["feed"][] = $post->toArray();
+            }
+            return true;
+        }
+
+        private function feed_latest(){
+            if(!\Helpers\Get::exist(["last"])){ return $this->error("Fehlende Parameter - Parameter [last]"); }
+            $feed = new \App\Models\Post\Feed();
+            $feed->loadLatest(\Helpers\Get::get("last"));
+            $this->ajax->value["feed"] = [];
+            foreach($feed->postlist as $id){
+                $post = new \App\Models\Post\Post($id);
+                $this->ajax->value["feed"][] = $post->toArray();
+            }
+            return true;
+        }
+
+        private function feed_previous(){
+            if(!\Helpers\Get::exist(["prev"])){ return $this->error("Fehlende Parameter - Parameter [prev]"); }
+            $feed = new \App\Models\Post\Feed();
+            $feed->loadPrevious(\Helpers\Get::get("prev"));
+            $this->ajax->value["feed"] = [];
+            foreach($feed->postlist as $id){
+                $post = new \App\Models\Post\Post($id);
+                $this->ajax->value["feed"][] = $post->toArray();
+            }
+            return true;
+        }
+
+        private function feed_check(){
+            if(!\Helpers\Get::exist(["last"])){ return $this->error("Fehlende Parameter - Parameter [last]"); }
+            $feed = new \App\Models\Post\Feed();
+            $feed->loadLatest(\Helpers\Get::get("last"));
+            $this->ajax->value["new"] = count($feed->postlist);
             return true;
         }
         

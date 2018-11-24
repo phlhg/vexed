@@ -105,6 +105,13 @@
             return $html;
         }
 
+        public function toArray(){
+            return array(
+                "id" => $this->id,
+                "html" => $this->toHtmlFeed()
+            );
+        }
+
         /* VOTING */
 
         public function upVote(){

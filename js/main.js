@@ -9,6 +9,12 @@ var App = {}
 App.init = function(){
     App.client = new Client();
     App.site = new Site();
+    App.ready = new Event("AppReady");
+    document.dispatchEvent(App.ready);
+}
+
+App.onready = function(){
+    document.dispatchEvent(new Event("AppReady"));
 }
 
 /* CONFIG */
@@ -22,6 +28,7 @@ Config.get = function(id){
 /* CLIENT */
 function Client(){
     this.id = -1;
+    this.load();
 }
 
 Client.prototype.load = function(){
@@ -146,6 +153,113 @@ Site.prototype.setEvents = function(element){
 Site.prototype = Object.create(Site.prototype);
 Site.prototype.constructor = Site;
 
+function PHFeed(element){
+    this.wrapper = $("html, body")[0];
+    this.element = element;
+    this.protect = true;
+    this.loading = true;
+    this.latest = -1;
+    this.previous = -1;
+
+    this.lastScrollHeight = 0;
+    this.lastScrollTop = 0;
+    this.loadingTimeout = null;
+
+    this.newPostMsg = false;
+    this.interval = null;
+
+    this.init();
+}
+
+PHFeed.prototype.init = function(){
+    $(this.wrapper).scrollTop(0);
+
+    $(window).scroll(function(e){ this.onscroll(); }.bind(this));
+
+    this.interval = setInterval(function(){ this.checkForUpdates(); }.bind(this),1000*30);
+
+    this.load();
+}
+
+PHFeed.prototype.onscroll = function(){
+    var offset = this.wrapper.clientHeight/3;
+    if($(window).scrollTop() > offset && $(window).scrollTop() < $("html,body").prop("scrollHeight") - this.wrapper.clientHeight - offset){ this.protect = false; }
+    if(this.protect){ return false; }
+    this.lastScrollHeight = $("html,body").prop("scrollHeight");
+    this.lastScrollTop = $(window).scrollTop();
+    if(this.loading){ return false; }
+    if($(window).scrollTop() <= offset){ return this.loadLatest() }
+    if($(window).scrollTop() >= $("html,body").prop("scrollHeight") - this.wrapper.clientHeight - offset){ return this.loadPrevious(); }
+    this.protect = false;
+}
+
+PHFeed.prototype.checkForUpdates = function(){
+    PHAjax.GET("/ajax/f/feed_check/?last="+this.latest,function(data){
+        if(data.value.new > 0 && !this.newPostMsg){
+            var msg = new PHNotification("Neue Beiträge verfügbar","Hier klicken um diese zu laden.");
+            msg.time = 5;
+            msg.onclick = function(msg){ msg.hide(); this.loadLatest(); $("html,body").animate({scrollTop: 0},500); }.bind(this,msg);
+            msg.show();
+            this.newPostMsg = true;
+        }
+    }.bind(this));
+}
+
+PHFeed.prototype.restoreScroll = function(){
+    $(window).scrollTop($("html,body").prop("scrollHeight")-this.lastScrollHeight+$(window).scrollTop());
+}
+
+PHFeed.prototype.load = function(){
+    this.loading = true;
+    PHAjax.GET("/ajax/f/feed_init/",function(data){
+        if(data.value.feed.length > 0){ 
+            this.addElements(data.value.feed);
+            this.latest = data.value.feed[0].id;
+            this.previous = data.value.feed[data.value.feed.length-1].id;
+        }
+        this.loading = false;
+    }.bind(this));
+}
+
+PHFeed.prototype.loadPrevious = function(){
+    this.loading = true;
+    this.protect = true;
+    PHAjax.GET("/ajax/f/feed_previous/?prev="+this.previous,function(data){
+        if(data.value.feed.length > 0){ this.addElements(data.value.feed); }
+        this.loading = false;
+    }.bind(this));
+}
+
+PHFeed.prototype.loadLatest = function(){
+    this.loading = true;
+    this.protect = true;
+    PHAjax.GET("/ajax/f/feed_latest/?last="+this.latest,function(data){
+        if(data.value.feed.length > 0){
+            this.addElements(data.value.feed);
+            this.newPostMsg = false;
+            this.restoreScroll();
+        }
+        this.loading = false;
+    }.bind(this));
+}
+
+PHFeed.prototype.addElements = function(posts){
+    posts.forEach(function(el){
+        var post = $(el.html);
+        App.site.setEvents($(post)[0]);
+        if(el.id > this.latest){
+            this.latest = el.id;
+            $(this.element).prepend(post);
+        } else {
+            this.previous = el.id;
+            $(this.element).append(post);
+        }
+    }.bind(this));
+}
+
+PHFeed.prototype = Object.create(PHFeed.prototype);
+PHFeed.prototype.constructor = PHFeed;
+
 /* FORM */
 
 function Form(element){
@@ -268,7 +382,6 @@ LazyLoader.onscroll = function(){
 }
 
 LazyLoader.load = function(src){
-    console.log("LOAD: "+src);
     LazyLoader.list.filter(function(el){
         return el.source == src;
     }).forEach(function(el){
@@ -459,6 +572,8 @@ function PHNotification(title,content,callback){
     this.content = content || "";
     this.image = "";
     this.time = 2;
+    this.el_title = null;
+    this.el_content = null;
     this.onclick = function(){}
     this.callback = callback || function(){}
 }
@@ -475,10 +590,12 @@ PHNotification.prototype.makeElement = function(){
     var html = '';
     html += '<div class="ph_notifi hidden'+(this.image != "" ? ' img' : '')+'">';
     html += '<span class="title">'+this.title+'</span>';
-    if(this.title != "") html += '<p>'+this.content+'</p>';
+    html += '<p>'+this.content+'</p>';
     if(this.image != "") html += '<img src="'+this.image+'"/>';
     html += '</div>'
     var element = $(html);
+    this.el_title = $(element).find(".title");
+    this.el_content = $(element).find("p");
     $(element).click(function(){ this.onclick(); }.bind(this));
     return element;
 }
@@ -492,7 +609,7 @@ PHNotification.prototype.show = function(){
 PHNotification.prototype._show = function(){
     $(".ph_notifi_wrapper").append(this.element);
     setTimeout(function(element){ $(element).removeClass("hidden"); }.bind(null,this.element),200);
-    setTimeout(function(){ this.hide(); }.bind(this),this.time*1000);
+    if(this.time > 0){ setTimeout(function(){ this.hide(); }.bind(this),this.time*1000); }
 }
 
 PHNotification.prototype.hide = function(){
@@ -503,6 +620,13 @@ PHNotification.prototype.hide = function(){
         PHNotification.list.shift();
         PHNotification.next();
     }.bind(this),400);
+}
+
+PHNotification.prototype.update = function(title,content){
+    title = title ? title : "";
+    content = content ? content : "";
+    if(title != ""){ this.title = title; $(this.el_title).html(this.title); }
+    if(content != ""){ this.content = content; $(this.el_content).html(this.content); }
 }
 
 PHNotification.create = function(title,content,time,image,callback){

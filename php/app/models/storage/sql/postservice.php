@@ -47,11 +47,26 @@
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 
-        public function getByUsers($subs){
+        private function makeSubsString($subs){
             $subs = array_filter($subs,function($a){ return preg_match('/[0-9]+/i',$a); });
-            $s = join('\' OR user = \'',$subs);
-            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = '".$s."' ORDER BY date DESC");
+            return join('\' OR user = \'',$subs);
+        }
+
+        public function getInit($subs){
+            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE user = '".$this->makeSubsString($subs)."' ORDER BY date DESC LIMIT 10");
             if(!$q->execute()){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
+        public function getLatest($subs,$last=0){
+            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE id > ? AND (user = '".$this->makeSubsString($subs)."') ORDER BY date ASC");
+            if(!$q->execute([$last])){ return []; }
+            return $q->fetchAll(\PDO::FETCH_COLUMN);
+        }
+
+        public function getPrevious($subs,$prev=0){
+            $q = $this->db->prepare("SELECT id FROM ph_posts WHERE id < ? AND (user = '".$this->makeSubsString($subs)."') ORDER BY date DESC LIMIT 10");
+            if(!$q->execute([$prev])){ return []; }
             return $q->fetchAll(\PDO::FETCH_COLUMN);
         }
 

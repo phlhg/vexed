@@ -17,7 +17,6 @@
 
         public function __construct(){
             $this->postservice = new \App\Models\Storage\Sql\PostService();
-            $this->load();
         }
         
         private function getSubscriptions(){
@@ -26,8 +25,16 @@
             return $subs;
         }
 
-        public function load(){
-            $this->postlist = $this->postservice->getByUsers($this->getSubscriptions());
+        public function loadLatest($last=0){
+            $this->postlist = $this->postservice->getLatest($this->getSubscriptions(),$last);
+        }
+
+        public function loadPrevious($prev=0){
+            $this->postlist = $this->postservice->getPrevious($this->getSubscriptions(),$prev);
+        }
+
+        public function loadInit(){
+            $this->postlist = $this->postservice->getInit($this->getSubscriptions());
         }
 
     }
