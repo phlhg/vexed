@@ -22,7 +22,7 @@
             $this->view->v->q_results = [];
 
             if(count(\App::$client->subscriptions) > 0){
-                $this->view->v->profile_suggestions_title = "Nutzer die du kennen könntest";
+                $this->view->v->profile_suggestions_title = "Kennst du...";
                 $this->view->v->profile_suggestions = \App\Models\Suggestions::knownUsers(4);
             } else {
                 $this->view->v->notice = "Finde andere Nutzer oder schau dir beliebte Beiträge an 🔍";

@@ -12,6 +12,7 @@
                     echo $profile->toHtml();
                 }
             ?></div>
+            <br/>
         <?php } ?>
         <div class="ph_post_list">
             <div class="container"><?php
