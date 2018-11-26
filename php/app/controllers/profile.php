@@ -124,10 +124,9 @@
                     $filetype = $type;
                 }
             }
-
             if($filetype == false){ $filetype = "jpg"; $id = 0; }
             $this->view->setFormat("image/".$filetype);
-            $this->view->v->content = file_get_contents($folder.$id.$tiny.'.'.$filetype);
+            $this->view->v->content = file_get_contents($folder.$id.'.'.$filetype);
         }
     }
 

@@ -6,11 +6,14 @@
         <div class="ph_profileh_content">
             <div id="pb_sel" class="ph_pb_wrapper"><div style="background-image: url(/img/pb/<?=$_var->profile->id?>)" class="pb"></div><div class="overlay"><i class="material-icons">add_a_photo</i></div></div>
             <div class="main">
-                <span class="meta">
-                    <?=($_var->profile->admin ? '<span><strong>ADMIN</strong></span>' : '')?>
-                    <span><strong><?=count(\App\Models\Post\Post::byUser($_var->profile->id))?></strong>Beiträge</span>
-                    <a href="/p/<?=$_var->profile->name?>/followers/"><strong><?=count($_var->profile->followers)?></strong>Abonnenten</a>
-                    <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>abonniert</a></span>
+            <span class="meta">
+                <?=($_var->profile->id == "60" ? '<span title="Bot" class="ph_inline_icon"><i class="material-icons">adb</i></span>' : '')?>
+                <?=($_var->profile->verified ? '<span title="Verifizierter Nutzer" class="ph_inline_icon"><i class="material-icons">check</i></span>' : '')?>
+                <?=($_var->profile->admin ? '<span title="Administrator" class="ph_inline_icon">A</span>' : '')?>
+                <a href="/p/<?=$_var->profile->name?>/"><strong><?=count(\App\Models\Post\Post::byUser($_var->profile->id))?></strong>Posts</a>
+                <a href="/p/<?=$_var->profile->name?>/followers/"><strong><?=count($_var->profile->followers)?></strong>Abos</a>
+                <a href="/p/<?=$_var->profile->name?>/subscriptions/" ><strong><?=count($_var->profile->subscriptions)?></strong>Folgt</a>
+            </span>
                 <h1><input name="username" placeholder="Nutzername" value="<?=$_var->profile->name?>"/></h1>
             </div>
             <span class="description">

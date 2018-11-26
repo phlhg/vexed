@@ -23,7 +23,7 @@
 
         protected $email = "";
         public $admin = "";
-        protected $verified = false;
+        public $verified = false;
         protected $private = false;
         protected $banned = false;
         public $created = 0;
@@ -152,7 +152,7 @@
                 <a class="link" href="/p/'.$this->name.'/"></a>
                 <div class="pb" style="background-image: url(/img/pb/'.$this->id.'/);"></div>
                 <span class="name">'.$this->displayName.'</span>
-                <span class="description">'.preg_replace('/\n/i',' ',$this->description).'</span>
+                <span class="description">'.($this->verified ? '<span title="Verifizierter Nutzer" class="ph_inline_icon small"><i class="material-icons">check</i></span> ':'').preg_replace('/\n/i',' ',$this->description).'</span>
                 <div class="ph_fs_button" data-rel="'.$this->relation.'" data-id="'.$this->id.'">
                     <span class="edit"><span class="txt">Bearbeiten </span><i class="material-icons">create</i></span>
                     <span class="follow"><span class="txt">Folgen </span><i class="material-icons">add</i></span>

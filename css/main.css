@@ -232,9 +232,10 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
 .ph_profileh_content > .main { position: relative; display: block; width: 100%;}
 .ph_profileh_content > .main > h1 { height: auto; overflow-x: hidden; overflow-y: hidden; text-overflow: ''; white-space: nowrap; font-size: 100px; line-height: 125px; margin: 0; }
-.ph_profileh_content > .main > .meta { display: block; }
-.ph_profileh_content > .main > .meta > span, .ph_profileh_content > .main > .meta > a  { color: #fff; font-weight: normal; font-size: 12px; display: inline-block; margin: 0 10px 0 0; }
-.ph_profileh_content > .main > .meta > span > strong, .ph_profileh_content > .main > .meta > a > strong { font-size: 18px; color: rgb(255,210,0); font-weight: bold; display: inline-block; margin: 0 4px 0 0; }
+.ph_profileh_content > .main > .meta { line-height: 25px; display: block; }
+.ph_profileh_content > .main > .meta > a, .ph_profileh_content > .main > .meta > span { margin: 0 2px 0 0; }
+.ph_profileh_content > .main > .meta > a  { vertical-align: top; height: 20px; color: #fff; padding: 0 10px 0 0; border-radius: 10px; display: inline-block; background-color: rgb(10,10,10); color: #fff; font-weight: normal; font-size: 12px; line-height: 20px; display: inline-block; }
+.ph_profileh_content > .main > .meta > a > strong { vertical-align: top; min-width: 20px; height: 20px; line-height: 20px; height: 100%; text-align: center; padding: 0 5px; border-radius: 10px; font-size: 16px; display: inline-block; color: rgb(10,10,10); background-color: rgb(255,210,0); font-weight: bold; display: inline-block; margin: 0 5px 0 0; }
 .ph_profileh_content > .description .ph_profile_website { margin-top: 15px; text-decoration: underline !important; color: #fff; display: block; padding: 5px 0;}
 .ph_loading .ph_profileh_content { opacity: 0; }
 
@@ -374,6 +375,12 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 .ph_search_suggestions > .ph_suggestions { visibility: visible; opacity: 1; z-index: +10; padding: 10px 20px; min-height: 1000vh; border-radius: 0 0 4px 4px; position: absolute; display: block; top: 100%; left: -20px; width: calc(100% + 40px); background-color: rgb(20,20,20); }
 .ph_search_suggestions > .ph_suggestions:empty { visibility: hidden; opacity: 0; padding: 0 20px; }
 
+.ph_inline_icon { font-weight: bold; position: relative; vertical-align: top; text-align: center; display: inline-block; border-radius: 50%; width: 20px; height: 20px;  line-height: 20px; color: rgb(10,10,10); font-size: 16px; background-color: rgb(255,201,0);}
+.ph_inline_icon > i { margin-bottom: 2px !important; font-size: 16px !important; }
+
+.ph_inline_icon.small { vertical-align: sub; width: 12px; height: 12px; line-height: 12px; font-size: 12px;}
+.ph_inline_icon.small > i { margin-bottom: 4px !important; margin-left: -1px !important; font-size: 12px !important; }
+
 /*#######################################
     Media Queries
 ########################################*/
@@ -448,14 +455,15 @@ section.min-fullscreen.transparent-menu { min-height: 100%; top: 0; padding-top:
 
     .ph_profile_bg > div {  filter: blur(4px); width: calc(100% + 8px); height: calc(100% + 8px); }
 
-    .ph_profileh_content .ph_pb_wrapper  { position: absolute; width: 60px; height: 60px; right: 20px; top: 50px; }
+    .ph_profileh_content .ph_pb_wrapper  { position: absolute; width: 60px; height: 60px; right: 20px; top: 60px; }
     .ph_profileh_content .ph_pb_wrapper .overlay { line-height: 60px;}
     .ph_profileh_content .ph_pb_wrapper .overlay i { font-size: 20px; line-height: 60px; }
     .ph_profileh_content { margin: 50px 0 0 0; left: 0; padding: 20px 80px 20px 20px; transform: translate(0,0); }
 
     .ph_profileh_content > .main > h1 { margin: 10px 0; font-size: 45px; line-height: 60px; }
-    .ph_profileh_content > .main > .meta > span, .ph_profileh_content > .main > .meta > a  { font-size: 10px; margin: 0 2px 0 0; }
-    .ph_profileh_content > .main > .meta > span > strong, .ph_profileh_content > .main > .meta > a > strong { font-size: 12px; margin: 0 2px 0 0; }
+    .ph_profileh_content > .main > .meta { width: calc(100% + 60px); }
+    .ph_profileh_content > .main > .meta > a  { font-size: 10px; margin: 0 2px 0 0; }
+    .ph_profileh_content > .main > .meta > a > strong { font-size: 12px; margin: 0 4px 0 0; }
 
     .ph_profileh_content > .description { font-size: 14px; }
     .ph_profileh_content > .description > textarea { min-height: 60px; }

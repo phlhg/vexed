@@ -60,7 +60,7 @@
                 <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf,false).'</span>
                 <span class="meta">
                     '.($showUser ? '<strong>
-                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
+                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.' '.($user->verified ? ' <span class="ph_inline_icon small"><i class="material-icons">check</i></span>' : '').'
                     </strong> | ' : '').\App\Models\Post\Vote::format($this->votes).' | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).'</span>
                 </a>';
             return $html;
@@ -74,7 +74,7 @@
                 --><span class="meta">
                     <span class="text">'.Self::format(strlen($this->text_nf) > 255 ? substr($this->text_nf,0,255).'...' : $this->text_nf,false).'</span>'.
                     ($showUser ? '<strong>
-                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.'
+                        <img class="inline_pb" src="/img/pb/'.$user->id.'/?tiny" />'.$user->displayName.' '.($user->verified ? ' <span class="ph_inline_icon small"><i class="material-icons">check</i></span>' : '').'
                     </strong> | ' : '')
                     .\App\Models\Post\Vote::format($this->votes).' | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).'</span><!--
                 --></a>';
@@ -93,7 +93,7 @@
                     </div>
                     <p class="description">'.$this->text.'</p>
                     <span class="meta">
-                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.'</a> | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).' 
+                        <a class="p_link" href="/p/'.$user->name.'/">'.$user->displayName.($user->verified ? ' <span class="ph_inline_icon small"><i class="material-icons">check</i></span>' : '').'</a> | '.count($this->comments).' <i class="material-icons">chat_bubble_outline</i> | '.\Helpers\Date::beautify($this->date).' 
                     </span>
                     <div class="voting ph_voter" data-vote="'.$this->clientVote.'" data-id="'.$this->id.'"><!--
                         --><div class="actions down">-</div><!--
