@@ -17,6 +17,7 @@
             $this->view->v->comment_error = "";
             $this->view->v->comment_info = "";
 
+            $this->view->v->page_menu_back = true;
             $this->view->v->post = $post;
             $this->view->v->poster = $poster;
 

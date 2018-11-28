@@ -44,7 +44,11 @@ Client.prototype.isWebApp = function(){
 }
 
 Client.prototype.logout = function(){
-    window.location = "/logout/?re="+window.location.pathname;
+    var msg = new PHNotification("Nicht angemeldet","Bitte melde dich erneut an",function(){
+        App.site.load("/logout/?re="+window.location.pathname);
+    });
+    msg.time = 5;
+    msg.show();
 }
 
 Client.prototype = Object.create(Client.prototype);
@@ -75,6 +79,10 @@ Site.prototype.load = function(href){
         window.location.href = href;
     }.bind(null,href));
     return true;
+}
+
+Site.prototype.back = function(){
+    this.obscure(function(){  window.history.back(); });
 }
 
 Site.prototype.obscure = function(callback){
@@ -244,17 +252,19 @@ PHFeed.prototype.loadLatest = function(){
 }
 
 PHFeed.prototype.addElements = function(posts){
+    var feed = this;
     posts.forEach(function(el){
         var post = $(el.html);
+        var id = parseInt(el.id);
         App.site.setEvents($(post)[0]);
-        if(el.id > this.latest){
-            this.latest = el.id;
-            $(this.element).prepend(post);
+        if(id > feed.latest){
+            feed.latest = id;
+            $(feed.element).prepend(post);
         } else {
-            this.previous = el.id;
-            $(this.element).append(post);
+            feed.previous = id;
+            $(feed.element).append(post);
         }
-    }.bind(this));
+    });
 }
 
 PHFeed.prototype = Object.create(PHFeed.prototype);
@@ -689,7 +699,7 @@ PHAjax.warning = function (data){
 PHAjax.processResponse = function (data,callback){
     if(data.rspn === undefined){ return PHAjax.failed(); }
     if(data.rspn == PHAjaxRspn.OK){ return callback(data); }
-    if(data.rspn == PHAjaxRspn.DENIED){ return; } //NOTLOGGEDIN
+    if(data.rspn == PHAjaxRspn.DENIED){ return App.client.logout(); } 
     if(data.rspn == PHAjaxRspn.WARNING){ return PHAjax.warning(data); }
     if(data.rspn == PHAjaxRspn.ERROR){ return PHAjax.error(data); }
     PHAjax.failed();

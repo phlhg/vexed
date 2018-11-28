@@ -40,7 +40,7 @@ form .ph_sub_wrapper:after {
 
 /*-- TRANSITIONS --*/
 
-.ph_comment, .ph_notifi, .ph_post_list .ph_post_banner.MEDIA > img, .ph_post, .ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
+.mobile_header .back, .ph_comment, .ph_notifi, .ph_post_list .ph_post_banner.MEDIA > img, .ph_post, .ph_profile_bg_overlay, .ph_post > .ph_post_info > .profile > .pb > img , .ph_post > .ph_post_media > img, .ph_post > .ph_post_media > .actions, .ph_post > .ph_post_media, .ph_webapp_info_wrapper, .ph_pwc .indicator > span, .ph_post > .ph_post_info > .voting > .actions, .ph_button_v2.multi > .sect, .ph_fs_button span, .ph_form_error:before, .ph_form_info:before, .ph_form_error, .ph_form_info , .ph_menu_container .ph_menu_inner nav a > span, .ph_menu_container .ph_menu_inner nav a > span:after, header .ph_mham > span, form .ph_sub_wrapper:after, .ph_button:after, .ph_button, form input, form input[type='checkbox']:after, header nav > a:after {
     -webkit-transition: all 250ms cubic-bezier(.4,0,.6,1); transition: all 250ms cubic-bezier(.4,0,.6,1);
 }
 
@@ -96,6 +96,12 @@ header.transparent-menu:after { display: none; }
 .mobile_header .profile { line-height: 36px; color: rgb(10,10,10); text-align: center; border-radius: 50%; overflow: hidden; height: 34px; width: 34px; position: absolute; top: 8px; left: 20px; }
 .mobile_header .profile.login { background-color: rgb(255,210,0); }
 .mobile_header .profile img { object-fit: cover; width: 100%; height: 100%; }
+.ph_loading .mobile_header.back .profile { visibility: visible; opacity: 1; }
+.mobile_header.back .profile { visibility: hidden; opacity: 0; }
+
+.mobile_header .back { cursor: pointer; visibility: hidden; opacity: 0; line-height: 36px; color: rgb(255,210,0); text-align: center; overflow: hidden; height: 34px; width: 34px; position: absolute; top: 8px; left: 20px; }
+.mobile_header.back .back{ display: block; visibility: visible; opacity: 1; }
+.ph_loading .mobile_header.back .back{ visibility: hidden; opacity: 0; }
 
 .mobile_header.login-menu .logo, .mobile_header.login-menu .title, .mobile_header.login-menu .profile { display: none;  }
 .mobile_header.login-menu .logo_login { display: block; }

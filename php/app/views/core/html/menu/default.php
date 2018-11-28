@@ -14,12 +14,13 @@
         <?php } ?>
     </div><!--
 --></div></header>
-<div class="mobile_header <?=(isset($view->v->page_menu_class) ? $view->v->page_menu_class : '')?>">
+<div class="mobile_header <?=(isset($view->v->page_menu_back) && $view->v->page_menu_back == true ? " back" : '')?><?=(isset($view->v->page_menu_class) ? " ".$view->v->page_menu_class : '')?>">
     <?php if($view->client->isLoggedIn()){ ?>
         <a title="Profil" href="/p/<?=$view->client->name?>/" class="profile"><img src="/img/pb/<?=$view->client->id?>" /></a>
     <?php } else { ?>
         <a title="Profil" href="/" class="profile login"><i class="material-icons">person_outline</i></a>
     <?php } ?>
+    <a title="Zurück" onclick="App.site.back()" class="back"><i class="material-icons">arrow_back_ios</i></a>
     <span class="title"><?=$view->meta->title?></span>
     <a class="logo" href="/"><img src="/img/icons/favicon.png" /></a>
     <a class="logo_login" href="/"><img src="/img/icons/logo.svg" /></a>
