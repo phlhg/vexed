@@ -32,7 +32,7 @@
                     </div>
                 </span>
                 <span>
-                    <a href="/p/<?=$_var->profile->name?>/" target="_blank" class="ph_button_v2">
+                    <a href="/p/<?=$_var->profile->name?>/" class="ph_button_v2">
                         <span class="txt">Abbrechen </span><i class="material-icons">close</i>
                     </a>
                 </span>
