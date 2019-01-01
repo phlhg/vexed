@@ -14,12 +14,18 @@
             $this->view->v->content = "";
             $this->view->v->notice = "";
 
+            $ownposts = count(\App\Models\Post\Post::byUser(__CLIENT()->id));
+
+            if(count(__CLIENT()->subscriptions) < 1 && $ownposts < 1){
+                return __ROUTER()->setRoute("Home/_empty");
+            }
+
             if(__CLIENT()->description == ""){
                 $this->view->v->notice = 'Füge deinem <a href="/p/'.__CLIENT()->name.'/">Profil</a> eine Beschreibung hinzu, damit die anderen Nutzer mehr über dich erfahren können 😉';
             }
 
-            if(count(\App\Models\Post\Post::byUser(__CLIENT()->id)) < 1){
-                $this->view->v->notice = 'Noch keine Posts?! 🤔<br/>Erstelle deinen ersten Post, indem du auf "<i class="material-icons">add</i>" klickst';
+            if($ownposts < 1){
+                $this->view->v->notice = 'Noch keine eigenen Posts?! 🤔<br/>Erstelle deinen ersten Post, indem du auf "<i class="material-icons">add</i>" klickst';
             }
         }
 
