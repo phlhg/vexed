@@ -38,7 +38,7 @@
         <!--FAVICON-->
         <link href="/img/icons/favicon.png" type="image/x-icon" rel="shortcut icon">
         <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="http://<?php echo \Core\Config::get("application_domain"); ?>/img/icons/dark_favicon.png" rel="apple-touch-icon" />
+        <link href="/img/icons/dark_favicon.png" rel="apple-touch-icon" />
         <!-- FONTS -->
         <link data-href="https://fonts.googleapis.com/css?family=Aldrich|Oxygen:300,400,700" rel="stylesheet" />
         <link data-href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
