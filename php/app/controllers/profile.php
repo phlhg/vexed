@@ -19,10 +19,6 @@
             $y = date("Y",time());
             foreach(\App\Models\Post\Post::byUser($profile->id) as $id){
                 $post = new \App\Models\Post\Post($id);
-                if($y != date("Y",$post->date)){
-                    $y = date("Y",$post->date);
-                    $this->view->v->p_postlist .= '</div><h2>'.$y.'</h2><div class="container">';
-                }
                 $this->view->v->p_postlist .= $post->toHtmlBanner();
             }
 
