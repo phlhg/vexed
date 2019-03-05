@@ -1,5 +1,5 @@
 # VEXED
-VEXED is a small social network made with PHP, SQL, HTML, CSS and Javascript.
+VEXED is a small social network made with PHP, SQL, HTML, CSS and Javascript.<br/>
 Originally it was created as my graduation project in high school. 
 
 ## Current Features
