@@ -1,15 +1,14 @@
-# Matura
-Coding a small social network as my graduation work in school.
+# VEXED
+VEXED is a small social network made with PHP, SQL, HTML, CSS and Javascript.
+Originally it was created as my graduation project in high school. 
 
-## (Planned) Features
+## Current Features
 - [x] Feed
 - [x] Post
-- [ ] Tags
 - [x] Profile
-- [ ] Settings (for Profile)
-- [ ] Search (for posts, [x] users, tags)
+- [x] Search (for users)
 - [x] Register
 - [x] Login
 
 ## Public version
-will be published on [vxd.phlhg.ch](http://vxd.phlhg.ch) as soon as there is a stageable version
+With an access-key you can create an account in the public version available on [vxd.phlhg.ch](http://vxd.phlhg.ch).
