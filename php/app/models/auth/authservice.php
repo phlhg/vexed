@@ -16,7 +16,9 @@
             Parent::__construct();
             $this->login = new \App\Models\Auth\LoginService();
             $this->userService = new \App\Models\Storage\Sql\UserService();
+            $this->attempts = (\Helpers\Session::exists("login_attempts") ? \Helpers\Session::get("login_attempts") : 0);
             $this->identified = $this->identify();
+            \Helpers\Session::set("login_attempts",$this->attempts);
         }
 
         private function identify(){
@@ -31,10 +33,11 @@
 
         public function login($token, $username, $password, $preserve){
             $this->login->set($username,$password,$preserve);
+            if($this->attempts > 2){ return $this->login->error("Du wurdest aufgrund zu vieler falscher Eingaben blockiert"); }
             if(!\Helpers\Token::check($token)){ return $this->login->info("Ungültiger Token - Anfrage abgelehnt"); }
             if(\Helpers\Check::email($username)){ $id = $this->userService->getIdByEmail($username); } else { $id = $this->userService->getIdByName($username); }
-            if($id < 0){ return $this->login->error("Passwort oder Nutzername falsch"); }
-            if(!$this->userService->checkCredentials($id,$password)){ return $this->login->error("Passwort oder Nutzername falsch"); }
+            if($id < 0){ $this->attempts++; return $this->login->error("Passwort oder Nutzername falsch"); }
+            if(!$this->userService->checkCredentials($id,$password)){ $this->attempts++; return $this->login->error("Passwort oder Nutzername falsch"); }
             if($this->userService->isBanned($id)){ return $this->login->error("Dein Account wurde gesperrt"); }
             if(!$this->userService->isConfirmed($id)){ return $this->login->info("Bitte bestätige zuerst deinen Account"); }
             if($preserve){ $this->setAutolog($id); }
