@@ -10,6 +10,3 @@ Originally it was created as my graduation project in high school.
 - [x] Search (for users)
 - [x] Register
 - [x] Login
-
-## Public version
-With an access-key you can create an account in the public version available on [vxd.phlhg.ch](http://vxd.phlhg.ch).
